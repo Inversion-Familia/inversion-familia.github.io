@@ -65,7 +65,6 @@ input[type=number],input[type=text],select{font:inherit;padding:7px 9px;border:1
 a{color:var(--acc)}
 .src{font-size:12px;color:var(--mut)}
 canvas{max-height:360px}
-.btn2{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:6px 12px;font:inherit;font-size:13.5px;cursor:pointer;text-decoration:none}
 .rcard{border:2px solid var(--line);border-radius:14px;padding:14px}
 .rcard.best{border-color:var(--acc)}
 .badge{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;background:var(--acc);color:#fff;margin-bottom:6px}
@@ -273,9 +272,6 @@ canvas{max-height:360px}
 <header>
   <h1>Dónde invertir · comparador familiar</h1>
   <div class="sub" id="upd"></div>
-  <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-    <a class="btn2" id="waShare" target="_blank" rel="noopener">💬 Enviar por WhatsApp</a>
-  </div>
 </header>
 <nav><div class="in" id="tabs">
   <button data-t="hoy" class="on">Hoy</button>
@@ -1377,10 +1373,6 @@ drawS();
 
 
 
-
-// ---------- HERRAMIENTAS DE CABECERA ----------
-(()=>{const url=location.href.startsWith('http')&&!location.href.includes('claude')?location.origin+location.pathname:'https://inversion-familia.github.io';
- document.getElementById('waShare').href='https://wa.me/?text='+encodeURIComponent('Mira esta web para comparar dónde ahorrar e invertir (se actualiza cada día): '+url);})();
 
 // ---------- QUÉ HAGO CON MI DINERO ----------
 function runRec(){
