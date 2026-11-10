@@ -65,6 +65,20 @@ input[type=number],input[type=text],select{font:inherit;padding:7px 9px;border:1
 a{color:var(--acc)}
 .src{font-size:12px;color:var(--mut)}
 canvas{max-height:360px}
+.zbar{display:flex;justify-content:flex-end;align-items:center;gap:8px;margin:4px 0 6px}
+.zbar span{font-size:12.5px;color:var(--mut)}
+.zbtn{border:1px solid var(--acc);background:var(--acc2);color:var(--acc);border-radius:9px;padding:6px 12px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.zoomable{cursor:zoom-in}
+#zoom{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column}
+#zoom.on{display:flex}
+#zoom .zh{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--card)}
+#zoom .zh b{font-size:16px}
+#zoom .zb{flex:1;overflow:auto;padding:12px}
+#zoom .zb table{font-size:15px;min-width:max(100%,1200px)}#zoom .zb td,#zoom .zb th{min-width:150px}#zoom .zh .btn{white-space:nowrap}
+#zoom .zb canvas{max-height:none!important}
+#zoom .zrot{display:none;font-size:12.5px;color:var(--mut);padding:6px 14px}
+@media (max-width:700px) and (orientation:portrait){#zoom .zrot{display:block}}
+
 .rcard{border:2px solid var(--line);border-radius:14px;padding:14px}
 .rcard.best{border-color:var(--acc)}
 .badge{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;background:var(--acc);color:#fff;margin-bottom:6px}
@@ -1424,6 +1438,29 @@ function runRec(){
    ops.sort((a,b)=>a.riesgo-b.riesgo||b.ganT-a.ganT).map(o=>`<tr><td><b>${o.nombre}</b></td><td class="small">${o.detalle}</td><td class="n">${fmt(o.tae,2)}%<br><span class="small">${o.tipo}</span></td><td class="n"><b>${eur(o.ganT)}</b></td><td class="n" style="color:${o.malo!=null&&o.malo<0?'var(--bad)':'inherit'}">${o.malo==null?'—':(o.malo>=0?'+':'')+eur(o.malo)}</td><td class="small">${o.gar}</td></tr>`).join('');
 }
 ['rImp','rAn','rRi','rCol'].forEach(i=>document.getElementById(i).addEventListener('input',runRec));runRec();
+
+// ---------- AMPLIAR GRÁFICOS Y TABLAS ----------
+(()=>{
+ const Z=document.createElement('div');Z.id='zoom';
+ Z.innerHTML='<div class="zh"><b id="zT"></b><button class="btn" id="zC">✕ Cerrar</button></div><div class="zrot">📱 Gira el móvil para verlo más grande</div><div class="zb" id="zB"></div>';
+ document.body.appendChild(Z);let zc=null;
+ const close=()=>{Z.classList.remove('on');if(zc){zc.destroy();zc=null;}document.getElementById('zB').innerHTML='';document.body.style.overflow='';};
+ document.getElementById('zC').onclick=close;document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+ const titulo=el=>{const c=el.closest('.card');const t=c&&c.querySelector('h2,h3');return t?t.textContent:'Vista ampliada';};
+ function open(el){
+  const B=document.getElementById('zB');B.innerHTML='';document.getElementById('zT').textContent=titulo(el);
+  if(el.tagName==='CANVAS'){const ch=typeof Chart!=='undefined'&&Chart.getChart(el);if(!ch)return;
+    const box=document.createElement('div');box.style.cssText='position:relative;height:calc(100vh - 110px);min-height:320px';const cv=document.createElement('canvas');box.appendChild(cv);B.appendChild(box);
+    zc=new Chart(cv,{type:ch.config.type,data:JSON.parse(JSON.stringify(ch.config.data)),options:Object.assign({},ch.config.options,{maintainAspectRatio:false,animation:false}),plugins:ch.config.plugins||[]});
+  }else{B.appendChild(el.cloneNode(true));}
+  Z.classList.add('on');document.body.style.overflow='hidden';
+ }
+ const addBar=(target,el)=>{const bar=document.createElement('div');bar.className='zbar';bar.innerHTML='<span>Pulsa para verlo en grande</span><button class="zbtn">⤢ Ampliar</button>';
+   bar.querySelector('button').onclick=()=>open(el);target.parentNode.insertBefore(bar,target);el.classList.add('zoomable');el.addEventListener('click',e=>{if(el.tagName!=='CANVAS'&&e.target.closest('a,button'))return;if(el.tagName==='CANVAS'&&window.innerWidth>700)return;open(el);});};
+ document.querySelectorAll('canvas').forEach(c=>addBar(c,c));
+ document.querySelectorAll('.tw').forEach(t=>{if(t.closest('#zoom'))return;if(t.querySelector('input,select'))return;
+   const tb=t.querySelector('table');if(!tb)return;addBar(t,t);});
+})();
 </script>
 </body>
 </html>
