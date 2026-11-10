@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<meta name="theme-color" content="#1f5f4a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Invertir">
+<title>Dónde invertir · comparador familiar</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#f6f5f1;--card:#fff;--ink:#1d1d1f;--mut:#6b6b70;--line:#e4e2dc;
+  --acc:#1f5f4a;--acc2:#e8f1ec;--warn:#9a5b00;--warnbg:#fff4e0;--bad:#a8322d;--badbg:#fbeaea;
+  --r1:#2e7d5b;--r2:#5c9a4a;--r3:#b39b2d;--r4:#d07a2c;--r5:#b8452e;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#141414;--card:#1e1e1f;--ink:#ececec;--mut:#a0a0a5;--line:#333;--acc:#6cc39c;--acc2:#1f2d27;--warn:#f0b35a;--warnbg:#2e2412;--bad:#f08a84;--badbg:#341c1b}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+header{padding:22px 18px 6px;max-width:1100px;margin:auto}
+h1{font-size:24px;margin:0 0 4px}
+.sub{color:var(--mut);font-size:13px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .in{max-width:1100px;margin:auto;display:flex;gap:4px;overflow-x:auto;padding:8px 14px}
+nav button{border:0;background:none;padding:8px 12px;border-radius:8px;font:inherit;font-size:14px;color:var(--mut);cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--acc);color:#fff}
+@media (prefers-color-scheme:dark){nav button.on{color:#111}}
+main{max-width:1100px;margin:auto;padding:16px 14px 60px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+h2{font-size:19px;margin:4px 0 10px}h3{font-size:16px;margin:0 0 8px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.kpi .v{font-size:26px;font-weight:700}.kpi .l{color:var(--mut);font-size:13px}.kpi .s{font-size:12px;color:var(--mut)}
+.note{background:var(--warnbg);color:var(--warn);border-radius:10px;padding:10px 12px;font-size:13.5px}
+.good{background:var(--acc2);color:var(--acc);border-radius:10px;padding:10px 12px;font-size:13.5px}
+.bad{background:var(--badbg);color:var(--bad);border-radius:10px;padding:10px 12px;font-size:13.5px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--mut);font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;font-weight:600;color:#fff}
+.tag{display:inline-block;padding:1px 7px;border-radius:6px;font-size:11.5px;background:var(--acc2);color:var(--acc);margin:1px 2px 1px 0}
+.tag.w{background:var(--warnbg);color:var(--warn)}
+.flt{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px;align-items:center}
+.flt label{font-size:13.5px;display:flex;gap:6px;align-items:center;background:var(--bg);padding:5px 10px;border-radius:8px;border:1px solid var(--line);cursor:pointer}
+input[type=number],input[type=text],select{font:inherit;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);width:100%}
+.fld label{display:block;font-size:13px;color:var(--mut);margin-bottom:4px}
+.q{margin-bottom:14px}.q p{margin:0 0 6px;font-weight:600}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;cursor:pointer;font-size:14px}
+.opts label:has(input:checked){border-color:var(--acc);background:var(--acc2)}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
+@media (prefers-color-scheme:dark){.btn{color:#111}}
+.bar{display:flex;height:22px;border-radius:7px;overflow:hidden;margin:8px 0}
+.bar div{height:100%}
+.leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.small{font-size:12.5px;color:var(--mut)}
+a{color:var(--acc)}
+.src{font-size:12px;color:var(--mut)}
+canvas{max-height:360px}
+</style>
+</head>
+<body>
+
+<!-- ===================== DATOS (se actualizan a diario) ===================== -->
+<script id="datos" type="application/json">
+{
+ "actualizado": "2026-11-09",
+ "inflacion": {"valor": 4.9, "subyacente": 3.1, "mes": "octubre 2026 (dato adelantado INE)", "fuente": "https://www.ine.es/dyngs/Prensa/adIPC1026.htm"},
+ "bce_deposito": 2.5,
+ "tesoro": [
+  {"producto":"Letras 6 meses","tipo":2.845,"fecha":"3/11/2026"},
+  {"producto":"Letras 9 meses","tipo":2.968,"fecha":"13/10/2026"},
+  {"producto":"Letras 12 meses","tipo":3.068,"fecha":"3/11/2026"},
+  {"producto":"Bono 5 años","tipo":3.34,"fecha":"5/11/2026"},
+  {"producto":"Obligación 10 años","tipo":3.80,"fecha":"5/11/2026"},
+  {"producto":"Obligación 15 años","tipo":4.09,"fecha":"5/11/2026"}
+ ],
+ "ing": {
+  "naranjaNomina": 1.00, "naranjaSin": 0.30,
+  "dep12": [[0,50000,2.00],[50001,100000,2.15],[100001,1000000,2.30]],
+  "dep24max": 2.60,
+  "bienvenida": "Depósito Bienvenida 3% TAE a 3 meses (hasta 50.000 €), solo para nuevos clientes",
+  "fondosTer": 1.10, "carterasTer": 0.99,
+  "brokerCom": "3 € + 0,10% por operación (menos de 15 operaciones/trimestre); 1,5 € + 0,05% con 15 o más",
+  "etfGratisMin": "iShares 2.500 € · Amundi 2.000 € · Xtrackers 1.500 € · WisdomTree 1.000 € por compra",
+  "fgd": "Países Bajos (100.000 €)",
+  "fuentes": [["Finect – Cuenta Naranja y promoción nómina","https://www.finect.com/usuario/davidcarmona/articulos/ing-amplia-su-oferta-de-400-euros-por-domiciliar-la-nomina-hasta-el-15-de-noviembre"],["Finect – Depósitos ING","https://www.finect.com/usuario/davidcarmona/articulos/ing-sube-hasta-el-260-tae-en-sus-depositos-a-24-meses-y-estrena-dos-nuevos-productos-a-6-meses"],["Rankia – Fondos y Carteras Naranja","https://www.rankia.com/blog/fondos-inversion/5259067-ing-mejores-fondos-cartera-naranja"],["Rankia – Bróker Naranja","https://www.rankia.com/blog/mejores-brokers/5659985-broker-naranja-ing-opiniones"],["Rankia – ETFs sin comisión en ING","https://www.rankia.com/blog/mejores-brokers/3093464-que-bancos-ofrecen-mejores-comisiones-para-operar-bolsa"]]
+ },
+ "ibex": {
+  "nivel": 19742.5, "fecha": "9/11/2026", "ytd": 14.07,
+  "fechaConsenso": "2–4 de noviembre de 2026 (consenso Reuters)",
+  "valores": [
+   {"v":"Solaria","pot":66.8,"ytd":-18,"po":24.78,"nota":"Renovables. El que más recorrido ve el consenso"},
+   {"v":"Merlin Properties","pot":47.0,"ytd":-0.9,"po":16.87,"nota":"Inmobiliaria (SOCIMI)"},
+   {"v":"ACS","pot":41.3,"ytd":9.3,"po":128.72,"nota":"Construcción; ha corregido ~35% desde máximos de mayo"},
+   {"v":"Grifols","pot":38.7,"ytd":-10.1,"po":15.60,"nota":"Farmacéutica; Barclays, más prudente, la ve en 13 €"},
+   {"v":"Fluidra","pot":37.8,"ytd":null,"po":null,"nota":"Piscinas"},
+   {"v":"Cellnex","pot":33.9,"ytd":null,"po":null,"nota":"Torres de telecomunicaciones"},
+   {"v":"Banco Santander","pot":32.5,"ytd":null,"po":13.70,"nota":"Banca"},
+   {"v":"Sacyr","pot":31.5,"ytd":null,"po":null,"nota":"Construcción y concesiones"},
+   {"v":"CaixaBank","pot":19.4,"ytd":null,"po":13.58,"nota":"Banca. 10 analistas compran, 5 venden"},
+   {"v":"Acerinox","pot":16.8,"ytd":31.6,"po":19.45,"nota":"Acero inoxidable"},
+   {"v":"BBVA","pot":16.5,"ytd":6.9,"po":24.95,"nota":"Banca"},
+   {"v":"Telefónica","pot":15.9,"ytd":-3.7,"po":3.90,"nota":"Telecomunicaciones"},
+   {"v":"Acciona Energía","pot":11.3,"ytd":-5.6,"po":23.53,"nota":"Renovables"},
+   {"v":"Inditex","pot":8.8,"ytd":0.0,"po":61.28,"nota":"Textil (Zara)"},
+   {"v":"Acciona","pot":5.3,"ytd":9.8,"po":214.97,"nota":"Infraestructuras y energía"},
+   {"v":"Repsol","pot":3.3,"ytd":85,"po":null,"nota":"Petróleo; +85% en el año por la subida de la energía"},
+   {"v":"Aena","pot":1.9,"ytd":14.3,"po":27.74,"nota":"Aeropuertos"},
+   {"v":"Iberdrola","pot":-2.2,"ytd":23.5,"po":21.62,"nota":"Eléctrica; ya superó el precio objetivo"},
+   {"v":"Logista","pot":-8.5,"ytd":20.7,"po":null,"nota":"Distribución"},
+   {"v":"Endesa","pot":-16.0,"ytd":42.8,"po":36.77,"nota":"Eléctrica; ha subido por encima de lo que esperaban los analistas"}
+  ],
+  "sinDato": "Amadeus, Bankinter, Colonial, Ferrovial, IAG, Indra, Mapfre, Puig, Redeia, Rovi, Sabadell, Unicaja, Naturgy, ArcelorMittal y Enagás",
+  "fuentes": [["Estrategias de Inversión – Potencial de los valores del Ibex 35 (Reuters)","https://www.estrategiasdeinversion.com/actualidad/noticias/bolsa-espana/tres-acciones-del-ibex-35-con-potencial-de-mas-n-965387"],["Yahoo Finanzas – Tres acciones con potencial de más del 40%","https://es.finance.yahoo.com/noticias/acciones-ibex-35-potencial-40-051000410.html"],["Yahoo Finanzas – Grifols (4/11/2026)","https://es.finance.yahoo.com/noticias/acci%C3%B3n-ibex-35-pleno-rebote-092000066.html"],["Estrategias de Inversión – CaixaBank (3/11/2026)","https://www.estrategiasdeinversion.com/analisis/los-brokers-recomiendan/recomendaciones-espana/un-valor-y-banco-del-ibex-35-que-se-puede-disparar-n-965831"],["Diario de Santiago – Cierre Ibex 9/11/2026","https://www.diariodesantiago.es/economia/el-ibex-35-sube-un-193-y-recupera-los-19-700-puntos/"]]
+ },
+ "bonos": [
+  {"banco":"BBVA","importe":1060,"txt":"Hasta 1.060 €","req":"Domiciliar ingresos, usar la tarjeta, Bizum, pagar recibos y mantener saldo","perm":"Según condiciones","plazo":"10/11/2026"},
+  {"banco":"Unicaja (Requetecuenta Digital)","importe":900,"txt":"Hasta 900 €","req":"450 € por domiciliar nómina, hasta 250 € vía remuneración de la cuenta (1,25% TAE hasta 20.000 €) y hasta 200 € por recibos (1% devuelto)","perm":"24 meses (parte de nómina)","plazo":""},
+  {"banco":"Santander","importe":840,"txt":"Hasta 840 € en 2 años","req":"35 €/mes con nómina desde 1.500 € (30 €/mes con 800–1.499 €), Bizum y 2 recibos","perm":"Sin permanencia: cobras los meses que cumples","plazo":""},
+  {"banco":"Cajamar","importe":750,"txt":"300 / 500 / 750 €","req":"Según nómina: 1.200–1.999 € / 2.000–3.999 € / desde 4.000 €. Cuenta al 2,02% TAE hasta 20.000 €","perm":"36 meses","plazo":"31/12/2026"},
+  {"banco":"Kutxabank","importe":600,"txt":"300 € o 600 €","req":"300 € con nómina desde 800 €; 600 € desde 2.500 €. Además cuenta al 3,10% TAE el 1er año","perm":"Hasta 36 meses","plazo":"31/12/2026"},
+  {"banco":"Bankinter","importe":600,"txt":"600 € brutos","req":"Nómina desde 850 €, mantenerla 12 meses. Cuenta Digital al 3% TAE","perm":"12 meses","plazo":"11/11/2026"},
+  {"banco":"ABANCA","importe":500,"txt":"500 € brutos (405 € netos)","req":"Nómina desde 1.200 € (185 € brutos con 800–1.200 €)","perm":"24 meses","plazo":"31/12/2026"},
+  {"banco":"Sabadell","importe":400,"txt":"400 €","req":"Domiciliar nómina y activar Bizum. Cuenta Online al 2,75% TAE hasta 100.000 €","perm":"Según condiciones","plazo":"12/11/2026"},
+  {"banco":"imagin","importe":250,"txt":"250 € netos","req":"Nómina desde 900 €, sin recibos, seguros ni compras mínimas","perm":"Según condiciones","plazo":""},
+  {"banco":"CaixaBank","importe":250,"txt":"Hasta 250 € o regalo (móvil, TV)","req":"Nómina, 3 recibos y 3 compras con tarjeta al trimestre","perm":"Según condiciones","plazo":""}
+ ],
+ "bonosFuentes": [["Rankia – Bancos que regalan dinero","https://www.rankia.com/blog/cuentas-corrientes/5463401-bancos-que-regalan-dinero-abrir-cuenta-mejores-ofertas"],["Kelisto – Regalos por domiciliar la nómina","https://www.kelisto.es/cuentas-bancarias/consejos-y-analisis/los-mejores-regalos-de-los-bancos-3189"],["Rastreator – Cuentas nómina","https://www.rastreator.com/cuentas-bancarias/guias/mejores-cuentas-nomina"],["Roams – Regalos por abrir cuenta","https://roams.es/finanzas/cuentas/cuenta-regalo/"]],
+ "precios": {"fecha":"6/11/2026","lista":{
+  "Solaria":16.15,"Acciona Energía":22.14,"Merlin Properties":11.60,"ACS":87.00,"Ferrovial":52.78,"Acciona":218.00,"Amadeus":60.52,"IAG":5.192,"Colonial":5.27,"Logista":36.60,"Sacyr":4.046,"Acerinox":14.94,"Fluidra":19.32,"Mapfre":4.13,"Telefónica":3.385,"Inditex":59.04,"Cellnex":26.68,"Endesa":44.20,"Indra":56.76,"Puig":19.84,"BBVA":22.73,"Repsol":29.90}},
+ "tesoro_proximas": "10/11/2026 (Letras 3 y 9 meses) · 1/12/2026 (Letras 6 y 12 meses)",
+ "cuentas": [
+  {"entidad":"Bankinter","producto":"Cuenta Nómina","tae":5.00,"cond":"Nómina ≥850 €, 3 recibos y 3 pagos con tarjeta al trimestre. 5% solo el 1er año (2% el 2º)","max":"10.000 €","fgd":"España","sinCond":false,"plazoOferta":""},
+  {"entidad":"Revolut","producto":"Cuenta Remunerada","tae":3.51,"cond":"Nuevos clientes, tipo promocional limitado en el tiempo (hasta 4 meses)","max":"—","fgd":"Lituania","sinCond":false,"plazoOferta":""},
+  {"entidad":"Ferratum","producto":"Cuenta de ahorro","tae":3.40,"cond":"Nuevos clientes: 3,35% TIN 3 meses, luego 3,00% TIN","max":"100.000 €","fgd":"Malta","sinCond":true,"plazoOferta":""},
+  {"entidad":"Raisin","producto":"Cuenta Bienvenida","tae":3.30,"cond":"Nuevos clientes, 3 meses. Dinero disponible siempre","max":"60.000 €","fgd":"Alemania","sinCond":true,"plazoOferta":""},
+  {"entidad":"Openbank","producto":"Cuenta Remunerada","tae":3.25,"cond":"Nuevos clientes, 12 meses, activar Bizum","max":"Sin límite","fgd":"España","sinCond":true,"plazoOferta":"Alta hasta 16/11/2026"},
+  {"entidad":"B100 (Abanca)","producto":"Cuenta Health","tae":3.15,"cond":"Ligada a retos/hábitos de la app","max":"50.000 €","fgd":"España","sinCond":false,"plazoOferta":""},
+  {"entidad":"bunq","producto":"Cuenta de ahorro","tae":3.01,"cond":"Tipo variable (3,0–3,2% según fuente y saldo). Intereses semanales","max":"100.000 €","fgd":"Países Bajos","sinCond":true,"plazoOferta":""},
+  {"entidad":"Kutxabank","producto":"Cuenta Remunerada","tae":3.10,"cond":"1er año; el 2º año baja a 0,75%","max":"100.000 €","fgd":"España","sinCond":true,"plazoOferta":"Activación hasta 22/11/2026"},
+  {"entidad":"Trade Republic","producto":"Cuenta","tae":3.04,"cond":"Sin condiciones. Revisa el saldo máximo remunerado (fuentes difieren)","max":"Consultar","fgd":"Alemania","sinCond":true,"plazoOferta":""},
+  {"entidad":"Bankinter","producto":"Cuenta Digital","tae":3.00,"cond":"Sin nómina. 2,96% TIN garantizado hasta 11/05/2027","max":"100.000 €","fgd":"España","sinCond":true,"plazoOferta":"Altas hasta 11/11/2026"},
+  {"entidad":"Sabadell","producto":"Cuenta Online","tae":2.75,"cond":"Nuevos clientes","max":"100.000 €","fgd":"España","sinCond":true,"plazoOferta":""},
+  {"entidad":"B100 (Abanca)","producto":"Cuenta Save","tae":2.75,"cond":"Sin condiciones","max":"100.000 €","fgd":"España","sinCond":true,"plazoOferta":""},
+  {"entidad":"Renault Bank","producto":"Cuenta Contigo","tae":2.61,"cond":"Nuevos clientes","max":"Sin máximo","fgd":"Francia","sinCond":true,"plazoOferta":""},
+  {"entidad":"Unicaja","producto":"Cuenta Online","tae":2.55,"cond":"Sin comisiones; bonificación extra si domicilias nómina","max":"—","fgd":"España","sinCond":true,"plazoOferta":"Apertura hasta 31/01/2027"},
+  {"entidad":"MyInvestor","producto":"Cuenta Remunerada","tae":2.50,"cond":"Nuevos clientes, 6 meses","max":"70.000 €","fgd":"España","sinCond":true,"plazoOferta":""},
+  {"entidad":"ABANCA","producto":"Cuenta Remunerada","tae":2.00,"cond":"Sin límite de saldo","max":"Sin límite","fgd":"España","sinCond":true,"plazoOferta":""}
+ ],
+ "depositos": [
+  {"entidad":"Bank B (vía Raisin)","plazo":84,"tae":3.75,"min":"5.000 €","fgd":"Bélgica"},
+  {"entidad":"Renault Bank","plazo":36,"tae":3.55,"min":"—","fgd":"Francia"},
+  {"entidad":"HoistSpar","plazo":12,"tae":3.51,"min":"1 €","fgd":"Suecia"},
+  {"entidad":"Banco BIG (Gran Depósito)","plazo":6,"tae":3.50,"min":"10.000 € (nuevos clientes)","fgd":"Portugal"},
+  {"entidad":"Volkswagen Bank","plazo":24,"tae":3.50,"min":"—","fgd":"Alemania"},
+  {"entidad":"Mano Bank (vía Raisin)","plazo":12,"tae":3.46,"min":"—","fgd":"Lituania"},
+  {"entidad":"BluOr Bank (vía Raisin)","plazo":12,"tae":3.45,"min":"—","fgd":"Letonia"},
+  {"entidad":"SME Bank (vía Raisin)","plazo":24,"tae":3.44,"min":"20.000 €","fgd":"Lituania"},
+  {"entidad":"Ferratum","plazo":36,"tae":3.40,"min":"50 €","fgd":"Malta"},
+  {"entidad":"Bank DiMare","plazo":24,"tae":3.40,"min":"10.000 €","fgd":"Extranjero"},
+  {"entidad":"MiraltaBank (vía Raisin)","plazo":36,"tae":3.38,"min":"15.000 €","fgd":"España"},
+  {"entidad":"SME Bank (vía Raisin)","plazo":12,"tae":3.35,"min":"20.000 €","fgd":"Lituania"},
+  {"entidad":"Cetelem","plazo":24,"tae":3.25,"min":"1 €","fgd":"Consultar"},
+  {"entidad":"Banco Finantia (Jump)","plazo":6,"tae":3.25,"min":"—","fgd":"Portugal"},
+  {"entidad":"Ferratum","plazo":12,"tae":3.20,"min":"50 €","fgd":"Malta"},
+  {"entidad":"Ferratum","plazo":6,"tae":3.10,"min":"50 €","fgd":"Malta"},
+  {"entidad":"MiraltaBank (vía Raisin)","plazo":12,"tae":3.10,"min":"—","fgd":"España"},
+  {"entidad":"Self Bank","plazo":3,"tae":3.05,"min":"6.000 €","fgd":"España"},
+  {"entidad":"HoistSpar","plazo":3,"tae":3.02,"min":"1 €","fgd":"Suecia"},
+  {"entidad":"WiZink","plazo":18,"tae":2.85,"min":"5.000 €","fgd":"España"},
+  {"entidad":"ING","plazo":12,"tae":2.30,"min":"2,00% hasta 50.000 €; 2,30% desde 100.001 €","fgd":"Países Bajos"}
+ ],
+ "fondos": {
+  "patrimonio": 479234, "mes": "octubre 2026",
+  "categorias": [
+   {"cat":"Renta fija","patrimonio":185831,"nota":"La mayor categoría con diferencia"},
+   {"cat":"Renta variable internacional","patrimonio":81432,"nota":"Dato a septiembre 2026"}
+  ],
+  "flujos": [
+   "Suscripciones netas en 2026: unos 11.500 M€ hasta octubre (10.658 M€ a septiembre + 864 M€ en octubre).",
+   "Renta fija internacional es la categoría que más dinero nuevo ha captado en el año (2.779 M€ a septiembre), seguida de los fondos globales (2.547 M€).",
+   "En octubre, los fondos de rentabilidad objetivo fueron los que más captaron (877 M€).",
+   "Los fondos garantizados llevan todo el año perdiendo dinero (≈ -29% de patrimonio).",
+   "Los monetarios han sido el «refugio» de 2025-2026 para el ahorro a corto plazo."
+  ],
+  "hogares": "Los depósitos bancarios siguen siendo el producto donde más ahorran los hogares españoles; los fondos de inversión son el segundo (215.400 M€ captados en 10 años según Inverco)."
+ },
+ "fuentes": [
+  ["INE – IPC adelantado octubre 2026","https://www.ine.es/dyngs/Prensa/adIPC1026.htm"],
+  ["Rankia – Cuentas remuneradas noviembre 2026","https://www.rankia.com/blog/cuentas-corrientes/7544345-mejores-cuentas-remuneradas-noviembre-2026"],
+  ["elEconomista – Cuentas remuneradas","https://www.eleconomista.es/finanzas-personales/cuentas-sin-comisiones/cuentas-remuneradas/"],
+  ["Bankkers – Cuentas remuneradas","https://bankkers.com/cuentas/mejores-cuentas-remuneradas/"],
+  ["Kelisto – Cuentas remuneradas","https://www.kelisto.es/cuentas-bancarias/mejor-compra/las-mejores-cuentas-ahorro-2851"],
+  ["Raisin – Depósitos noviembre","https://www.raisin.com/es-es/noticias/mejores-depositos-a-plazo-fijo-noviembre-2026/"],
+  ["elEconomista – Depósitos","https://www.eleconomista.es/finanzas-personales/depositos-a-plazo-fijo/"],
+  ["Rankia – Depósitos","https://www.rankia.com/blog/mejores-depositos/4127358-mejores-depositos"],
+  ["Finect – Depósitos","https://www.finect.com/usuario/eduardogarcia/articulos/los-mejores-depositos-bancarios-a-plazo-fijo"],
+  ["R4 – Letras del Tesoro","https://www.r4.com/articulos-y-analisis/ideas/actualidad-letras-del-tesoro-12-meses"],
+  ["OCU – Subasta bonos 5 nov 2026","https://www.ocu.org/inversiones/invertir/obligaciones/articulos/2026/11/subasta-tesoro-noviembre-2026"],
+  ["Finect – Patrimonio fondos octubre 2026 (Inverco)","https://www.finect.com/usuario/eduardogarcia/articulos/el-patrimonio-de-los-fondos-en-espana-se-situa-en-479234-millones-en-octubre-y-recupera-el-crecimiento"],
+  ["Finect – Patrimonio fondos septiembre 2026","https://www.finect.com/usuario/eduardogarcia/articulos/el-patrimonio-de-los-fondos-en-espana-se-situa-en-478086-millones-en-septiembre-por-debajo-de-lo-previsto"],
+  ["Bankkers – Rentabilidad histórica MSCI World","https://bankkers.com/?p=1259"]
+ ]
+}
+</script>
+
+<!-- Supuestos de largo plazo por tipo de activo (históricos aproximados; cambian poco) -->
+<script id="activos" type="application/json">
+[
+ {"id":"cuenta","nombre":"Cuenta remunerada","grupo":"Liquidez","riesgo":1,"rent":3.0,"vol":0.3,"rentTxt":"2,5–3,5% hoy (promos)","peor":"0% (garantizada hasta 100.000 €)","liquidez":"Inmediata","garantia":"FGD 100.000 €/titular/banco","fiscal":"Intereses: base del ahorro, con retención 19%","para":"Colchón de emergencia y dinero que puedes necesitar ya","ojo":"Las mejores ofertas son promociones temporales; luego el tipo baja"},
+ {"id":"deposito","nombre":"Depósito a plazo fijo","grupo":"Liquidez","riesgo":1,"rent":3.2,"vol":0.3,"rentTxt":"3–3,75% hoy","peor":"0% (garantizado)","liquidez":"Al vencimiento (cancelar antes penaliza)","garantia":"FGD 100.000 €","fiscal":"Base del ahorro, retención 19%","para":"Dinero que no tocarás en un plazo concreto","ojo":"Si el banco es extranjero, lo cubre el FGD de su país"},
+ {"id":"letras","nombre":"Letras del Tesoro","grupo":"Liquidez","riesgo":1,"rent":3.0,"vol":0.5,"rentTxt":"2,8–3,1% hoy","peor":"≈0% si mantienes hasta vencimiento","liquidez":"3–12 meses (o vender antes en mercado)","garantia":"Estado español","fiscal":"Base del ahorro, sin retención","para":"Alternativa segura a depósitos, sin límite de 100.000 €","ojo":"Comprar en el Tesoro tiene trámites; el Banco de España cobra si no reinviertes"},
+ {"id":"monetario","nombre":"Fondo monetario","grupo":"Liquidez","riesgo":1,"rent":2.3,"vol":0.5,"rentTxt":"≈2–2,5% anual actual","peor":"≈ -0,5% (2022)","liquidez":"2–3 días","garantia":"Sin FGD (riesgo muy bajo)","fiscal":"Solo tributa al vender; traspasos entre fondos sin impuestos","para":"Aparcar dinero a medio plazo y mover luego a otros fondos sin pagar impuestos","ojo":"Su rentabilidad baja cuando bajan los tipos del BCE"},
+ {"id":"bonos","nombre":"Bonos del Estado (5–15 años)","grupo":"Renta fija","riesgo":2,"rent":3.6,"vol":6,"rentTxt":"3,3–4,1% hoy","peor":"≈ -20% (2022, si vendes antes)","liquidez":"Vender en mercado al precio del día","garantia":"Estado español","fiscal":"Cupones en base del ahorro","para":"Asegurar un tipo durante años","ojo":"Si suben los tipos y necesitas vender, pierdes"},
+ {"id":"rfglobal","nombre":"Fondo/ETF renta fija global","grupo":"Renta fija","riesgo":2,"rent":3.0,"vol":5,"rentTxt":"≈2,5–4% largo plazo","peor":"≈ -17% (2022)","liquidez":"2–3 días","garantia":"No","fiscal":"Fondos: traspasos sin impuestos","para":"Amortiguar la cartera y diversificar","ojo":"No es «sin riesgo»: 2022 fue el peor año en décadas"},
+ {"id":"mixto","nombre":"Fondo mixto 60/40","grupo":"Mixto","riesgo":3,"rent":6.0,"vol":10,"rentTxt":"≈5–7% largo plazo","peor":"≈ -25% (2008)","liquidez":"2–3 días","garantia":"No","fiscal":"Traspasos sin impuestos","para":"Quien quiere una sola cosa que lo haga todo","ojo":"Vigila comisiones: en banco suelen ser 1,5–2% al año"},
+ {"id":"rvglobal","nombre":"Indexado bolsa mundial (MSCI World)","grupo":"Renta variable","riesgo":4,"rent":8.0,"vol":15,"rentTxt":"≈9% anual desde 1969 (en dólares)","peor":"≈ -54% en euros (2000→2009)","liquidez":"2–3 días","garantia":"No","fiscal":"Fondo indexado: traspasos sin impuestos; ETF: tributa al vender","para":"El motor de crecimiento a largo plazo (10+ años)","ojo":"Puede pasar 4–5 años en negativo tras una crisis"},
+ {"id":"sp500","nombre":"Indexado S&P 500 (EE. UU.)","grupo":"Renta variable","riesgo":4,"rent":8.5,"vol":16,"rentTxt":"≈10% anual histórico (en dólares)","peor":"≈ -50% (2008)","liquidez":"2–3 días","garantia":"No","fiscal":"Igual que el anterior","para":"Más concentración en EE. UU. y tecnológicas","ojo":"Menos diversificado que el mundial; riesgo dólar"},
+ {"id":"ibex","nombre":"Bolsa española (Ibex 35)","grupo":"Renta variable","riesgo":5,"rent":6.0,"vol":20,"rentTxt":"Históricamente por debajo del mundial","peor":"≈ -60% (2007-09)","liquidez":"Inmediata (acciones)","garantia":"No","fiscal":"Dividendos y ventas en base del ahorro","para":"Complemento, no núcleo","ojo":"Muy concentrada en bancos y pocas empresas"},
+ {"id":"reit","nombre":"Inmobiliario cotizado (REIT/SOCIMI)","grupo":"Alternativos","riesgo":5,"rent":6.5,"vol":20,"rentTxt":"≈6–8% largo plazo","peor":"≈ -65% (2008-09)","liquidez":"2–3 días","garantia":"No","fiscal":"Dividendos con retención 19%","para":"Exposición a inmuebles sin comprar un piso","ojo":"Sufre mucho cuando suben los tipos"},
+ {"id":"vivienda","nombre":"Piso para alquilar","grupo":"Alternativos","riesgo":3,"rent":5.0,"vol":8,"rentTxt":"Bruta ≈4–7% + revalorización","peor":"≈ -30% precio (2008-13)","liquidez":"Muy baja (meses)","garantia":"No","fiscal":"Rendimiento del capital inmobiliario (base general)","para":"Quien tiene mucho capital y tiempo para gestionarlo","ojo":"Concentra todo en un activo; impagos, reformas, ITP/IBI"},
+ {"id":"oro","nombre":"Oro (ETC)","grupo":"Alternativos","riesgo":4,"rent":5.0,"vol":15,"rentTxt":"Variable, no genera rentas","peor":"≈ -45% (2011-15)","liquidez":"2–3 días","garantia":"No","fiscal":"Ganancia patrimonial al vender","para":"Pequeño seguro ante crisis e inflación (5–10%)","ojo":"Puede pasar años sin subir"},
+ {"id":"pension","nombre":"Plan de pensiones","grupo":"Jubilación","riesgo":3,"rent":5.0,"vol":10,"rentTxt":"Depende de lo que invierta","peor":"Según el plan","liquidez":"Hasta jubilación (salvo 10 años de antigüedad)","garantia":"No","fiscal":"Desgrava hasta 1.500 €/año; al cobrar tributa como trabajo","para":"Quien tributa a tipo alto en IRPF","ojo":"Comisiones altas en los de banco; al rescatar se paga IRPF"},
+ {"id":"cripto","nombre":"Criptomonedas (Bitcoin)","grupo":"Especulativo","riesgo":5,"rent":10,"vol":65,"rentTxt":"Enorme pero imprevisible","peor":"≈ -77% (2022) · -84% (2018)","liquidez":"Inmediata","garantia":"No (riesgo de plataforma)","fiscal":"Ganancia patrimonial; Modelo 721 si >50.000 € fuera","para":"Solo dinero que aceptas perder entero","ojo":"Máximo 1–5% de la cartera"}
+]
+</script>
+
+<!-- Rentabilidades anuales históricas (año natural, %). USD se convierte a EUR con el cambio de fin de año. -->
+<script id="historico" type="application/json">
+{
+ "anos":   [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],
+ "eurusd0": 1.0070,
+ "eurusd": [0.9388,0.8813,1.0487,1.2630,1.3621,1.1797,1.3170,1.4721,1.3917,1.4406,1.3362,1.2939,1.3194,1.3791,1.2141,1.0887,1.0541,1.1993,1.1450,1.1234,1.2271,1.1326,1.0705,1.1039,1.0389,1.1743],
+ "series": {
+  "sp":    {"nombre":"S&P 500","moneda":"USD","r":[-9.10,-11.89,-22.10,28.68,10.88,4.91,15.79,5.49,-37.00,26.46,15.06,2.11,16.00,32.39,13.69,1.38,11.96,21.83,-4.38,31.49,18.40,28.71,-18.11,26.29,25.02,17.9]},
+  "world": {"nombre":"Bolsa mundial (MSCI World)","moneda":"USD","r":[-13.18,-16.82,-19.89,33.11,14.72,9.49,20.07,9.04,-40.71,29.99,11.76,-5.54,15.83,26.68,4.94,-0.87,7.51,22.40,-8.71,27.67,15.90,21.82,-18.14,23.79,18.67,21.1]},
+  "ibex":  {"nombre":"Bolsa española (Ibex 35 + div.)","moneda":"EUR","div":3.5,"r":[-21.75,-7.82,-28.11,28.17,17.37,18.20,31.79,7.32,-39.43,29.84,-17.43,-13.11,-4.66,21.42,3.66,-7.15,-2.01,7.40,-14.97,11.82,-15.45,7.93,-5.56,22.76,14.78,49.27]},
+  "rf":    {"nombre":"Renta fija euro","moneda":"EUR","r":[7.2,6.3,9.1,4.1,7.6,4.0,0.0,2.2,4.3,6.0,2.2,3.3,11.2,2.2,11.1,1.0,3.3,0.7,0.4,6.0,4.0,-2.9,-17.2,7.2,2.6,1.7]},
+  "depo":  {"nombre":"Depósito / Letras 12 meses","moneda":"EUR","r":[4.8,4.1,3.5,2.3,2.3,2.3,3.4,4.5,4.8,1.6,1.4,2.0,1.1,0.5,0.5,0.2,0,0,0,0,0,0,1.1,3.6,3.2,2.2]},
+  "gold":  {"nombre":"Oro","moneda":"USD","r":[-5.4,2.5,24.8,19.4,5.6,18.0,23.2,31.9,4.3,25.0,29.2,10.1,7.0,-28.3,-1.5,-10.4,8.6,13.1,-1.6,18.3,25.1,-3.6,-0.3,13.1,27.2,64.0]},
+  "btc":   {"nombre":"Bitcoin","moneda":"USD","desde":2014,"r":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,-58.0,35.0,125.0,1331.0,-73.5,95.0,303.0,60.0,-64.2,156.0,121.0,-5.0]},
+  "ipc":   {"nombre":"Inflación España","moneda":"EUR","r":[4.0,2.7,4.0,2.6,3.2,3.7,2.7,4.2,1.4,0.8,3.0,2.4,2.9,0.3,-1.0,0.0,1.6,1.1,1.2,0.8,-0.5,6.5,5.7,3.1,2.8,2.9]}
+ },
+ "carteras": {
+  "c6040": {"nombre":"Cartera 60/40","w":{"world":60,"rf":40}},
+  "boggle":{"nombre":"Indexada 80/20 (Bogleheads)","w":{"world":80,"rf":20}},
+  "perm":  {"nombre":"Cartera Permanente","w":{"world":25,"rf":25,"gold":25,"depo":25}},
+  "allw":  {"nombre":"All Weather (aprox.)","w":{"world":30,"rf":55,"gold":15}}
+ },
+ "nota": "Datos de año natural hasta 31/12/2025. 2026 se añadirá al cerrar el año. Valores aproximados de índices de referencia: S&P 500 y MSCI World con dividendos (en dólares, convertidos a euros); Ibex 35 con ~3,5% de dividendo anual estimado; renta fija = índice agregado euro; depósito ≈ Euribor 12 meses (mínimo 0%); IPC diciembre sobre diciembre."
+}
+</script>
+
+<header>
+  <h1>Dónde invertir · comparador familiar</h1>
+  <div class="sub" id="upd"></div>
+</header>
+<nav><div class="in" id="tabs">
+  <button data-t="hoy" class="on">Hoy</button>
+  <button data-t="perfil">Mi perfil</button>
+  <button data-t="bancos">Bancos</button>
+  <button data-t="ing">Mi banco: ING</button>
+  <button data-t="ibex">Ibex 35: previsiones</button>
+  <button data-t="opciones">Todas las opciones</button>
+  <button data-t="sim">Simulador</button>
+  <button data-t="hist">Desde una fecha</button>
+  <button data-t="estr">Estrategias</button>
+  <button data-t="como">Cómo invertir (S&amp;P 500…)</button>
+  <button data-t="fondo">Productos a fondo</button>
+  <button data-t="cartera">Revisa tu cartera</button>
+  <button data-t="ganar">Ganar más</button>
+  <button data-t="seg">Mi seguimiento</button>
+  <button data-t="gente">Dónde invierte la gente</button>
+  <button data-t="guia">Guía</button>
+</div></nav>
+
+<main>
+<!-- HOY -->
+<section id="hoy" class="on">
+  <div class="grid" id="kpis"></div>
+  <div class="card" id="realidad"></div>
+  <div class="card">
+    <h3>Reglas de oro antes de invertir</h3>
+    <ol style="margin:0;padding-left:20px">
+      <li><b>Colchón primero:</b> 3–6 meses de gastos en cuenta remunerada. Eso no se invierte.</li>
+      <li><b>Plazo = riesgo:</b> dinero que necesitas en menos de 3 años → nada de bolsa.</li>
+      <li><b>Diversifica:</b> mejor un indexado mundial (1.400 empresas) que 3 acciones.</li>
+      <li><b>Comisiones bajas:</b> un 1,5% anual de diferencia se come un tercio del resultado en 25 años.</li>
+      <li><b>No reacciones a las caídas:</b> vender en pánico es como se pierde de verdad.</li>
+      <li><b>Más de 100.000 € en depósitos:</b> repártelos entre bancos para que todo esté cubierto por el FGD.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- PERFIL -->
+<section id="perfil">
+  <div class="card">
+    <h2>Test de perfil inversor</h2>
+    <p class="small">6 preguntas. El resultado es una cartera <i>orientativa</i> por tipos de activo, no una recomendación de productos concretos.</p>
+    <form id="test"></form>
+    <button class="btn" id="calc">Ver mi cartera</button>
+  </div>
+  <div class="card" id="resultado" style="display:none"></div>
+</section>
+
+<!-- BANCOS -->
+<section id="bancos">
+  <div class="card">
+    <h2>Cuentas remuneradas</h2>
+    <div class="flt">
+      <label><input type="checkbox" id="fSin"> Solo sin nómina ni condiciones</label>
+      <label><input type="checkbox" id="fEs"> Solo FGD español</label>
+    </div>
+    <div class="tw"><table id="tCuentas"></table></div>
+    <p class="small">TAE = rentabilidad anual con la capitalización incluida. «FGD» = qué fondo de garantía cubre tus primeros 100.000 €.</p>
+  </div>
+  <div class="card">
+    <h2>Depósitos a plazo fijo</h2>
+    <div class="flt">
+      <label>Plazo <select id="fPlazo" style="width:auto">
+        <option value="0">Todos</option><option value="6">Hasta 6 meses</option><option value="12">Hasta 1 año</option><option value="24">Hasta 2 años</option><option value="36">Hasta 3 años</option><option value="999">Más de 3 años</option>
+      </select></label>
+      <label><input type="checkbox" id="fEs2"> Solo FGD español</label>
+    </div>
+    <div class="tw"><table id="tDep"></table></div>
+  </div>
+  <div class="card">
+    <h2>Deuda del Estado</h2>
+    <div class="tw"><table id="tTesoro"></table></div>
+    <p class="small" id="tesProx"></p>
+  </div>
+  <div class="card">
+    <h3>¿Cuánto me dan con…?</h3>
+    <div class="grid">
+      <div class="fld"><label>Importe (€)</label><input type="number" id="cImp" value="20000" step="1000"></div>
+      <div class="fld"><label>Meses</label><input type="number" id="cMes" value="12"></div>
+    </div>
+    <div id="cRes" style="margin-top:10px"></div>
+  </div>
+</section>
+
+
+<!-- ING -->
+<section id="ing">
+  <div class="card">
+    <h2>Qué puedes hacer con tu dinero en ING</h2>
+    <p class="small">Todo lo que ofrece ING España para ahorrar e invertir, ordenado de menos a más riesgo, y cómo sacarle más rentabilidad sin cambiar de banco.</p>
+    <div class="grid" id="ingKpi"></div>
+  </div>
+  <div class="card">
+    <h3>1 · Ahorro sin riesgo</h3>
+    <div class="tw"><table id="ingAhorro"></table></div>
+    <div id="ingAhorroNota" style="margin-top:10px"></div>
+  </div>
+  <div class="card">
+    <h3>2 · Invertir en ING: las tres vías</h3>
+    <div class="tw"><table>
+      <tr><th>Vía</th><th>Qué es</th><th class="n">Coste anual</th><th>A favor</th><th>En contra</th></tr>
+      <tr><td><b>Bróker Naranja + ETFs</b></td><td>Compras tú ETFs (S&amp;P 500, MSCI World…) desde la app de ING. Más de 600 ETFs sin comisión de compra si cada compra supera un mínimo.</td><td class="n"><b>0,07–0,20%</b><br><span class="small">del ETF</span></td><td>Lo más barato dentro de ING. Mismos ETFs que en cualquier bróker.</td><td>Para no pagar comisión hay que comprar de una vez el mínimo de la gestora. Sin traspasos sin impuestos.</td></tr>
+      <tr><td><b>Fondos Naranja indexados</b><br><span class="small">S&amp;P 500, Euro Stoxx 50, Ibex 35, Nasdaq 100</span></td><td>Fondos indexados de ING (gestiona Amundi). Aportas lo que quieras cuando quieras.</td><td class="n"><b id="ingFT"></b></td><td>Cómodos, desde 1 participación, traspasables sin impuestos.</td><td>Unas 10 veces más caros que un indexado de MyInvestor o un ETF. Sin fondo mundial propio.</td></tr>
+      <tr><td><b>Carteras Naranja</b><br><span class="small">7 perfiles, de 0/100 a 100/0</span></td><td>Fondos de fondos indexados ya mezclados según tu perfil. ING rebalancea.</td><td class="n"><b id="ingCT"></b></td><td>Cero decisiones; diversificación mundial.</td><td>Más caro que un roboadvisor independiente (≈0,4–0,6% total).</td></tr>
+      <tr><td><b>Acciones sueltas</b></td><td>Más de 7.000 acciones de España, Europa y EE. UU.</td><td class="n" id="ingBC"></td><td>Acceso sencillo desde la app.</td><td>Comisión por operación más alta que brókers online.</td></tr>
+      <tr><td><b>Planes de pensiones Naranja</b></td><td>Plan S&amp;P 500, planes por fecha de jubilación (2030–2050) y nuevos planes de 2026 (MSCI World, entre otros).</td><td class="n">≈1,06–1,32%</td><td>Desgrava hasta 1.500 €/año. Traspasos desde otros bancos gratis.</td><td>Dinero bloqueado hasta la jubilación; al cobrar tributa como sueldo.</td></tr>
+    </table></div>
+    <div class="tw" style="margin-top:10px"><table>
+      <tr><th>Fondo Naranja</th><th>ISIN</th><th>Riesgo</th></tr>
+      <tr><td>Fondo Naranja Standard &amp; Poor's 500</td><td>ES0152769032</td><td>5–6/7</td></tr>
+      <tr><td>Fondo Naranja Euro Stoxx 50</td><td>ES0152771038</td><td>6/7</td></tr>
+      <tr><td>Fondo Naranja Ibex 35</td><td>ES0152741031</td><td>6/7</td></tr>
+      <tr><td>Cartera Naranja 10/90 · 30/70 · 50/50 (y otras)</td><td>ES0116356009 · ES0144085000 · ES0162294005</td><td>2–4/7</td></tr>
+    </table></div>
+  </div>
+  <div class="card">
+    <h3>¿Cuánto te cuesta la comisión? Fondo Naranja S&amp;P 500 frente a un ETF del S&amp;P 500</h3>
+    <div class="grid">
+      <div class="fld"><label>Inversión inicial (€)</label><input type="number" id="ingIni" value="10000" step="1000"></div>
+      <div class="fld"><label>Aportación mensual (€)</label><input type="number" id="ingMes" value="200" step="50"></div>
+      <div class="fld"><label>Años</label><input type="number" id="ingAnos" value="20"></div>
+      <div class="fld"><label>Rentabilidad bruta supuesta (%)</label><input type="number" id="ingRent" value="8" step="0.5"></div>
+    </div>
+    <div id="ingCalc" style="margin-top:12px"></div>
+  </div>
+  <div class="card">
+    <h3>Lo más rentable que puedes hacer siendo cliente de ING</h3>
+    <ol>
+      <li><b>Colchón (3–6 meses de gastos):</b> en la Cuenta Naranja tienes liquidez inmediata pero solo un <span id="ingN1"></span>. Si quieres más, una cuenta de otro banco al 3–3,5% (pestaña <b>Bancos</b>) puede convivir con tu nómina en ING. Muchos clientes de ING lo hacen así.</li>
+      <li><b>Dinero a 1–2 años:</b> las <b>Letras del Tesoro</b> (≈3,07% a 12 meses) pagan más que el Depósito Naranja. Se compran sin comisión en tesoro.es o en el Banco de España, aunque tu banco sea ING.</li>
+      <li><b>Largo plazo (10+ años), si quieres hacerlo todo en ING:</b> Bróker Naranja con un ETF de bolsa mundial o del S&amp;P 500 de la lista sin comisiones, comprando cada vez por encima del mínimo de la gestora (por ejemplo, una compra trimestral). Comprueba en el selector de ETFs de la app que el ETF que elijas está en la lista sin comisión.</li>
+      <li><b>Si prefieres aportar poco cada mes sin pensar:</b> el Fondo Naranja S&amp;P 500 o una Cartera Naranja funcionan, pero el coste del 1% se nota mucho a largo plazo (mira la calculadora). Fuera de ING, un indexado al 0,05–0,20% hace lo mismo.</li>
+      <li><b>Plan de pensiones:</b> solo si tributas a tipo alto en el IRPF y no vas a necesitar ese dinero.</li>
+    </ol>
+    <p class="small">Garantía: los depósitos de ING están cubiertos por el FGD de <span id="ingFGD"></span>. Los fondos y ETFs son tuyos aunque el banco quebrara.</p>
+    <ul class="src" id="ingSrc"></ul>
+  </div>
+</section>
+
+<!-- IBEX -->
+<section id="ibex">
+  <div class="grid" id="ixKpi"></div>
+  <div class="card">
+    <div class="bad"><b>Esto no es una predicción.</b> Nadie sabe qué acción va a subir o bajar. Lo que ves es el <b>precio objetivo medio de los analistas a 12 meses</b> y la diferencia con el precio actual («potencial»). Los analistas fallan a menudo y suelen ir corrigiendo su objetivo detrás del precio. Ejemplo de este año: Endesa ha subido un 42,8% y ha dejado atrás las valoraciones de los analistas; ahora su precio objetivo medio queda un 16% por debajo de la cotización.</div>
+  </div>
+  <div class="card">
+    <h2>Lo que esperan los analistas para cada valor</h2>
+    <p class="small" id="ixFecha"></p>
+    <div class="flt"><label><input type="radio" name="ixOrd" value="pot" checked> Ordenar por potencial</label><label><input type="radio" name="ixOrd" value="ytd"> Ordenar por lo que lleva en el año</label></div>
+    <div class="tw"><table id="ixTab"></table></div>
+    <p class="small" id="ixSin"></p>
+  </div>
+  <div class="card">
+    <h3>Cómo leer esta tabla</h3>
+    <ul>
+      <li><b>Potencial alto</b> suele significar que la acción ha caído mucho o que los analistas creen que el mercado la infravalora. A veces aciertan; otras veces la acción sigue cayendo y el objetivo baja.</li>
+      <li><b>Potencial negativo</b> suele aparecer en acciones que han subido muy rápido (Endesa, Iberdrola, Logista). No significa que vayan a caer, sino que el precio ya supera lo que los analistas creen que valen.</li>
+      <li>Fíjate en la columna «En 2026»: los que más potencial tienen suelen ser los que peor lo han hecho este año. El consenso tiende a esperar que vuelvan a la media.</li>
+      <li>Para invertir en el Ibex sin elegir acciones: un fondo o ETF del Ibex 35 (pestaña <b>Productos a fondo</b>) o, mejor, dentro de un indexado mundial.</li>
+    </ul>
+    <ul class="src" id="ixSrc"></ul>
+  </div>
+</section>
+<!-- OPCIONES -->
+<section id="opciones">
+  <div class="card">
+    <h2>Riesgo frente a rentabilidad</h2>
+    <p class="small">Cada punto es un tipo de inversión. Cuanto más a la derecha, más sube y baja (volatilidad); cuanto más arriba, más rentabilidad esperable a largo plazo.</p>
+    <canvas id="scatter"></canvas>
+  </div>
+  <div class="card">
+    <h2>Todas las opciones, de más segura a más arriesgada</h2>
+    <div class="tw"><table id="tAct"></table></div>
+  </div>
+</section>
+
+<!-- SIMULADOR -->
+<section id="sim">
+  <div class="card">
+    <h2>Simulador</h2>
+    <div class="grid">
+      <div class="fld"><label>Capital inicial (€)</label><input type="number" id="sIni" value="10000" step="1000"></div>
+      <div class="fld"><label>Aportación mensual (€)</label><input type="number" id="sMes" value="200" step="50"></div>
+      <div class="fld"><label>Años</label><input type="number" id="sAnos" value="15" min="1" max="50"></div>
+      <div class="fld"><label>Cartera</label><select id="sCart"></select></div>
+      <div class="fld"><label>Inflación media supuesta (%)</label><input type="number" id="sInf" value="2.5" step="0.1"></div>
+      <div class="fld"><label>Comisiones anuales (%)</label><input type="number" id="sCom" value="0.2" step="0.1"></div>
+    </div>
+    <p class="small">Simula 2.000 escenarios posibles con la rentabilidad y volatilidad históricas de cada activo. No es una predicción.</p>
+  </div>
+  <div class="grid" id="sKpi"></div>
+  <div class="card"><canvas id="simChart"></canvas></div>
+  <div class="card" id="sTexto"></div>
+</section>
+
+<!-- HISTÓRICO -->
+<section id="hist">
+  <div class="card">
+    <h2>¿Cuánto habría ganado desde…?</h2>
+    <p class="small">Elige un año de inicio y mira qué habría pasado con tu dinero en cada opción, año a año, con datos reales (en euros, con dividendos y antes de impuestos).</p>
+    <div class="grid">
+      <div class="fld"><label>Desde enero de</label><select id="hDesde"></select></div>
+      <div class="fld"><label>Hasta diciembre de</label><select id="hHasta"></select></div>
+      <div class="fld"><label>Importe inicial (€)</label><input type="number" id="hIni" value="10000" step="1000"></div>
+      <div class="fld"><label>Aportación mensual (€)</label><input type="number" id="hMes" value="0" step="50"></div>
+    </div>
+  </div>
+  <div class="card"><canvas id="hChart"></canvas>
+    <div class="flt" id="hSel" style="margin-top:10px"></div></div>
+  <div class="card"><div class="tw"><table id="hTab"></table></div>
+    <p class="small" id="hNota"></p></div>
+</section>
+
+<!-- ESTRATEGIAS -->
+<section id="estr">
+  <div class="card">
+    <h2>Estrategias que más se usan (y funcionan)</h2>
+    <p class="small">Las más extendidas entre inversores particulares y recomendadas por la literatura financiera. Las que tienen botón se pueden probar con datos reales.</p>
+  </div>
+  <div id="eList"></div>
+</section>
+
+<!-- CÓMO INVERTIR -->
+<section id="como">
+  <div class="card">
+    <h2>Cómo invertir en el S&amp;P 500 (y en la bolsa mundial) desde España</h2>
+    <div class="note"><b>Importante:</b> desde la UE un particular no puede comprar los ETFs estadounidenses famosos (VOO, SPY, IVV) porque no tienen el folleto europeo obligatorio (KID). Hay que usar versiones europeas, que llevan <b>«UCITS»</b> en el nombre. Replican lo mismo.</div>
+    <h3 style="margin-top:14px">Opción A · Fondo indexado (lo más recomendable en España)</h3>
+    <p>Ventaja clave: puedes <b>traspasar</b> a otro fondo sin pagar impuestos hasta que retires el dinero. Ideal para aportar cada mes.</p>
+    <div class="tw"><table>
+      <tr><th>Fondo</th><th>ISIN</th><th class="n">Coste anual</th><th>Qué replica</th></tr>
+      <tr><td>Vanguard U.S. 500 Stock Index EUR Acc</td><td>IE0032126645</td><td class="n">0,10%</td><td>S&amp;P 500</td></tr>
+      <tr><td>Fidelity S&amp;P 500 Index P-EUR Acc</td><td>IE00BYX5MX67</td><td class="n">0,10–0,12%</td><td>S&amp;P 500</td></tr>
+      <tr><td>Vanguard Global Stock Index</td><td>IE00B03HCZ61</td><td class="n">0,18%</td><td>MSCI World (mundo desarrollado)</td></tr>
+      <tr><td>Vanguard Global Bond Index (hedged)</td><td>IE00B18GC888</td><td class="n">≈0,15%</td><td>Renta fija global cubierta en euros</td></tr>
+    </table></div>
+    <h3 style="margin-top:14px">Opción B · ETF UCITS (cotiza como una acción)</h3>
+    <p>Más barato y se compra al instante, pero cada vez que vendes pagas impuestos (no hay traspasos).</p>
+    <div class="tw"><table>
+      <tr><th>ETF</th><th>Ticker</th><th>ISIN</th><th class="n">Coste anual</th></tr>
+      <tr><td>iShares Core S&amp;P 500 UCITS (Acc)</td><td>SXR8 / CSPX</td><td>IE00B5BMR087</td><td class="n">0,07%</td></tr>
+      <tr><td>Vanguard S&amp;P 500 UCITS (Acc)</td><td>VUAA</td><td>IE00BFMXXD54</td><td class="n">0,07%</td></tr>
+      <tr><td>Invesco S&amp;P 500 UCITS (Acc)</td><td>P500 / SPXS</td><td>IE00B3YCGJ38</td><td class="n">0,05%</td></tr>
+      <tr><td>Xtrackers MSCI USA UCITS 1C</td><td>XD9U</td><td>IE00BJ0KDR00</td><td class="n">0,03%</td></tr>
+      <tr><td>iShares Core MSCI World UCITS (Acc)</td><td>IWDA / EUNL</td><td>IE00B4L5Y983</td><td class="n">0,20%</td></tr>
+      <tr><td>Vanguard FTSE All-World UCITS (Acc)</td><td>VWCE</td><td>IE00BK5BQT80</td><td class="n">≈0,19%</td></tr>
+    </table></div>
+    <p class="small">«Acc» = acumulación: reinvierte los dividendos y no tributas por ellos cada año. Suele ser la mejor opción para largo plazo.</p>
+  </div>
+
+  <div class="card">
+    <h2>Dónde abrir la cuenta</h2>
+    <div class="tw"><table>
+      <tr><th>Plataforma</th><th>País / supervisor</th><th>Bueno para</th><th>Fiscalidad</th></tr>
+      <tr><td><b>MyInvestor</b></td><td>España · CNMV/BdE</td><td>Fondos indexados desde 1 € (Vanguard, Fidelity, iShares), sin comisión de custodia</td><td>Te hace las retenciones e informe fiscal</td></tr>
+      <tr><td><b>Indexa Capital</b></td><td>España · CNMV</td><td>Gestión automática (roboadvisor): eliges perfil y ellos invierten y rebalancean</td><td>Retenciones e informe fiscal</td></tr>
+      <tr><td><b>Openbank / Renta 4 / Self Bank</b></td><td>España</td><td>Fondos indexados y ETFs desde un banco o bróker español</td><td>Retenciones e informe fiscal</td></tr>
+      <tr><td><b>Trade Republic</b></td><td>Alemania · BaFin</td><td>Planes de ahorro automáticos en ETFs desde 1 €, comisión mínima</td><td>Revisa si te da informe fiscal español; si no, lo declaras tú</td></tr>
+      <tr><td><b>Scalable Capital</b></td><td>Alemania · BaFin</td><td>Planes de ahorro en ETFs, tarifa plana</td><td>Declaras tú</td></tr>
+      <tr><td><b>Interactive Brokers</b></td><td>Irlanda · Banco Central de Irlanda</td><td>Acceso a casi todos los mercados del mundo, muy barato, más complejo</td><td>Declaras tú</td></tr>
+      <tr><td><b>DEGIRO</b></td><td>Países Bajos/Alemania</td><td>ETFs y acciones baratos</td><td>Declaras tú</td></tr>
+      <tr><td><b>XTB</b></td><td>Polonia · KNF (sucursal en España)</td><td>ETFs y acciones sin comisión hasta cierto volumen</td><td>Revisa condiciones</td></tr>
+    </table></div>
+    <p class="small">Tu dinero en un bróker no está «en el bróker»: los fondos y ETFs están a tu nombre y separados de su patrimonio. Si el bróker quiebra, se recuperan. El efectivo sin invertir sí depende del fondo de garantía de su país.</p>
+  </div>
+
+  <div class="card">
+    <h2>Lo que hay que saber si usas plataformas extranjeras</h2>
+    <ul>
+      <li><b>Modelo 720:</b> si a 31 de diciembre tienes más de 50.000 € en cuentas o valores en el extranjero (por bloque), hay que presentarlo. Es informativo, no pagas más, pero olvidarlo tiene sanción.</li>
+      <li><b>Modelo 721:</b> lo mismo para criptomonedas custodiadas fuera de España (más de 50.000 €).</li>
+      <li><b>Sin retenciones:</b> un bróker extranjero normalmente no te retiene impuestos; en la renta tienes que declarar ventas y dividendos tú.</li>
+      <li><b>Acciones de EE. UU. directas:</b> rellena el formulario W-8BEN para que te retengan solo el 15% en dividendos (y desgrávalo en la renta como doble imposición).</li>
+      <li><b>Riesgo divisa:</b> el S&amp;P 500 está en dólares. En 2025 el índice subió un 16–18% en dólares, pero el euro se revalorizó un 13% y en euros la ganancia fue mucho menor.</li>
+      <li><b>Concentración:</b> en el S&amp;P 500 las 10 mayores empresas pesan alrededor de un tercio. El MSCI World o el FTSE All-World diversifican más.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Paso a paso para empezar</h2>
+    <ol>
+      <li>Ten tu <b>colchón de emergencia</b> (3–6 meses de gastos) en una cuenta remunerada.</li>
+      <li>Haz el <b>test de perfil</b> para decidir cuánto va a bolsa y cuánto a renta fija.</li>
+      <li>Abre cuenta en <b>una</b> plataforma (con fondos indexados, mejor una española por la fiscalidad sencilla).</li>
+      <li>Elige <b>1–3 fondos</b>: bolsa mundial (o S&amp;P 500) + renta fija global. No hace falta más.</li>
+      <li>Programa una <b>aportación automática mensual</b>.</li>
+      <li>Una vez al año, <b>rebalancea</b> a tus porcentajes. El resto del año, no toques nada.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- PRODUCTOS A FONDO -->
+<section id="fondo">
+  <div class="flt" id="fNav">
+    <label data-go="pIdx">Fondos indexados</label><label data-go="pEtf">ETFs</label><label data-go="pAcc">Acciones</label><label data-go="pBon">Bonos</label><label data-go="pDiv">Diversificación</label>
+  </div>
+
+  <div class="card" id="pIdx">
+    <h2>Fondos indexados: el catálogo</h2>
+    <p>Un fondo indexado compra <b>todas</b> las empresas de un índice en su proporción, con costes muy bajos (0,05–0,25% al año frente al 1,5–2% de un fondo de banco). En España además se pueden traspasar sin pagar impuestos.</p>
+    <div class="tw"><table>
+      <tr><th>Para qué</th><th>Fondo</th><th>ISIN</th><th class="n">Coste</th></tr>
+      <tr><td rowspan="4"><b>Bolsa mundial</b><br><span class="small">≈1.300–1.400 empresas de 23 países desarrollados</span></td><td>iShares Developed World Index (clase S)</td><td>IE000ZYRH0Q7</td><td class="n">0,06%</td></tr>
+      <tr><td>iShares Developed World Index (clase D)</td><td>IE00BD0NCM55</td><td class="n">0,12%</td></tr>
+      <tr><td>Fidelity MSCI World Index</td><td>IE00BYX5P602</td><td class="n">0,12%</td></tr>
+      <tr><td>Vanguard Global Stock Index</td><td>IE00B03HCZ61</td><td class="n">0,18%</td></tr>
+      <tr><td rowspan="3"><b>EE. UU. / S&amp;P 500</b></td><td>iShares US Index (clase S)</td><td>IE000N4ZYX28</td><td class="n">0,05%</td></tr>
+      <tr><td>Fidelity S&amp;P 500 Index</td><td>IE00BYX5MX67</td><td class="n">0,06–0,10%</td></tr>
+      <tr><td>Vanguard U.S. 500 Stock Index</td><td>IE0032126645</td><td class="n">0,10%</td></tr>
+      <tr><td><b>Emergentes</b><br><span class="small">China, India, Taiwán, Brasil, Corea…</span></td><td>Vanguard Emerging Markets Stock Index</td><td>IE0031786142</td><td class="n">0,23%</td></tr>
+      <tr><td rowspan="2"><b>Renta fija</b></td><td>Vanguard Global Bond Index (cubierto a euros)</td><td>IE00B18GC888</td><td class="n">≈0,15%</td></tr>
+      <tr><td>iShares Global Aggregate 1-5 años (cubierto, clase S)</td><td>IE0004ZP1ND3</td><td class="n">0,10%</td></tr>
+    </table></div>
+    <p class="small">Las clases «S» y algunas otras baratas solo están en ciertas plataformas (sobre todo MyInvestor). Comprueba siempre el ISIN y el coste (TER) en la ficha antes de comprar.</p>
+    <h3>Combinaciones típicas con 1–3 fondos</h3>
+    <div class="grid">
+      <div class="good"><b>Lo más simple</b><br>100% bolsa mundial. Un solo fondo, máximo crecimiento, caídas fuertes.</div>
+      <div class="good"><b>Clásica de 3 fondos</b><br>70% mundial · 15% emergentes · 15% renta fija.</div>
+      <div class="good"><b>Prudente</b><br>50% mundial · 50% renta fija global cubierta.</div>
+    </div>
+    <p class="small" style="margin-top:8px">¿Emergentes sí o no? Desde 2000 los emergentes han rentado más que el mundo desarrollado (≈9,1% frente a ≈7,5% anual), pero en los últimos 10 años bastante menos (≈9,1% frente a ≈12,8%). Por eso muchos ponen un 10–15% como complemento.</p>
+  </div>
+
+
+  <div class="card" id="pEtf">
+    <h2>ETFs: los más importantes</h2>
+    <p>Los que concentran más dinero y más compras en Europa. Son la base de casi todas las carteras indexadas. Todos son UCITS (los que se pueden comprar desde España).</p>
+    <div class="tw"><table>
+      <tr><th>ETF</th><th>Ticker</th><th>ISIN</th><th class="n">Coste</th><th>Por qué importa</th></tr>
+      <tr><td><b>iShares Core S&amp;P 500</b></td><td>CSPX / SXR8</td><td>IE00B5BMR087</td><td class="n">0,07%</td><td>El ETF más grande de Europa (≈134.000 M€)</td></tr>
+      <tr><td><b>iShares Core MSCI World</b></td><td>IWDA / EUNL</td><td>IE00B4L5Y983</td><td class="n">0,20%</td><td>El clásico de bolsa mundial desarrollada (≈124.000 M€)</td></tr>
+      <tr><td><b>Vanguard FTSE All-World</b></td><td>VWCE (acc) / VWRL (dist)</td><td>IE00BK5BQT80</td><td class="n">≈0,14–0,19%</td><td>El más comprado de Europa en 2026; 3.700 empresas, incluye emergentes</td></tr>
+      <tr><td><b>Vanguard S&amp;P 500</b></td><td>VUAA (acc) / VUSA (dist)</td><td>IE00BFMXXD54</td><td class="n">0,07%</td><td>Alternativa al de iShares</td></tr>
+      <tr><td><b>iShares MSCI ACWI</b></td><td>IUSQ / ISAC</td><td>IE00B6R52259</td><td class="n">0,20%</td><td>Mundo desarrollado + emergentes en uno</td></tr>
+      <tr><td><b>iShares Nasdaq 100</b></td><td>CNDX / SXRV</td><td>IE00B53SZB19</td><td class="n">0,30–0,33%</td><td>Las 100 grandes tecnológicas y no financieras de EE. UU.</td></tr>
+      <tr><td><b>iShares Core MSCI EM IMI</b></td><td>EIMI</td><td>IE00BKM4GZ66</td><td class="n">0,18%</td><td>El de referencia para emergentes</td></tr>
+      <tr><td><b>iShares Core MSCI Europe</b></td><td>IMEU / SMEA</td><td>IE00B4K48X80</td><td class="n">0,12%</td><td>Bolsa europea amplia</td></tr>
+      <tr><td><b>iShares Core EURO STOXX 50</b></td><td>SXRT / CSX5</td><td>IE00B53L3W79</td><td class="n">0,10%</td><td>Las 50 mayores de la zona euro</td></tr>
+      <tr><td><b>Xtrackers Spain Equity</b></td><td>XMES</td><td>—</td><td class="n">0,30%</td><td>Bolsa española</td></tr>
+      <tr><td><b>iShares Core Global Aggregate Bond (EUR hedged)</b></td><td>AGGH</td><td>IE00BDBRDM35</td><td class="n">0,10%</td><td>Renta fija mundial cubierta en euros</td></tr>
+      <tr><td><b>Xtrackers EUR Overnight Rate Swap</b></td><td>XEON</td><td>LU0290358497</td><td class="n">0,10%</td><td>«Monetario» en ETF: rinde lo que el tipo del BCE</td></tr>
+      <tr><td><b>iShares Physical Gold ETC</b></td><td>SGLN / PPFB</td><td>IE00B4ND3602</td><td class="n">0,12%</td><td>Oro físico, sin almacenarlo tú</td></tr>
+    </table></div>
+    <p class="small">«Acc» reinvierte dividendos (mejor fiscalmente para largo plazo); «Dist» los paga. Con ETFs no hay traspasos sin impuestos, a diferencia de los fondos indexados.</p>
+
+    <h2 style="margin-top:18px">ETFs: los más rentables de los últimos 3 años</h2>
+    <div class="bad"><b>Ojo antes de mirar esta tabla:</b> son apuestas sectoriales muy concentradas. Lo que más ha subido en 3 años rara vez repite: en España, el activo ganador de un año casi nunca lo es al siguiente. Si entras, que sea como «satélite» (5–10%), nunca como núcleo.</div>
+    <div class="tw" style="margin-top:10px"><table>
+      <tr><th>ETF</th><th>Ticker</th><th>ISIN</th><th class="n">Coste</th><th class="n">Rent. 3 años</th><th>Tema</th></tr>
+      <tr><td>Amundi MSCI Semiconductors</td><td>LSMC</td><td>LU1900066033</td><td class="n">0,35%</td><td class="n"><b>≈ +330%</b></td><td>Chips (Nvidia, TSMC, Broadcom…) · volatilidad ≈28%</td></tr>
+      <tr><td>iShares Gold Producers</td><td>IAUP / SPGP</td><td>—</td><td class="n">0,55%</td><td class="n"><b>≈ +250%</b></td><td>Mineras de oro</td></tr>
+      <tr><td>Xtrackers Artificial Intelligence &amp; Big Data</td><td>XAIX</td><td>IE00BGV5VN51</td><td class="n">0,35%</td><td class="n"><b>≈ +159%</b></td><td>Inteligencia artificial</td></tr>
+      <tr><td>L&amp;G Artificial Intelligence</td><td>XMLD</td><td>IE00BK5BCD43</td><td class="n">0,49%</td><td class="n"><b>≈ +145%</b></td><td>Inteligencia artificial</td></tr>
+      <tr><td>VanEck Gold Miners</td><td>G2X</td><td>—</td><td class="n">0,53%</td><td class="n"><b>≈ +137%</b></td><td>Mineras de oro</td></tr>
+      <tr><td>iShares S&amp;P 500 Information Technology</td><td>QDVE</td><td>—</td><td class="n">0,15%</td><td class="n"><b>≈ +122%</b></td><td>Tecnológicas de EE. UU. · volatilidad ≈19%</td></tr>
+      <tr><td>iShares Physical Gold ETC</td><td>PPFB / SGLN</td><td>IE00B4ND3602</td><td class="n">0,12%</td><td class="n"><b>≈ +103%</b></td><td>Oro físico</td></tr>
+      <tr><td>iShares MSCI EM ex-China</td><td>—</td><td>—</td><td class="n">0,18%</td><td class="n"><b>≈ +103%</b></td><td>Emergentes sin China (India, Taiwán, Corea…)</td></tr>
+      <tr><td>iShares Nasdaq 100</td><td>CNDX</td><td>IE00B53SZB19</td><td class="n">0,33%</td><td class="n"><b>≈ +98%</b> (USD)</td><td>Grandes tecnológicas</td></tr>
+      <tr><td><i>Referencia: iShares Core S&amp;P 500</i></td><td>SXR8</td><td>IE00B5BMR087</td><td class="n">0,07%</td><td class="n">≈ +70%</td><td>Para comparar</td></tr>
+    </table></div>
+    <p class="small">Rentabilidades acumuladas a 3 años según Rankia y TradingView (datos de 2026); cambian cada día. «—» = verifica el ISIN en justETF o en tu bróker antes de comprar.</p>
+  </div>
+  <div class="card" id="pAcc">
+    <h2>Acciones sueltas</h2>
+    <p>Comprar acciones de empresas concretas (Santander, Inditex, Apple…) a través de un bróker. Es lo más popular entre los inversores particulares españoles, pero también lo más arriesgado.</p>
+    <div class="grid">
+      <div class="kpi card"><div class="l">Peso de las acciones en carteras de clientes de DEGIRO España</div><div class="v">71,8%</div><div class="s">frente a 20,7% en ETFs (marzo 2026)</div></div>
+      <div class="kpi card"><div class="l">Sector favorito</div><div class="v">Tecnología</div><div class="s">30% de lo invertido en acciones</div></div>
+    </div>
+    <p><b>Las que más tiene la gente en España:</b> Nvidia, Amazon, Microsoft, Tesla, Alphabet (Google), Meta y Apple (eToro, 3.er trimestre de 2026). Entre las españolas, las más negociadas en 2025 fueron Santander, Repsol, Grifols, IAG, Indra y Solaria (DEGIRO).</p>
+    <h3>Antes de comprar acciones sueltas</h3>
+    <ul>
+      <li><b>Una empresa puede valer cero.</b> Banco Popular (2017), Abengoa o Pescanova lo demostraron. Un índice nunca va a cero.</li>
+      <li><b>Hacen falta 20–30 empresas o más</b> de distintos sectores y países para tener una diversificación razonable.</li>
+      <li><b>La mayoría no bate al índice:</b> a 15 años, alrededor de 9 de cada 10 fondos de gestión activa en EE. UU. quedan por detrás del S&amp;P 500, y eso que los gestan profesionales.</li>
+      <li><b>Qué mira la gente:</b> PER (precio entre beneficio, cuántos años de beneficio pagas), deuda, crecimiento de ventas y beneficios, dividendo y si es sostenible.</li>
+      <li><b>Comisiones:</b> por operación (desde 0 € hasta 0,1% con mínimos) y cambio de divisa en acciones de EE. UU.</li>
+      <li><b>Impuestos:</b> los dividendos tienen una retención del 19%. Las pérdidas compensan ganancias durante 4 años. Si vendes con pérdidas y recompras la misma acción en 2 meses, Hacienda no te deja aplicar esa pérdida.</li>
+    </ul>
+    <div class="note">Uso razonable: como «satélite» (10–20% del total) junto a un núcleo de fondos indexados. Ver «Núcleo y satélite» en Estrategias.</div>
+  </div>
+
+  <div class="card" id="pBon">
+    <h2>Bonos y renta fija</h2>
+    <p>Prestas dinero a un Estado o a una empresa y te devuelve el capital más unos intereses (cupón). Los tipos actuales del Tesoro están en la pestaña <b>Bancos</b>.</p>
+    <div class="tw"><table>
+      <tr><th>Tipo</th><th>Plazo</th><th>Riesgo</th><th>Notas</th></tr>
+      <tr><td>Letras del Tesoro</td><td>3–12 meses</td><td>Muy bajo</td><td>Sin cupón: compras más barato y cobras 1.000 € al vencer</td></tr>
+      <tr><td>Bonos del Estado</td><td>3–5 años</td><td>Bajo</td><td>Cupón anual fijo. España: calificación A (S&amp;P A+, Moody's A3)</td></tr>
+      <tr><td>Obligaciones del Estado</td><td>10–50 años</td><td>Bajo si aguantas; medio si vendes antes</td><td>Pagan más, pero su precio se mueve mucho con los tipos</td></tr>
+      <tr><td>Bonos de empresas (grado de inversión)</td><td>2–10 años</td><td>Bajo–medio</td><td>Algo más de interés que el Estado</td></tr>
+      <tr><td>Bonos «high yield»</td><td>Varios</td><td>Alto</td><td>Empresas con más riesgo de impago. Mejor en fondo diversificado</td></tr>
+    </table></div>
+    <h3>La regla clave: tipos y precio van al revés</h3>
+    <p>Si los tipos suben un 1%, un bono a unos 10 años pierde alrededor de un 8–10% de valor en el mercado (si lo mantienes hasta vencer, cobras lo pactado igualmente). Por eso la renta fija cayó tanto en 2022.</p>
+    <h3>Cómo comprarlos</h3>
+    <ul>
+      <li><b>Sin comisiones:</b> en las subastas del Tesoro, desde tesoro.es o el Banco de España (Cuentas Directas), con Cl@ve o certificado digital. Mínimo 1.000 €.</li>
+      <li><b>A través de banco o bróker</b> (Renta 4, Self Bank, Interactive Brokers, Aurigabonos…): más cómodo, con comisión. También permiten comprar en el mercado secundario y bonos de empresas.</li>
+      <li><b>En fondo de renta fija:</b> lo más diversificado; no tiene fecha de vencimiento, así que su valor siempre fluctúa.</li>
+    </ul>
+    <p class="small">Dato curioso: apenas un 1% del ahorro de los hogares españoles está en renta fija comprada directamente.</p>
+  </div>
+
+  <div class="card" id="pDiv">
+    <h2>Diversificación: no poner todos los huevos en la misma cesta</h2>
+    <div class="grid">
+      <div class="good"><b>1. Por tipo de activo</b><br>Bolsa, renta fija, liquidez y algo de oro reaccionan distinto a cada crisis.</div>
+      <div class="good"><b>2. Por países</b><br>España es menos del 1% de la bolsa mundial. Un indexado mundial ya reparte entre 23 países.</div>
+      <div class="good"><b>3. Por empresas y sectores</b><br>Un fondo con 1.400 empresas frente a 3 acciones.</div>
+      <div class="good"><b>4. Por divisa</b><br>Parte en euros y parte en dólares y otras monedas.</div>
+      <div class="good"><b>5. En el tiempo</b><br>Aportar cada mes evita entrar todo en el peor momento.</div>
+      <div class="good"><b>6. Por entidad</b><br>Máximo 100.000 € por banco en depósitos, por la garantía del FGD.</div>
+    </div>
+    <h3 style="margin-top:14px">Así se comportaron en las peores crisis (en euros)</h3>
+    <div class="tw"><table id="tCrisis"></table></div>
+    <p class="small">Fíjate: en 2008 la renta fija y el oro subieron mientras la bolsa se hundía. En 2022 cayeron bolsa y bonos a la vez; ahí solo protegieron la liquidez y el oro. Ningún activo protege siempre: por eso se combinan.</p>
+    <p><button class="btn" onclick="document.querySelector('#tabs button[data-t=cartera]').click()">Revisar mi cartera</button></p>
+  </div>
+</section>
+
+<!-- REVISA TU CARTERA -->
+<section id="cartera">
+  <div class="card">
+    <h2>¿Está bien diversificado tu dinero?</h2>
+    <p class="small">Pon cuánto tienes en cada cosa (aproximado). Los datos solo se guardan en tu navegador.</p>
+    <div class="grid" id="mcIn"></div>
+    <div class="grid" style="margin-top:10px">
+      <div class="fld"><label>Gastos mensuales de tu casa (€)</label><input type="number" id="mcGastos" value="1500" step="100"></div>
+      <div class="fld"><label>Lo máximo que tienes en un solo banco (€)</label><input type="number" id="mcBanco" value="0" step="1000"></div>
+      <div class="fld"><label>Nº de empresas distintas en acciones sueltas</label><input type="number" id="mcNum" value="0"></div>
+      <div class="fld"><label>Lo que más pesa una sola acción (€)</label><input type="number" id="mcMax" value="0" step="500"></div>
+    </div>
+  </div>
+  <div class="card" id="mcOut"></div>
+</section>
+
+
+<!-- GANAR MÁS -->
+<section id="ganar">
+  <div class="flt" id="gNav"><label data-go="gFis">Fin de año: impuestos</label><label data-go="gBon">Regalos por nómina</label><label data-go="gObj">Objetivos</label><label data-go="gHip">¿Amortizar o invertir?</label><label data-go="gGas">Recortar gastos</label></div>
+
+  <div class="card" id="gFis">
+    <h2>Antes del 31 de diciembre: pagar menos en la Renta</h2>
+    <p>Lo que hagas hasta el 31/12/2026 cuenta para la declaración que presentarás en primavera de 2027.</p>
+    <div class="grid">
+      <div class="card"><h3>1 · Compensar ganancias con pérdidas</h3>
+        <div class="fld"><label>Ganancias que ya has realizado en 2026 (ventas con beneficio) (€)</label><input type="number" id="fG" value="3000" step="100"></div>
+        <div class="fld" style="margin-top:8px"><label>Pérdidas latentes que tienes ahora (inversiones que valen menos de lo que pagaste) (€)</label><input type="number" id="fP" value="1500" step="100"></div>
+        <div id="fRes1" style="margin-top:10px"></div>
+      </div>
+      <div class="card"><h3>2 · Aportar al plan de pensiones</h3>
+        <div class="fld"><label>Tu base imponible general aproximada (sueldo bruto menos Seg. Social) (€)</label><input type="number" id="fB" value="30000" step="1000"></div>
+        <div class="fld" style="margin-top:8px"><label>Lo que aportarías al plan antes del 31/12 (€)</label><input type="number" id="fA" value="1500" step="100"></div>
+        <div id="fRes2" style="margin-top:10px"></div>
+      </div>
+    </div>
+    <h3>Reglas que conviene saber</h3>
+    <ul>
+      <li><b>Regla de los 2 meses:</b> si vendes con pérdidas y vuelves a comprar el mismo valor en los 2 meses anteriores o posteriores, Hacienda no te deja usar esa pérdida todavía. Para no salirte del mercado, puedes comprar algo parecido pero distinto (otro fondo u otro ETF).</li>
+      <li><b>Pérdidas de años anteriores:</b> se pueden compensar durante 4 años. Las de 2022 caducan este año: si tienes alguna pendiente, materializar ganancias antes del 31/12 evita perderla.</li>
+      <li><b>Compensación cruzada:</b> pérdidas de ventas pueden restar hasta un 25% de los intereses y dividendos (y al revés).</li>
+      <li><b>Tramo bajo:</b> los primeros 6.000 € de ganancias tributan al 19%. Si te acercas, puede compensar repartir ventas entre 2026 y 2027.</li>
+      <li><b>Fondos:</b> si solo quieres cambiar de fondo, hazlo por traspaso: no tributas.</li>
+      <li><b>Jubilados en 2024 con plan de pensiones:</b> 2026 es el último año para rescatar con la reducción del 40% sobre aportaciones anteriores a 2007.</li>
+      <li><b>Plan de pensiones:</b> el límite general de aportación desgravable en planes individuales es de 1.500 € al año (más si tu empresa aporta a un plan de empleo). No es un regalo: al rescatar tributará como sueldo, así que compensa sobre todo si hoy tributas a tipo alto.</li>
+    </ul>
+    <p class="small">Cálculo orientativo con la escala general estatal + autonómica media; tu comunidad puede variar unos puntos. Para casos con importes altos, consulta con un asesor fiscal.</p>
+  </div>
+
+  <div class="card" id="gBon">
+    <h2>Bancos que pagan por llevarles la nómina</h2>
+    <p>Como eres cliente de ING, los regalos de ING (solo para nuevos clientes) no te sirven; los de otros bancos sí, si cambias la nómina. Ordenados por importe máximo:</p>
+    <div class="tw"><table id="tBon"></table></div>
+    <div class="note" style="margin-top:10px"><b>Antes de lanzarte:</b> el regalo tributa (te retienen un 19%); si no cumples la permanencia, normalmente lo devuelves en proporción; y muchos exigen recibos, tarjeta o un saldo mínimo. Lo que más rinde suele ser una oferta sin muchas vinculaciones que puedas mantener sin esfuerzo. Mover la nómina no te obliga a dejar ING: puedes seguir usando la Cuenta Naranja y el Bróker.</div>
+    <ul class="src" id="bonSrc"></ul>
+  </div>
+
+  <div class="card" id="gObj">
+    <h2>Calculadora de objetivos</h2>
+    <div class="grid">
+      <div class="fld"><label>¿Para qué?</label><input type="text" id="oQue" value="Entrada de un piso"></div>
+      <div class="fld"><label>Cantidad que necesitas (€)</label><input type="number" id="oObj" value="30000" step="1000"></div>
+      <div class="fld"><label>¿En cuántos años?</label><input type="number" id="oAn" value="5" min="1"></div>
+      <div class="fld"><label>Lo que ya tienes ahorrado para esto (€)</label><input type="number" id="oYa" value="5000" step="500"></div>
+    </div>
+    <div id="oRes" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card" id="gHip">
+    <h2>¿Amortizar hipoteca o invertir?</h2>
+    <div class="grid">
+      <div class="fld"><label>Dinero extra disponible (€)</label><input type="number" id="hX" value="10000" step="1000"></div>
+      <div class="fld"><label>Tipo de interés de tu hipoteca (%)</label><input type="number" id="hT" value="2.5" step="0.1"></div>
+      <div class="fld"><label>Años que le quedan</label><input type="number" id="hA" value="20"></div>
+      <div class="fld"><label>Rentabilidad esperada de la inversión (%)</label><input type="number" id="hR" value="6" step="0.5"></div>
+    </div>
+    <div id="hRes" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card" id="gGas">
+    <h2>Recortar gastos fijos</h2>
+    <p class="small">Pon lo que pagas al mes y lo que podrías pagar tras comparar. Abajo verás lo que supone ese ahorro si lo inviertes.</p>
+    <div class="tw"><table id="tGas"></table></div>
+    <div id="gasRes" style="margin-top:12px"></div>
+    <h3>Dónde suele estar el ahorro</h3>
+    <ul>
+      <li><b>Luz y gas:</b> compara tu tarifa con el comparador oficial de la CNMC (comparador.cnmc.gob.es) y ajusta la potencia contratada si te sobra.</li>
+      <li><b>Seguros (coche, hogar, vida):</b> pide precio a 2–3 aseguradoras un mes antes de la renovación; muchas suben el precio cada año al cliente que no se mueve.</li>
+      <li><b>Móvil e internet:</b> las ofertas de captación suelen ser mucho más baratas que lo que pagan los clientes antiguos; llamar para negociar o portar funciona.</li>
+      <li><b>Comisiones bancarias:</b> con ING ya no deberías pagar ninguna; revisa otras cuentas o tarjetas antiguas.</li>
+      <li><b>Suscripciones:</b> revisa el extracto de los últimos 3 meses y da de baja lo que no uses.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- MI SEGUIMIENTO -->
+<section id="seg">
+  <div class="card">
+    <h2>Mi seguimiento</h2>
+    <p class="small">Apunta lo que tienes de verdad. Para las acciones del Ibex el precio se rellena solo con el último dato (se actualiza a diario); para el resto, escribe el precio actual cuando quieras. Todo se guarda solo en tu navegador.</p>
+    <div class="tw"><table id="sTab"></table></div>
+    <p style="margin-top:10px"><button class="btn" id="sAdd">+ Añadir inversión</button></p>
+    <datalist id="sIbexList"></datalist>
+  </div>
+  <div class="card" id="sOut"></div>
+</section>
+<!-- GENTE -->
+<section id="gente">
+  <div class="card">
+    <h2>Dónde invierte la gente en España</h2>
+    <div id="gHog" class="good"></div>
+    <h3 style="margin-top:14px">Fondos de inversión (Inverco)</h3>
+    <div class="grid" id="gKpi"></div>
+    <ul id="gFlu"></ul>
+    <p class="note">Que mucha gente invierta en algo no lo hace mejor para ti. La renta fija capta mucho dinero porque mucha gente busca seguridad, no porque sea lo más rentable a largo plazo.</p>
+  </div>
+</section>
+
+<!-- GUÍA -->
+<section id="guia">
+  <div class="card">
+    <h2>Impuestos del ahorro (IRPF)</h2>
+    <p>Intereses, dividendos y ganancias al vender tributan en la base del ahorro:</p>
+    <table><tr><th>Tramo de ganancias</th><th class="n">Tipo</th></tr>
+      <tr><td>Hasta 6.000 €</td><td class="n">19%</td></tr>
+      <tr><td>6.000 – 50.000 €</td><td class="n">21%</td></tr>
+      <tr><td>50.000 – 200.000 €</td><td class="n">23%</td></tr>
+      <tr><td>200.000 – 300.000 €</td><td class="n">27%</td></tr>
+      <tr><td>Más de 300.000 €</td><td class="n">30%</td></tr>
+    </table>
+    <p class="small">Ventaja de los fondos de inversión: puedes pasar el dinero de un fondo a otro (traspaso) sin pagar impuestos hasta que lo sacas. Con ETFs y acciones no.</p>
+  </div>
+  <div class="card">
+    <h2>Glosario rápido</h2>
+    <p><b>TAE:</b> lo que ganas al año en %. <b>TIN:</b> el tipo «puro», sin contar cuándo se pagan los intereses.<br>
+    <b>FGD:</b> Fondo de Garantía de Depósitos. Si el banco quiebra te devuelve hasta 100.000 € por persona y banco. Solo cubre cuentas y depósitos.<br>
+    <b>Volatilidad:</b> cuánto sube y baja algo. Una volatilidad del 15% significa que en un año normal puede moverse ±15%.<br>
+    <b>Peor caída:</b> lo máximo que ha llegado a perder desde un máximo hasta un mínimo.<br>
+    <b>Indexado:</b> fondo que copia un índice entero (p. ej. las 1.400 mayores empresas del mundo) con comisiones muy bajas.<br>
+    <b>Rentabilidad real:</b> rentabilidad menos inflación. Lo que de verdad ganas en poder de compra.</p>
+  </div>
+  <div class="card">
+    <h3>Aviso</h3>
+    <p class="small">Herramienta personal y educativa para comparar. No es asesoramiento financiero ni recomienda productos concretos. Las ofertas bancarias cambian a menudo: confirma siempre las condiciones en la web del banco antes de contratar. Rentabilidades pasadas no garantizan rentabilidades futuras.</p>
+    <h3 style="margin-top:12px">Fuentes de los datos</h3>
+    <ul id="fuentes" class="src"></ul>
+  </div>
+</section>
+</main>
+
+<script>
+const D = JSON.parse(document.getElementById('datos').textContent);
+const A = JSON.parse(document.getElementById('activos').textContent);
+const fmt = (n,d=2)=> n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d});
+const eur = n => Math.round(n).toLocaleString('es-ES')+' €';
+const RC = ['','var(--r1)','var(--r2)','var(--r3)','var(--r4)','var(--r5)'];
+const RT = ['','Muy bajo','Bajo','Medio','Alto','Muy alto'];
+const pill = r => `<span class="pill" style="background:${RC[r]}">${RT[r]}</span>`;
+const fechaTxt = new Date(D.actualizado).toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+document.getElementById('upd').textContent = `Datos actualizados el ${fechaTxt} · se revisan cada día`;
+
+// Tabs
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.t));
+  if(b.dataset.t==='opciones') drawScatter();
+  if(b.dataset.t==='sim') runSim();
+  window.scrollTo({top:0});
+});
+
+// ---------- HOY ----------
+const inf = D.inflacion.valor;
+const bestC = [...D.cuentas].sort((a,b)=>b.tae-a.tae);
+const bestSin = bestC.find(c=>c.sinCond);
+const bestD12 = D.depositos.filter(d=>d.plazo===12).sort((a,b)=>b.tae-a.tae)[0];
+const l12 = D.tesoro.find(t=>t.producto==='Letras 12 meses');
+document.getElementById('kpis').innerHTML = [
+  ['Inflación España',fmt(inf,1)+'%',D.inflacion.mes],
+  ['Mejor cuenta sin condiciones',fmt(bestSin.tae)+'% TAE',bestSin.entidad+' · '+bestSin.producto],
+  ['Mejor depósito a 1 año',fmt(bestD12.tae)+'% TAE',bestD12.entidad+' · FGD '+bestD12.fgd],
+  ['Letras del Tesoro 12 meses',fmt(l12.tipo,3)+'%','Subasta '+l12.fecha],
+].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('');
+const realC = bestSin.tae - inf;
+document.getElementById('realidad').innerHTML = `<h3>Lo más importante ahora mismo</h3>
+<div class="${realC<0?'bad':'good'}">Con la inflación al ${fmt(inf,1)}%, la mejor cuenta sin condiciones (${fmt(bestSin.tae)}%) te da una rentabilidad <b>real de ${fmt(realC)}%</b>.
+${realC<0?' Es decir: el dinero «seguro» está perdiendo poder de compra. Sirve para el colchón y el corto plazo, pero no para hacer crecer el ahorro a largo plazo.':''}</div>
+<p style="margin-bottom:0">Con 10.000 € en la cuenta durante un año: ganas unos <b>${eur(10000*bestSin.tae/100*0.81)}</b> netos de impuestos, pero las cosas cuestan unos <b>${eur(10000*inf/100)}</b> más.
+A largo plazo, solo los activos con algo de riesgo (bolsa diversificada, renta fija) han batido a la inflación de forma consistente.</p>`;
+
+// ---------- BANCOS ----------
+function tablaCuentas(){
+  const sin=document.getElementById('fSin').checked, es=document.getElementById('fEs').checked;
+  const rows=bestC.filter(c=>(!sin||c.sinCond)&&(!es||c.fgd==='España'));
+  document.getElementById('tCuentas').innerHTML=`<tr><th>Entidad</th><th class="n">TAE</th><th>Condiciones</th><th>Saldo máx.</th><th>FGD</th></tr>`+
+   rows.map(c=>`<tr><td><b>${c.entidad}</b><br><span class="small">${c.producto}</span>${c.plazoOferta?`<br><span class="tag w">${c.plazoOferta}</span>`:''}</td><td class="n"><b>${fmt(c.tae)}%</b></td><td>${c.cond}</td><td>${c.max}</td><td>${c.fgd==='España'?'<span class="tag">España</span>':`<span class="tag w">${c.fgd}</span>`}</td></tr>`).join('');
+}
+function tablaDep(){
+  const p=+document.getElementById('fPlazo').value, es=document.getElementById('fEs2').checked;
+  const prev={6:0,12:6,24:12,36:24,999:36}[p]??0;
+  const rows=D.depositos.filter(d=>(p===0||(p===999?d.plazo>36:(d.plazo<=p&&d.plazo>prev)))&&(!es||d.fgd==='España')).sort((a,b)=>b.tae-a.tae);
+  const pl=m=>m<12?m+' meses':(m%12===0?(m/12)+(m===12?' año':' años'):m+' meses');
+  document.getElementById('tDep').innerHTML=`<tr><th>Entidad</th><th>Plazo</th><th class="n">TAE</th><th>Mínimo</th><th>FGD</th></tr>`+
+   (rows.length?rows.map(d=>`<tr><td><b>${d.entidad}</b></td><td>${pl(d.plazo)}</td><td class="n"><b>${fmt(d.tae)}%</b></td><td>${d.min}</td><td>${d.fgd==='España'?'<span class="tag">España</span>':`<span class="tag w">${d.fgd}</span>`}</td></tr>`).join(''):'<tr><td colspan=5 class="small">Sin resultados con estos filtros</td></tr>');
+}
+['fSin','fEs'].forEach(i=>document.getElementById(i).onchange=tablaCuentas);
+['fPlazo','fEs2'].forEach(i=>document.getElementById(i).onchange=tablaDep);
+tablaCuentas();tablaDep();
+document.getElementById('tTesoro').innerHTML=`<tr><th>Producto</th><th class="n">Rentabilidad</th><th>Subasta</th></tr>`+
+  D.tesoro.map(t=>`<tr><td>${t.producto}</td><td class="n"><b>${fmt(t.tipo,3)}%</b></td><td>${t.fecha}</td></tr>`).join('');
+document.getElementById('tesProx').textContent='Próximas subastas: '+D.tesoro_proximas+'. Se compran sin comisiones en tesoro.es o en el Banco de España; en bancos suele haber comisión.';
+function calcBanco(){
+  const imp=+document.getElementById('cImp').value||0, m=+document.getElementById('cMes').value||0;
+  const opciones=[
+    ['Mejor cuenta sin condiciones',bestSin.tae,bestSin.entidad],
+    ['Mejor depósito a 1 año',bestD12.tae,bestD12.entidad],
+    ['Letras 12 meses',l12.tipo,'Tesoro'],
+    ['Cuenta tradicional (0%)',0,'banco típico']
+  ];
+  document.getElementById('cRes').innerHTML='<table><tr><th>Opción</th><th class="n">Bruto</th><th class="n">Neto (tras 19%)</th><th class="n">Real (tras inflación)</th></tr>'+
+   opciones.map(o=>{const b=imp*(Math.pow(1+o[1]/100,m/12)-1), n=b*0.81, r=n-imp*(Math.pow(1+inf/100,m/12)-1);
+    return `<tr><td>${o[0]}<br><span class="small">${o[2]}</span></td><td class="n">${eur(b)}</td><td class="n">${eur(n)}</td><td class="n" style="color:${r<0?'var(--bad)':'var(--acc)'}">${eur(r)}</td></tr>`}).join('')+'</table><p class="small">Supone que las promociones se mantienen todo el periodo, cosa que no siempre pasa.</p>';
+}
+['cImp','cMes'].forEach(i=>document.getElementById(i).oninput=calcBanco);calcBanco();
+
+// ---------- OPCIONES ----------
+document.getElementById('tAct').innerHTML=`<tr><th>Opción</th><th>Riesgo</th><th>Rentabilidad</th><th>Peor caída histórica</th><th>Liquidez</th><th>Garantía</th><th>Para qué sirve</th><th>Ojo con</th></tr>`+
+ [...A].sort((a,b)=>a.riesgo-b.riesgo||a.vol-b.vol).map(a=>`<tr><td><b>${a.nombre}</b><br><span class="small">${a.grupo}</span></td><td>${pill(a.riesgo)}</td><td>${a.rentTxt}</td><td>${a.peor}</td><td>${a.liquidez}</td><td>${a.garantia}</td><td>${a.para}</td><td class="small">${a.ojo}<br><i>${a.fiscal}</i></td></tr>`).join('');
+let sc;
+function drawScatter(){
+  if(sc||typeof Chart==='undefined') return;
+  const css=getComputedStyle(document.documentElement);
+  const col=r=>css.getPropertyValue(['','--r1','--r2','--r3','--r4','--r5'][r]).trim();
+  const pts=A.filter(a=>a.id!=='pension');
+  sc=new Chart(document.getElementById('scatter'),{type:'scatter',
+    data:{datasets:[{data:pts.map(a=>({x:a.vol,y:a.rent,n:a.nombre})),pointRadius:7,pointHoverRadius:9,backgroundColor:pts.map(a=>col(a.riesgo))}]},
+    options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.n}: ${fmt(c.raw.y,1)}% rent. · ${fmt(c.raw.x,0)}% volatilidad`}}},
+      scales:{x:{type:'logarithmic',min:0.2,max:80,title:{display:true,text:'Volatilidad anual (%, escala log)'},ticks:{callback:v=>[0.3,1,3,10,30].includes(v)?v+'%':''}},
+              y:{min:0,max:11,title:{display:true,text:'Rentabilidad anual esperable (%)'}}}},
+    plugins:[{id:'lbl',afterDatasetsDraw(ch){const ctx=ch.ctx;ctx.save();ctx.font='11px Inter';ctx.fillStyle=css.getPropertyValue('--mut');
+      ch.getDatasetMeta(0).data.forEach((p,i)=>{const n=pts[i].nombre.replace(/ \(.*\)/,'');ctx.fillText(n,p.x+9,p.y+4)});ctx.restore();}}]});
+}
+
+// ---------- PERFIL ----------
+const Q=[
+ ['¿Cuándo vas a necesitar este dinero?',[['En menos de 2 años',0],['En 2–5 años',1],['En 5–10 años',3],['En más de 10 años',4]]],
+ ['¿Tienes un colchón de emergencia aparte (3–6 meses de gastos)?',[['No',0],['Algo, menos de 3 meses',1],['Sí, 3–6 meses o más',3]]],
+ ['Tu inversión de 10.000 € cae a 7.000 € en unos meses. ¿Qué haces?',[['Vendo todo, no lo soporto',0],['Vendo una parte',1],['No toco nada y espero',3],['Aprovecho y compro más',4]]],
+ ['¿Qué te importa más?',[['No perder nada, aunque gane poco',0],['Ganar algo más que el banco con poco riesgo',1],['Equilibrio entre crecer y estabilidad',2],['Máximo crecimiento a largo plazo',4]]],
+ ['¿Has invertido antes en fondos, bolsa o similares?',[['Nunca',0],['Algo, poca cosa',1],['Sí, con regularidad',2]]],
+ ['¿Tus ingresos son estables?',[['No, son inestables',0],['Bastante estables',1],['Muy estables (fijo, funcionario, pensión…)',2]]]
+];
+document.getElementById('test').innerHTML=Q.map((q,i)=>`<div class="q"><p>${i+1}. ${q[0]}</p><div class="opts">${q[1].map((o,j)=>`<label><input type="radio" name="q${i}" value="${o[1]}"${j===0&&false?' checked':''}> ${o[0]}</label>`).join('')}</div></div>`).join('');
+const CART={
+ 'Muy conservador':{d:'Prioridad: no perder. Todo en productos garantizados o casi.',w:{cuenta:40,deposito:25,letras:20,monetario:15}},
+ 'Conservador':{d:'Algo de crecimiento con caídas pequeñas.',w:{cuenta:15,letras:15,monetario:10,rfglobal:35,rvglobal:25}},
+ 'Moderado':{d:'Equilibrio: la bolsa empuja, la renta fija amortigua.',w:{cuenta:5,monetario:10,rfglobal:30,rvglobal:50,oro:5}},
+ 'Dinámico':{d:'Crecimiento a largo plazo aceptando caídas fuertes.',w:{monetario:5,rfglobal:15,rvglobal:65,reit:5,oro:5,ibex:5}},
+ 'Agresivo':{d:'Máximo crecimiento; puede caer un 40–50% en una crisis.',w:{rfglobal:5,rvglobal:70,sp500:10,reit:5,oro:5,cripto:5}}
+};
+const CC={cuenta:'#7fb8a0',deposito:'#4f9a7c',letras:'#2e7d5b',monetario:'#a9d1bf',bonos:'#5c7fa3',rfglobal:'#6f8fc4',mixto:'#9a8fc9',rvglobal:'#d07a2c',sp500:'#e8a14f',ibex:'#b8452e',reit:'#b39b2d',oro:'#d9bc3c',cripto:'#8a3b7a',vivienda:'#888',pension:'#666'};
+const nombre=id=>A.find(a=>a.id===id).nombre;
+function stats(w){let r=0,v=0;for(const k in w){const a=A.find(x=>x.id===k);r+=a.rent*w[k]/100;v+=a.vol*w[k]/100;}return {r,v:v*0.85};}
+function barra(w){return `<div class="bar">${Object.entries(w).map(([k,p])=>`<div style="width:${p}%;background:${CC[k]}" title="${nombre(k)} ${p}%"></div>`).join('')}</div>
+<div class="leg">${Object.entries(w).map(([k,p])=>`<span><i style="background:${CC[k]}"></i>${nombre(k)} <b>${p}%</b></span>`).join('')}</div>`;}
+document.getElementById('calc').onclick=e=>{
+  e.preventDefault();
+  const vals=Q.map((_,i)=>{const c=document.querySelector(`input[name=q${i}]:checked`);return c?+c.value:null});
+  if(vals.includes(null)){document.getElementById('resultado').style.display='block';document.getElementById('resultado').innerHTML='<div class="note">Responde todas las preguntas.</div>';return;}
+  const s=vals.reduce((a,b)=>a+b,0);
+  let p = s<=4?'Muy conservador':s<=8?'Conservador':s<=12?'Moderado':s<=15?'Dinámico':'Agresivo';
+  if(vals[0]===0) p='Muy conservador'; else if(vals[0]===1 && ['Dinámico','Agresivo','Moderado'].includes(p)) p='Conservador';
+  const avisos=[];
+  if(vals[0]===0) avisos.push('Como necesitas el dinero en menos de 2 años, la bolsa no tiene sentido aunque toleres el riesgo.');
+  if(vals[0]===1 && s>8) avisos.push('Tu tolerancia daría para más riesgo, pero a 2–5 años una caída de bolsa puede no recuperarse a tiempo.');
+  if(vals[1]===0) avisos.push('<b>Primero monta el colchón de emergencia</b> en una cuenta remunerada antes de invertir nada a largo plazo.');
+  const c=CART[p], st=stats(c.w);
+  try{localStorage.setItem('perfil',p)}catch(_){}
+  document.getElementById('resultado').style.display='block';
+  document.getElementById('resultado').innerHTML=`<h2>Tu perfil: ${p}</h2><p>${c.d}</p>${barra(c.w)}
+  <div class="grid" style="margin-top:12px">
+   <div class="kpi"><div class="l">Rentabilidad esperable</div><div class="v">≈${fmt(st.r,1)}%</div><div class="s">anual, a largo plazo</div></div>
+   <div class="kpi"><div class="l">Oscilación típica</div><div class="v">±${fmt(st.v,0)}%</div><div class="s">en un año normal</div></div>
+   <div class="kpi"><div class="l">En una crisis grave</div><div class="v" style="color:var(--bad)">${st.v<1?'≈0%':'-'+fmt(Math.min(st.v*3.5,60),0)+'%'}</div><div class="s">caída posible temporal</div></div>
+  </div>
+  ${avisos.map(a=>`<div class="note" style="margin-top:10px">${a}</div>`).join('')}
+  <p class="small" style="margin-top:12px">Cómo llevarlo a la práctica: la parte de liquidez, en las cuentas/depósitos de la pestaña <b>Bancos</b>; la renta fija y la bolsa, con fondos indexados de bajo coste (comisión &lt;0,3%) en un bróker o gestora independiente. Puedes probar esta cartera en el <b>Simulador</b>.</p>`;
+  document.getElementById('sCart').value=p;
+};
+
+// ---------- SIMULADOR ----------
+const sel=document.getElementById('sCart');
+sel.innerHTML=Object.keys(CART).map(k=>`<option>${k}</option>`).join('')+A.filter(a=>a.id!=='pension'&&a.id!=='vivienda').map(a=>`<option value="solo:${a.id}">Solo: ${a.nombre}</option>`).join('');
+sel.value='Moderado';try{const p=localStorage.getItem('perfil');if(p)sel.value=p}catch(_){}
+let sch;
+function randn(){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function runSim(){
+  const ini=+document.getElementById('sIni').value||0, mes=+document.getElementById('sMes').value||0,
+        anos=Math.max(1,Math.min(50,+document.getElementById('sAnos').value||1)), infl=+document.getElementById('sInf').value/100, com=+document.getElementById('sCom').value/100;
+  const v=sel.value, w=v.startsWith('solo:')?{[v.slice(5)]:100}:CART[v].w, st=stats(w);
+  const mu=st.r/100-com, sg=st.v/100, N=2000, M=anos*12;
+  const mm=Math.log(1+mu)/12 - sg*sg/24, ms=sg/Math.sqrt(12);
+  const paths=[];
+  for(let n=0;n<N;n++){let x=ini;const p=[x];for(let t=1;t<=M;t++){x=x*Math.exp(mm+ms*randn())+mes;if(t%12===0)p.push(x);}paths.push(p);}
+  const pct=(arr,q)=>{const s=[...arr].sort((a,b)=>a-b);return s[Math.floor(q*(s.length-1))];};
+  const yrs=[...Array(anos+1).keys()], P10=[],P50=[],P90=[],APOR=[];
+  yrs.forEach(y=>{const col=paths.map(p=>p[y]);P10.push(pct(col,.1));P50.push(pct(col,.5));P90.push(pct(col,.9));APOR.push(ini+mes*12*y);});
+  const fin=paths.map(p=>p[anos]), apor=ini+mes*M, defl=Math.pow(1+infl,anos), perd=fin.filter(x=>x<apor).length/N;
+  // peor año aprox
+  document.getElementById('sKpi').innerHTML=[
+   ['Lo que aportas',eur(apor),''],
+   ['Resultado típico (mediana)',eur(P50[anos]),'≈ '+eur(P50[anos]/defl)+' en euros de hoy'],
+   ['Escenario malo (10%)',eur(P10[anos]),'1 de cada 10 casos acaba peor'],
+   ['Escenario bueno (10%)',eur(P90[anos]),'1 de cada 10 casos acaba mejor'],
+   ['Probabilidad de acabar perdiendo',fmt(perd*100,0)+'%','acabar con menos de lo aportado']
+  ].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('');
+  const css=getComputedStyle(document.documentElement);
+  const data={labels:yrs.map(y=>'Año '+y),datasets:[
+    {label:'Escenario bueno (P90)',data:P90,borderColor:'transparent',backgroundColor:'rgba(208,122,44,.18)',fill:'+1',pointRadius:0},
+    {label:'Escenario malo (P10)',data:P10,borderColor:'transparent',backgroundColor:'rgba(208,122,44,.18)',fill:false,pointRadius:0},
+    {label:'Resultado típico',data:P50,borderColor:'#d07a2c',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Dinero aportado',data:APOR,borderColor:css.getPropertyValue('--mut'),borderDash:[5,4],borderWidth:1.5,pointRadius:0,fill:false}]};
+  const opt={animation:false,interaction:{mode:'index',intersect:false},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+eur(c.raw)}},legend:{labels:{filter:i=>i.text!=='Escenario malo (P10)'}}},
+    scales:{y:{ticks:{callback:v=>(v>=1e6?fmt(v/1e6,1)+' M':Math.round(v/1000)+' k')+' €'}}}};
+  if(typeof Chart==='undefined'){}else if(sch){sch.data=data;sch.options=opt;sch.update();}else sch=new Chart(document.getElementById('simChart'),{type:'line',data,options:opt});
+  document.getElementById('sTexto').innerHTML=`<p style="margin:0">Cartera <b>${v.startsWith('solo:')?nombre(v.slice(5)):v}</b>: rentabilidad esperable ≈${fmt(st.r,1)}% anual (menos ${fmt(com*100,1)}% de comisiones), oscilación típica ±${fmt(st.v,0)}%.
+  Por el camino habrá años negativos: lo que decide el resultado es <b>no vender en las caídas</b>. Las cifras son antes de impuestos.</p>`;
+}
+['sIni','sMes','sAnos','sCart','sInf','sCom'].forEach(i=>document.getElementById(i).addEventListener('input',runSim));
+
+// ---------- GENTE ----------
+document.getElementById('gHog').textContent=D.fondos.hogares;
+document.getElementById('gKpi').innerHTML=[['Patrimonio total en fondos',fmt(D.fondos.patrimonio/1000,1)+' mil M€',D.fondos.mes]].concat(D.fondos.categorias.map(c=>[c.cat,fmt(c.patrimonio/1000,1)+' mil M€',c.nota]))
+ .map(k=>`<div class="kpi"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('');
+document.getElementById('gFlu').innerHTML=D.fondos.flujos.map(f=>`<li>${f}</li>`).join('');
+
+// ---------- FUENTES ----------
+document.getElementById('fuentes').innerHTML=D.fuentes.map(f=>`<li><a href="${f[1]}" target="_blank" rel="noopener">${f[0]}</a></li>`).join('')+
+ '<li>Rentabilidades y caídas históricas por tipo de activo: aproximaciones de largo plazo de índices de referencia (MSCI World, S&amp;P 500, Ibex 35, oro, Bitcoin, renta fija global).</li>';
+
+// ---------- HISTÓRICO ----------
+const H = JSON.parse(document.getElementById('historico').textContent);
+const MAPA={cuenta:'depo',deposito:'depo',letras:'depo',monetario:'depo',rfglobal:'rf',bonos:'rf',mixto:'world',rvglobal:'world',sp500:'sp',ibex:'ibex',oro:'gold',reit:'world',cripto:'btc',vivienda:'rf',pension:'world'};
+const HC={sp:'#d07a2c',world:'#1f5f4a',ibex:'#b8452e',rf:'#5c7fa3',depo:'#8fb3a3',gold:'#c9a227',btc:'#8a3b7a',c6040:'#4a4ae0',boggle:'#2a9d8f',perm:'#9b6b3d',allw:'#7a7a7a'};
+function eurR(k,i){const s=H.series[k];let r=s.r[i];if(r===null||r===undefined)return null;r=r+(s.div||0);
+  if(s.moneda==='USD'){const p=i===0?H.eurusd0:H.eurusd[i-1];return (1+r/100)*p/H.eurusd[i]-1;}return r/100;}
+function opcionesHist(){
+  const o=[];['sp','world','ibex','rf','depo','gold','btc'].forEach(k=>o.push({k,nombre:H.series[k].nombre,w:{[k]:100}}));
+  Object.entries(H.carteras).forEach(([k,c])=>o.push({k,nombre:c.nombre,w:c.w}));
+  Object.entries(CART).forEach(([n,c])=>{const w={};for(const id in c.w){const s=MAPA[id];w[s]=(w[s]||0)+c.w[id];}o.push({k:'perfil_'+n,nombre:'Perfil '+n.toLowerCase(),w});});
+  return o;}
+const OH=opcionesHist();
+const PC=['#5aa17f','#7fae5a','#b39b2d','#d07a2c','#b8452e'];
+Object.keys(CART).forEach((n,i)=>HC['perfil_'+n]=PC[i]);
+let hVisibles=new Set(['sp','world','ibex','rf','depo','gold','c6040']);
+const hD=document.getElementById('hDesde'),hH=document.getElementById('hHasta');
+hD.innerHTML=H.anos.map(a=>`<option ${a===2010?'selected':''}>${a}</option>`).join('');
+hH.innerHTML=H.anos.map(a=>`<option ${a===H.anos.at(-1)?'selected':''}>${a}</option>`).join('');
+function irr(flows){let lo=-0.99,hi=2;const npv=r=>flows.reduce((s,[t,c])=>s+c/Math.pow(1+r,t),0);
+  if(npv(lo)*npv(hi)>0)return null;for(let i=0;i<100;i++){const m=(lo+hi)/2;(npv(lo)*npv(m)<=0)?hi=m:lo=m;}return (lo+hi)/2;}
+let hch;
+function runHist(){
+  let i0=H.anos.indexOf(+hD.value), i1=H.anos.indexOf(+hH.value); if(i1<i0){[i0,i1]=[i1,i0];}
+  const ini=+document.getElementById('hIni').value||0, mes=+document.getElementById('hMes').value||0, anual=mes*12;
+  const labels=['Inicio '+H.anos[i0]].concat(H.anos.slice(i0,i1+1).map(a=>'Fin '+a));
+  const apor=[ini],ipcAc=[1];for(let i=i0;i<=i1;i++){apor.push(apor.at(-1)+anual);ipcAc.push(ipcAc.at(-1)*(1+H.series.ipc.r[i]/100));}
+  const res=OH.map(o=>{
+    let v=ini,g=1,peak=1,dd=0,worst=[Infinity,null],path=[ini],ok=true;
+    for(let i=i0;i<=i1;i++){
+      let r=0;for(const k in o.w){let x=eurR(k,i);if(x===null){if(Object.keys(o.w).length===1){ok=false;break;}x=eurR('depo',i);}r+=x*o.w[k]/100;}
+      if(!ok)break;
+      v=v*(1+r)+anual*Math.sqrt(1+r); g*=1+r; peak=Math.max(peak,g); dd=Math.min(dd,g/peak-1);
+      if(r<worst[0])worst=[r,H.anos[i]]; path.push(v);
+    }
+    if(!ok)return {...o,ok:false};
+    const n=i1-i0+1, flows=[[0,-ini]];for(let t=0;t<n;t++)flows.push([t+0.5,-anual]);flows.push([n,v]);
+    const tir=(ini===0&&anual===0)?null:irr(flows);
+    const infAn=Math.pow(ipcAc.at(-1),1/n)-1;
+    return {...o,ok:true,v,path,tir,real:tir===null?null:(1+tir)/(1+infAn)-1,worst,dd};
+  });
+  const ap=apor.at(-1);
+  const filas=res.filter(r=>r.ok).sort((a,b)=>b.v-a.v);
+  document.getElementById('hTab').innerHTML=`<tr><th>Opción</th><th class="n">Valor final</th><th class="n">Ganancia</th><th class="n">Rent. anual</th><th class="n">Rent. real anual</th><th class="n">Peor año</th><th class="n">Peor caída</th></tr>`+
+   filas.map(r=>`<tr><td><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${HC[r.k]||'#999'};margin-right:6px"></i>${r.nombre}</td>
+   <td class="n"><b>${eur(r.v)}</b></td><td class="n" style="color:${r.v<ap?'var(--bad)':'var(--acc)'}">${r.v>=ap?'+':''}${fmt((r.v/ap-1)*100,0)}%</td>
+   <td class="n">${r.tir===null?'—':fmt(r.tir*100,1)+'%'}</td><td class="n" style="color:${r.real<0?'var(--bad)':'inherit'}">${r.real===null?'—':fmt(r.real*100,1)+'%'}</td>
+   <td class="n">${fmt(r.worst[0]*100,0)}% <span class="small">(${r.worst[1]})</span></td><td class="n">${fmt(r.dd*100,0)}%</td></tr>`).join('')+
+   res.filter(r=>!r.ok).map(r=>`<tr><td class="small">${r.nombre}</td><td colspan=6 class="small">Sin datos para ese periodo (la serie empieza en ${H.series[r.k]?.desde||'—'})</td></tr>`).join('');
+  document.getElementById('hNota').innerHTML=`Has aportado <b>${eur(ap)}</b>. Inflación acumulada en el periodo: <b>${fmt((ipcAc.at(-1)-1)*100,0)}%</b> (lo que costaba 100 € ahora cuesta ${eur(100*ipcAc.at(-1))}). «Rent. anual» tiene en cuenta cuándo se hizo cada aportación. «Peor caída» = lo máximo que llegó a perder desde un máximo (con datos anuales; dentro del año pudo ser mayor). ${H.nota}`;
+  const css=getComputedStyle(document.documentElement);
+  const ds=res.filter(r=>r.ok&&hVisibles.has(r.k)).map(r=>({label:r.nombre,data:r.path,borderColor:HC[r.k]||'#999',borderWidth:H.carteras[r.k]||r.k.startsWith('perfil_')?3:2,pointRadius:0,tension:.15}));
+  ds.push({label:'Dinero aportado',data:apor,borderColor:css.getPropertyValue('--mut'),borderDash:[5,4],borderWidth:1.5,pointRadius:0});
+  const data={labels,datasets:ds};
+  const opt={animation:false,interaction:{mode:'index',intersect:false},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+eur(c.raw)}}},
+     scales:{y:{type:document.getElementById('hLog').checked?'logarithmic':'linear',ticks:{callback:v=>(v>=1e6?fmt(v/1e6,1)+' M':Math.round(v/1000)+' k')+' €'}}}};
+  if(typeof Chart==='undefined'){}else if(hch){hch.data=data;hch.options=opt;hch.update();}else hch=new Chart(document.getElementById('hChart'),{type:'line',data,options:opt});
+}
+document.getElementById('hSel').innerHTML=OH.map(o=>`<label><input type="checkbox" data-k="${o.k}" ${hVisibles.has(o.k)?'checked':''}> <i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${HC[o.k]||'#999'}"></i>${o.nombre}</label>`).join('')+
+  `<label><input type="checkbox" id="hLog"> Escala logarítmica</label>`;
+document.querySelectorAll('#hSel input[data-k]').forEach(c=>c.onchange=()=>{c.checked?hVisibles.add(c.dataset.k):hVisibles.delete(c.dataset.k);runHist();});
+document.getElementById('hLog').onchange=runHist;
+['hDesde','hHasta','hIni','hMes'].forEach(i=>document.getElementById(i).addEventListener('input',runHist));
+document.querySelector('#tabs button[data-t=hist]').addEventListener('click',runHist);
+
+// ---------- ESTRATEGIAS ----------
+const EST=[
+ {n:'Aportación periódica automática (DCA)',d:'Invertir la misma cantidad cada mes, pase lo que pase. Es la estrategia más usada por particulares.',p:'Elimina la tentación de adivinar el momento; compras más barato en las caídas; crea hábito.',c:'Si ya tienes una suma grande, invertirla de golpe ha dado más rentabilidad media que repartirla.',prueba:{mes:200,ini:0,k:'world'}},
+ {n:'Cartera indexada «Bogleheads»',d:'Uno a tres fondos indexados de bajo coste (bolsa mundial + renta fija) y mantenerlos durante décadas. Inspirada en John Bogle, fundador de Vanguard.',p:'Barata, diversificada, sin decisiones. La mayoría de fondos de gestión activa no la baten a 15 años.',c:'Aburrida; exige aguantar caídas del 40–50% en la parte de bolsa.',prueba:{k:'boggle'}},
+ {n:'Cartera 60/40',d:'60% bolsa, 40% renta fija. El estándar clásico de los gestores para perfiles moderados.',p:'Caídas mucho menores que con 100% bolsa, conservando buena parte de la rentabilidad.',c:'En 2022 bolsa y bonos cayeron a la vez y no protegió.',prueba:{k:'c6040'}},
+ {n:'Cartera Permanente (Harry Browne)',d:'25% bolsa, 25% bonos, 25% oro, 25% liquidez. Pensada para aguantar cualquier escenario económico.',p:'Muy estable: caídas pequeñas incluso en 2008.',c:'Menos rentabilidad a largo plazo que las carteras con más bolsa.',prueba:{k:'perm'}},
+ {n:'All Weather (Ray Dalio)',d:'Reparto por riesgo: poca bolsa, mucha renta fija y algo de oro y materias primas. Aquí, versión simplificada.',p:'Suave en las crisis de bolsa.',c:'Sufre mucho cuando suben los tipos de interés (2022).',prueba:{k:'allw'}},
+ {n:'Núcleo y satélite',d:'80–90% en una cartera indexada (núcleo) y 10–20% en ideas propias: acciones, sectores, Ibex, cripto (satélite).',p:'Permite «jugar» sin poner en riesgo el plan.',c:'Si el satélite crece demasiado deja de ser satélite: hay que rebalancear.'},
+ {n:'Escalera de depósitos o Letras',d:'Dividir el ahorro seguro en tramos que vencen cada 3, 6, 9 y 12 meses y renovarlos al vencer.',p:'Siempre tienes algo a punto de vencer y aprovechas si los tipos suben.',c:'Rentabilidad limitada; hoy por debajo de la inflación.'},
+ {n:'Regla «110 menos tu edad»',d:'Porcentaje en bolsa = 110 − edad (con 40 años, 70% en bolsa). El resto, en renta fija y liquidez.',p:'Sencilla, y reduce el riesgo al acercarte a la jubilación.',c:'Es orientativa: el plazo real y tu tolerancia importan más que la edad.'},
+ {n:'Rebalanceo anual',d:'Una vez al año, vender lo que más ha subido y comprar lo que más ha bajado hasta volver a tus porcentajes.',p:'Obliga a comprar barato y vender caro; mantiene el riesgo controlado.',c:'Con ETFs genera impuestos; con fondos indexados se hace por traspaso sin tributar.'},
+ {n:'Dividendos crecientes',d:'Comprar empresas que suben su dividendo año tras año para vivir de las rentas.',p:'Ingresos periódicos y empresas sólidas; muy popular en España.',c:'Tributas por cada dividendo (19–30%), diversificas menos y, por sí sola, no rinde más que un indexado.'},
+ {n:'Estrategia de «cubos» para la jubilación',d:'Cubo 1: dos años de gastos en liquidez. Cubo 2: de 3 a 8 años en renta fija. Cubo 3: el resto en bolsa.',p:'Nunca tienes que vender bolsa en plena caída para pagar gastos.',c:'Requiere disciplina para ir rellenando los cubos.'},
+ {n:'Plan de pensiones (solo si te conviene)',d:'Aportar hasta 1.500 € al año para desgravar en el IRPF.',p:'Si tributas al 37–47%, el ahorro fiscal inmediato es muy alto.',c:'Dinero bloqueado; al cobrar tributa como sueldo, y muchos planes de banco cobran caro.'}
+];
+document.getElementById('eList').innerHTML=EST.map((e,i)=>`<div class="card"><h3>${e.n}</h3><p style="margin:0 0 8px">${e.d}</p>
+ <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"><div class="good"><b>A favor:</b> ${e.p}</div><div class="note"><b>En contra:</b> ${e.c}</div></div>
+ ${e.prueba?`<button class="btn" style="margin-top:10px" data-e="${i}">Ver cómo le habría ido desde 2000</button>`:''}</div>`).join('');
+document.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{
+  const p=EST[+b.dataset.e].prueba;
+  hD.value=2000;hH.value=H.anos.at(-1);
+  document.getElementById('hIni').value=p.ini??10000;document.getElementById('hMes').value=p.mes??0;
+  hVisibles=new Set([p.k,'depo','sp','world']);
+  document.querySelectorAll('#hSel input[data-k]').forEach(c=>c.checked=hVisibles.has(c.dataset.k));
+  document.querySelector('#tabs button[data-t=hist]').click();
+});
+
+// ---------- PRODUCTOS A FONDO ----------
+document.querySelectorAll('#fNav label').forEach(l=>l.onclick=()=>document.getElementById(l.dataset.go).scrollIntoView({behavior:'smooth',block:'start'}));
+(()=>{const yrs=[2002,2008,2011,2018,2022],ks=['world','sp','ibex','rf','depo','gold'];
+ const cell=x=>`<td class="n" style="color:${x<0?'var(--bad)':'var(--acc)'}">${x>0?'+':''}${fmt(x*100,0)}%</td>`;
+ document.getElementById('tCrisis').innerHTML='<tr><th>Año</th>'+ks.map(k=>`<th class="n">${H.series[k].nombre.replace(/ \(.*\)/,'')}</th>`).join('')+'<th class="n">Cartera 60/40</th></tr>'+
+  yrs.map(y=>{const i=H.anos.indexOf(y);const r=ks.map(k=>eurR(k,i));return `<tr><td><b>${y}</b></td>${r.map(cell).join('')}${cell(0.6*eurR('world',i)+0.4*eurR('rf',i))}</tr>`}).join('');})();
+
+// ---------- REVISA TU CARTERA ----------
+const MC=[
+ {k:'cuenta',l:'Cuentas y depósitos',a:'cuenta',g:'Liquidez',es:1,usd:0},
+ {k:'letras',l:'Letras y bonos del Estado',a:'bonos',g:'Renta fija',es:1,usd:0},
+ {k:'rf',l:'Fondos/ETFs de renta fija',a:'rfglobal',g:'Renta fija',es:.1,usd:0},
+ {k:'mixto',l:'Fondos mixtos o «de banco»',a:'mixto',g:'Mixto',es:.3,usd:.3},
+ {k:'mundo',l:'Indexado/ETF bolsa mundial',a:'rvglobal',g:'Bolsa',es:.01,usd:.7},
+ {k:'sp',l:'S&P 500 / bolsa EE. UU.',a:'sp500',g:'Bolsa',es:0,usd:1},
+ {k:'esp',l:'Bolsa española (acciones o fondos)',a:'ibex',g:'Bolsa',es:1,usd:0},
+ {k:'sueltas',l:'Acciones sueltas extranjeras',a:'sp500',g:'Bolsa',es:0,usd:.8},
+ {k:'tem',l:'ETFs temáticos (IA, chips…)',a:'sp500',g:'Bolsa',es:0,usd:.9},
+ {k:'viv',l:'Pisos para alquilar (no tu casa)',a:'vivienda',g:'Inmobiliario',es:1,usd:0},
+ {k:'oro',l:'Oro',a:'oro',g:'Oro',es:0,usd:1},
+ {k:'cripto',l:'Criptomonedas',a:'cripto',g:'Cripto',es:0,usd:1},
+ {k:'pen',l:'Plan de pensiones',a:'pension',g:'Jubilación',es:.3,usd:.3}
+];
+const GC={'Liquidez':'#8fb3a3','Renta fija':'#5c7fa3','Mixto':'#9a8fc9','Bolsa':'#d07a2c','Inmobiliario':'#b39b2d','Oro':'#d9bc3c','Cripto':'#8a3b7a','Jubilación':'#777'};
+let mcSaved={};try{mcSaved=JSON.parse(localStorage.getItem('miCartera')||'{}')}catch(_){}
+document.getElementById('mcIn').innerHTML=MC.map(c=>`<div class="fld"><label>${c.l} (€)</label><input type="number" min="0" step="500" data-mc="${c.k}" value="${mcSaved[c.k]??0}"></div>`).join('');
+['mcGastos','mcBanco','mcNum','mcMax'].forEach(i=>{if(mcSaved[i]!==undefined)document.getElementById(i).value=mcSaved[i];});
+function runMC(){
+  const v={};MC.forEach(c=>v[c.k]=Math.max(0,+document.querySelector(`[data-mc=${c.k}]`).value||0));
+  const g=+document.getElementById('mcGastos').value||0,banco=+document.getElementById('mcBanco').value||0,num=+document.getElementById('mcNum').value||0,maxA=+document.getElementById('mcMax').value||0;
+  try{localStorage.setItem('miCartera',JSON.stringify({...v,mcGastos:g,mcBanco:banco,mcNum:num,mcMax:maxA}))}catch(_){}
+  const T=Object.values(v).reduce((a,b)=>a+b,0),out=document.getElementById('mcOut');
+  if(!T){out.innerHTML='<p class="small">Introduce tus cantidades arriba para ver el análisis.</p>';return;}
+  const grp={};MC.forEach(c=>grp[c.g]=(grp[c.g]||0)+v[c.k]);
+  const w={};MC.forEach(c=>{if(v[c.k])w[c.a]=(w[c.a]||0)+v[c.k]/T*100;});const st=stats(w);
+  const bolsa=grp['Bolsa']+(grp['Mixto']||0)*.5, pBolsa=bolsa/T;
+  const riesgo=T-v.cuenta-v.letras, es=MC.reduce((s,c)=>s+v[c.k]*c.es,0)-v.cuenta-v.letras, pEs=riesgo>0?es/riesgo:0;
+  const usd=MC.reduce((s,c)=>s+v[c.k]*c.usd,0)/T, meses=g?v.cuenta/g:99;
+  const av=[];let sc=100;const add=(p,t,cls='note')=>{sc-=p;av.push(`<div class="${cls}" style="margin-top:8px">${t}</div>`);};
+  if(g&&meses<3)add(15,`<b>Colchón insuficiente:</b> tienes ${fmt(meses,1)} meses de gastos en liquidez. Lo recomendable es 3–6 meses (${eur(3*g)}–${eur(6*g)}) antes de invertir en algo con riesgo.`,'bad');
+  const liq=(grp['Liquidez']||0)+v.letras;
+  if(g&&meses>12&&liq/T>.4){const perd=Math.max(0,(liq-6*g))*(inf/100-0.03);add(10,`<b>Mucho dinero parado:</b> ${fmt(liq/T*100,0)}% en liquidez y renta fija a corto (${fmt(meses,0)} meses de gastos). Con la inflación al ${fmt(inf,1)}%, lo que exceda del colchón pierde unos <b>${eur(perd)}/año</b> de poder de compra. Si no lo vas a necesitar en años, valora moverlo según tu perfil.`);}
+  if(banco>100000)add(10,`<b>Más de 100.000 € en un solo banco:</b> el FGD solo cubre 100.000 € por titular y entidad. Reparte el exceso (${eur(banco-100000)}) en otro banco o en Letras del Tesoro.`,'bad');
+  if(riesgo>0&&pEs>.5&&riesgo/T>.2)add(12,`<b>Demasiada España:</b> ${fmt(pEs*100,0)}% de tu dinero con riesgo depende de la economía española, que es menos del 1% de la bolsa mundial. Diversifica con un indexado mundial.`);
+  if(maxA>0&&maxA/T>.1)add(12,`<b>Una sola acción pesa el ${fmt(maxA/T*100,0)}%</b> de tu patrimonio. Por encima del 5–10% es mucho riesgo concentrado en una empresa.`,'bad');
+  if(v.esp+v.sueltas>0&&num>0&&num<15&&(v.esp+v.sueltas)/T>.15)add(8,`<b>Pocas empresas:</b> con ${num} acciones no estás diversificado. Hacen falta 20–30 o más, o mejor un fondo indexado.`);
+  if(v.cripto/T>.05)add(10,`<b>Cripto al ${fmt(v.cripto/T*100,0)}%:</b> puede caer un 75–85% (ya lo hizo en 2018 y 2022). La mayoría de carteras prudentes no pasan del 1–5%.`,'bad');
+  if(v.tem/T>.15)add(8,`<b>Temáticos al ${fmt(v.tem/T*100,0)}%:</b> los ETFs de IA o semiconductores son apuestas concentradas; mejor como satélite (5–10%).`);
+  if(v.viv/T>.5)add(8,`<b>Más de la mitad en inmuebles:</b> concentrado en un activo poco líquido (vender lleva meses) y en un solo país.`);
+  if(v.mixto>5000){const c=v.mixto*(Math.pow(1.06,20)-Math.pow(1.045,20));add(6,`<b>Fondos de banco:</b> suelen cobrar 1,5–2% al año. Frente a un indexado (0,1–0,2%), en 20 años esa diferencia puede costarte unos <b>${eur(c)}</b> sobre ${eur(v.mixto)}. Revisa su comisión (TER) y valora traspasar a un indexado: sin impuestos.`);}
+  if(bolsa===0&&T>6*g&&g)add(8,`<b>Nada en bolsa:</b> a largo plazo es lo único que ha batido a la inflación con holgura. Si tienes horizonte de 10+ años, considera una parte según tu perfil.`);
+  if(pBolsa>.9&&g&&meses>=3)add(4,`<b>Casi todo en bolsa:</b> en una crisis como 2008 podrías ver caer tu patrimonio un 40–50%. Si no lo aguantarías, añade renta fija.`);
+  if(usd>.85)add(4,`<b>${fmt(usd*100,0)}% en dólares u otras monedas:</b> si el dólar cae (como en 2025, −13%), lo notas en euros.`);
+  if(grp['Bolsa']>0&&v.mundo+v.sp===0&&v.esp+v.sueltas+v.tem>0)add(6,'<b>Sin núcleo indexado:</b> toda tu bolsa son apuestas concretas. Un fondo mundial como base reduce mucho el riesgo.');
+  sc=Math.max(0,Math.min(100,sc));
+  const perf=pBolsa<.1?'Muy conservador':pBolsa<.35?'Conservador':pBolsa<.6?'Moderado':pBolsa<.8?'Dinámico':'Agresivo';
+  out.innerHTML=`<h2>Tu cartera: ${eur(T)}</h2>
+  <div class="bar">${Object.entries(grp).filter(e=>e[1]>0).map(([k,x])=>`<div style="width:${x/T*100}%;background:${GC[k]}" title="${k}"></div>`).join('')}</div>
+  <div class="leg">${Object.entries(grp).filter(e=>e[1]>0).map(([k,x])=>`<span><i style="background:${GC[k]}"></i>${k} <b>${fmt(x/T*100,0)}%</b> (${eur(x)})</span>`).join('')}</div>
+  <div class="grid" style="margin-top:14px">
+   <div class="kpi"><div class="l">Nota de diversificación</div><div class="v" style="color:${sc>=75?'var(--acc)':sc>=50?'var(--warn)':'var(--bad)'}">${sc}/100</div><div class="s">${sc>=75?'Bien repartida':sc>=50?'Mejorable':'Muy concentrada o desequilibrada'}</div></div>
+   <div class="kpi"><div class="l">Se parece a un perfil</div><div class="v" style="font-size:20px">${perf}</div><div class="s">${fmt(pBolsa*100,0)}% en bolsa</div></div>
+   <div class="kpi"><div class="l">Rentabilidad esperable</div><div class="v">≈${fmt(st.r,1)}%</div><div class="s">anual a largo plazo, antes de comisiones</div></div>
+   <div class="kpi"><div class="l">En una crisis grave</div><div class="v" style="color:var(--bad)">≈ -${fmt(Math.min(st.v*3.5,70),0)}%</div><div class="s">≈ ${eur(T*Math.min(st.v*3.5,70)/100)} de caída temporal</div></div>
+   <div class="kpi"><div class="l">Colchón</div><div class="v">${g?fmt(meses,1):'—'}</div><div class="s">meses de gastos en liquidez</div></div>
+   <div class="kpi"><div class="l">Exposición a España</div><div class="v">${fmt(pEs*100,0)}%</div><div class="s">del dinero con riesgo</div></div>
+  </div>
+  ${av.length?'<h3 style="margin-top:14px">Qué revisaría</h3>'+av.join(''):'<div class="good" style="margin-top:12px">No vemos desequilibrios importantes. Mantén el plan y rebalancea una vez al año.</div>'}
+  <p class="small" style="margin-top:12px">Análisis orientativo con supuestos generales; no tiene en cuenta tu situación fiscal ni tus objetivos concretos.</p>`;
+}
+document.querySelectorAll('#cartera input').forEach(i=>i.addEventListener('input',runMC));runMC();
+// ---------- ING ----------
+(()=>{const I=D.ing;
+ document.getElementById('ingKpi').innerHTML=[
+  ['Cuenta Naranja (con nómina)',fmt(I.naranjaNomina)+'% TAE',`sin nómina: ${fmt(I.naranjaSin)}%`],
+  ['Mejor depósito ING','hasta '+fmt(I.dep24max)+'% TAE','a 24 meses'],
+  ['Inflación actual',fmt(inf,1)+'%','lo que pierde el dinero parado'],
+  ['Fondos Naranja',fmt(I.fondosTer)+'% al año','frente a 0,05–0,20% de un indexado barato']
+ ].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('');
+ const rows=[
+  ['Cuenta Naranja con Cuenta Nómina',I.naranjaNomina,'Inmediata','Sin límite'],
+  ['Cuenta Naranja sin nómina',I.naranjaSin,'Inmediata','Sin límite'],
+  ...I.dep12.map(t=>['Depósito Naranja 12 meses ('+(t[1]>=1000000?'más de '+eur(t[0]-1):eur(t[0])+'–'+eur(t[1]))+')',t[2],'12 meses','']),
+  ['Depósito Naranja 24 meses (tramo alto)',I.dep24max,'24 meses',''],
+  ['<i>Comparación: Letras del Tesoro 12 meses</i>',l12.tipo,'12 meses','Sin comisión en tesoro.es'],
+  ['<i>Comparación: mejor cuenta sin condiciones del mercado</i>',bestSin.tae,'Inmediata',bestSin.entidad]
+ ];
+ document.getElementById('ingAhorro').innerHTML='<tr><th>Producto</th><th class="n">TAE</th><th class="n">Real (tras inflación)</th><th>Disponibilidad</th><th>Notas</th></tr>'+
+  rows.map(r=>`<tr><td>${r[0]}</td><td class="n"><b>${fmt(r[1])}%</b></td><td class="n" style="color:${r[1]-inf<0?'var(--bad)':'var(--acc)'}">${fmt(r[1]-inf)}%</td><td>${r[2]}</td><td class="small">${r[3]}</td></tr>`).join('');
+ document.getElementById('ingAhorroNota').innerHTML=`<div class="note">Con 20.000 € en la Cuenta Naranja ganas unos <b>${eur(20000*I.naranjaNomina/100)}</b> al año. En la mejor cuenta del mercado, unos <b>${eur(20000*bestSin.tae/100)}</b>. ${I.bienvenida}.</div>`;
+ document.getElementById('ingFT').textContent='≈'+fmt(I.fondosTer)+'%';document.getElementById('ingCT').textContent='≈'+fmt(I.carterasTer)+'%';
+ document.getElementById('ingBC').innerHTML='<span class="small">'+I.brokerCom+'. Custodia 0 € si haces 1 operación al trimestre. ETFs sin comisión con mínimos: '+I.etfGratisMin+'</span>';
+ document.getElementById('ingN1').textContent=fmt(I.naranjaNomina)+'% TAE (con nómina)';document.getElementById('ingFGD').textContent=I.fgd;
+ document.getElementById('ingSrc').innerHTML=I.fuentes.map(f=>`<li><a href="${f[1]}" target="_blank" rel="noopener">${f[0]}</a></li>`).join('');
+ function calc(){const ini=+document.getElementById('ingIni').value||0,mes=+document.getElementById('ingMes').value||0,n=+document.getElementById('ingAnos').value||0,r=(+document.getElementById('ingRent').value||0)/100;
+  const fv=c=>{const m=Math.pow(1+r-c,1/12)-1;let v=ini;for(let i=0;i<n*12;i++)v=v*(1+m)+mes;return v;};
+  const a=fv(0.0007),b=fv(I.fondosTer/100),c=fv(I.carterasTer/100);
+  document.getElementById('ingCalc').innerHTML=`<table><tr><th>Opción</th><th class="n">Coste</th><th class="n">Valor final</th><th class="n">Diferencia</th></tr>
+   <tr><td>ETF S&amp;P 500 (Bróker Naranja, sin comisión de compra)</td><td class="n">0,07%</td><td class="n"><b>${eur(a)}</b></td><td class="n">—</td></tr>
+   <tr><td>Fondo Naranja S&amp;P 500</td><td class="n">${fmt(I.fondosTer)}%</td><td class="n"><b>${eur(b)}</b></td><td class="n" style="color:var(--bad)">-${eur(a-b)}</td></tr>
+   <tr><td>Cartera Naranja (referencia de coste)</td><td class="n">${fmt(I.carterasTer)}%</td><td class="n"><b>${eur(c)}</b></td><td class="n" style="color:var(--bad)">-${eur(a-c)}</td></tr></table>
+   <p class="small">Aportas ${eur(ini+mes*12*n)} en total. Misma rentabilidad bruta para todos; la única diferencia es el coste. La Cartera Naranja no es solo S&amp;P 500, se incluye para ver el efecto de su comisión.</p>`;}
+ ['ingIni','ingMes','ingAnos','ingRent'].forEach(i=>document.getElementById(i).addEventListener('input',calc));calc();
+})();
+// ---------- IBEX ----------
+(()=>{const X=D.ibex;
+ document.getElementById('ixKpi').innerHTML=[
+  ['Ibex 35',fmt(X.nivel,1)+' puntos','cierre '+X.fecha],
+  ['En lo que va de año',(X.ytd>0?'+':'')+fmt(X.ytd)+'%','2025: +49,3%, su mejor año desde 1993'],
+  ['Con potencial positivo',X.valores.filter(v=>v.pot>0).length+' de '+X.valores.length,'valores con dato de consenso'],
+  ['Esperan bajadas',X.valores.filter(v=>v.pot<0).length,'según el precio objetivo medio']
+ ].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('');
+ document.getElementById('ixFecha').textContent='Datos: '+X.fechaConsenso+'. Se actualizan a diario.';
+ const max=Math.max(...X.valores.map(v=>Math.abs(v.pot)));
+ function tabla(){const ord=document.querySelector('input[name=ixOrd]:checked').value;
+  const rows=[...X.valores].sort((a,b)=>(b[ord]??-999)-(a[ord]??-999));
+  document.getElementById('ixTab').innerHTML='<tr><th>Valor</th><th>Potencial a 12 meses</th><th class="n">Precio objetivo</th><th class="n">En 2026</th><th>Comentario</th></tr>'+
+   rows.map(v=>{const w=Math.abs(v.pot)/max*100,pos=v.pot>=0;
+    return `<tr><td><b>${v.v}</b></td><td style="min-width:170px"><div style="display:flex;align-items:center;gap:6px"><div style="flex:1;height:10px;background:var(--line);border-radius:5px;position:relative;overflow:hidden"><div style="position:absolute;${pos?'left:50%':'right:50%'};width:${w/2}%;height:100%;background:${pos?'var(--acc)':'var(--bad)'}"></div></div><b style="width:52px;text-align:right;color:${pos?'var(--acc)':'var(--bad)'}">${pos?'+':''}${fmt(v.pot,1)}%</b></div></td>
+    <td class="n">${v.po?fmt(v.po)+' €':'—'}</td><td class="n" style="color:${v.ytd==null?'inherit':v.ytd<0?'var(--bad)':'var(--acc)'}">${v.ytd==null?'—':(v.ytd>0?'+':'')+fmt(v.ytd,1)+'%'}</td><td class="small">${v.nota}</td></tr>`}).join('');}
+ document.querySelectorAll('input[name=ixOrd]').forEach(r=>r.onchange=tabla);tabla();
+ document.getElementById('ixSin').textContent='Sin dato de consenso reciente todavía: '+X.sinDato+'. La actualización diaria los irá completando.';
+ document.getElementById('ixSrc').innerHTML=X.fuentes.map(f=>`<li><a href="${f[1]}" target="_blank" rel="noopener">${f[0]}</a></li>`).join('');
+})();
+// ---------- GANAR MÁS ----------
+document.querySelectorAll('#gNav label').forEach(l=>l.onclick=()=>document.getElementById(l.dataset.go).scrollIntoView({behavior:'smooth',block:'start'}));
+const tramosAh=[[6000,.19],[50000,.21],[200000,.23],[300000,.27],[Infinity,.30]];
+function impAh(x){let t=0,prev=0;for(const [lim,r] of tramosAh){if(x>prev){t+=(Math.min(x,lim)-prev)*r;}prev=lim;}return t;}
+const tramosGen=[[12450,.19],[20200,.24],[35200,.30],[60000,.37],[300000,.45],[Infinity,.47]];
+function marg(b){for(const [lim,r] of tramosGen)if(b<=lim)return r;return .47;}
+function impGen(x){let t=0,prev=0;for(const [lim,r] of tramosGen){if(x>prev)t+=(Math.min(x,lim)-prev)*r;prev=lim;}return t;}
+function runFis(){
+  const G=+document.getElementById('fG').value||0,P=+document.getElementById('fP').value||0,B=+document.getElementById('fB').value||0,Ap=Math.min(+document.getElementById('fA').value||0,1500);
+  const comp=Math.min(G,P),ah=impAh(G)-impAh(G-comp);
+  document.getElementById('fRes1').innerHTML=G<=0?'<p class="small">Si no has vendido nada con beneficio este año, no hay nada que compensar (salvo pérdidas de años anteriores a punto de caducar).</p>':
+   `<div class="good">Si vendes ${eur(comp)} en pérdidas antes del 31/12, pagarías <b>${eur(ah)} menos</b> (de ${eur(impAh(G))} a ${eur(impAh(G-comp))}).${P>G?` Te sobrarían ${eur(P-G)} de pérdidas para compensar en los próximos 4 años.`:''}</div>`;
+  const ah2=impGen(B)-impGen(Math.max(0,B-Ap));
+  document.getElementById('fRes2').innerHTML=`<div class="good">Aportando ${eur(Ap)}, Hacienda te devolvería o dejaría de cobrarte unos <b>${eur(ah2)}</b> (tu tipo marginal ronda el ${fmt(marg(B)*100,0)}%).</div>
+   <p class="small">${marg(B)<=.24?'Con un tipo marginal bajo, la ventaja es pequeña: al rescatar podrías pagar parecido. Seguramente te compense más un fondo indexado normal.':'Con tipo marginal alto, el ahorro es real, sobre todo si al jubilarte vas a tributar a un tipo menor.'} ${+document.getElementById('fA').value>1500?'Se ha limitado a 1.500 €, el máximo general desgravable.':''}</p>`;
+}
+['fG','fP','fB','fA'].forEach(i=>document.getElementById(i).addEventListener('input',runFis));runFis();
+
+document.getElementById('tBon').innerHTML='<tr><th>Banco</th><th>Te dan</th><th>Qué piden</th><th>Permanencia</th><th>Hasta</th></tr>'+
+ [...D.bonos].sort((a,b)=>b.importe-a.importe).map(b=>`<tr><td><b>${b.banco}</b></td><td><b>${b.txt}</b></td><td class="small">${b.req}</td><td class="small">${b.perm}</td><td>${b.plazo?`<span class="tag w">${b.plazo}</span>`:'—'}</td></tr>`).join('');
+document.getElementById('bonSrc').innerHTML=D.bonosFuentes.map(f=>`<li><a href="${f[1]}" target="_blank" rel="noopener">${f[0]}</a></li>`).join('');
+
+function runObj(){
+  const obj=+document.getElementById('oObj').value||0,n=Math.max(1,+document.getElementById('oAn').value||1),ya=+document.getElementById('oYa').value||0,que=document.getElementById('oQue').value||'tu objetivo';
+  const opt= n<3?{n:'Cuenta remunerada, depósitos o Letras',r:Math.min(bestSin.tae,3)/100,w:'Con menos de 3 años no conviene arriesgar en bolsa: una mala racha no daría tiempo a recuperarse.'}
+    : n<7?{n:'Perfil conservador (algo de bolsa, mucha renta fija)',r:stats(CART['Conservador'].w).r/100,w:'Entre 3 y 7 años, una parte pequeña en bolsa ayuda, pero el grueso en renta fija y liquidez.'}
+    :{n:'Perfil moderado o dinámico (mayoría en bolsa indexada)',r:stats(CART['Moderado'].w).r/100,w:'Con más de 7 años, la bolsa diversificada ha sido históricamente lo que más rinde. Conforme se acerque la fecha, ve pasando a liquidez.'};
+  const m=Math.pow(1+opt.r,1/12)-1,N=n*12,fvYa=ya*Math.pow(1+m,N),falta=Math.max(0,obj-fvYa);
+  const pago=falta*m/(Math.pow(1+m,N)-1),sinR=Math.max(0,obj-ya)/N;
+  document.getElementById('oRes').innerHTML=`<div class="grid">
+   <div class="kpi"><div class="l">Ahorro mensual necesario</div><div class="v">${eur(pago)}</div><div class="s">invirtiendo en: ${opt.n}</div></div>
+   <div class="kpi"><div class="l">Sin invertir (dinero parado)</div><div class="v">${eur(sinR)}</div><div class="s">al mes, y perdiendo poder de compra</div></div>
+   <div class="kpi"><div class="l">Rentabilidad supuesta</div><div class="v">≈${fmt(opt.r*100,1)}%</div><div class="s">anual, sin garantías</div></div></div>
+   <p class="small" style="margin-top:8px">${que}: ${opt.w} Recuerda que con la inflación actual, ${eur(obj)} dentro de ${n} años comprarán lo que hoy ${eur(obj/Math.pow(1.025,n))} (suponiendo 2,5% anual).</p>`;
+}
+['oQue','oObj','oAn','oYa'].forEach(i=>document.getElementById(i).addEventListener('input',runObj));runObj();
+
+function runHip(){
+  const X=+document.getElementById('hX').value||0,t=(+document.getElementById('hT').value||0)/100,n=+document.getElementById('hA').value||0,r=(+document.getElementById('hR').value||0)/100;
+  const ahorroInt=X*(Math.pow(1+t,n)-1);const brutoInv=X*(Math.pow(1+r,n)-1);const netoInv=brutoInv-impAh(brutoInv);
+  const gana=netoInv>ahorroInt;
+  document.getElementById('hRes').innerHTML=`<table><tr><th>Opción</th><th class="n">Lo que ganas o te ahorras en ${n} años</th><th>Riesgo</th></tr>
+   <tr><td>Amortizar hipoteca</td><td class="n"><b>${eur(ahorroInt)}</b></td><td>Ninguno: es una rentabilidad segura del ${fmt(t*100,1)}%</td></tr>
+   <tr><td>Invertir</td><td class="n"><b>${eur(netoInv)}</b> <span class="small">(tras impuestos)</span></td><td>Puede salir mejor o peor; no está garantizado</td></tr></table>
+   <div class="${gana?'good':'note'}" style="margin-top:8px">${gana?`Con estos supuestos, invertir saldría mejor por unos ${eur(netoInv-ahorroInt)}, pero a cambio de asumir riesgo.`:`Con estos supuestos, amortizar es mejor y además sin riesgo.`} ${t<.03?'Con una hipoteca por debajo del 3%, invertir a largo plazo suele ganar en promedio.':t>.04?'Con una hipoteca por encima del 4%, amortizar es muy difícil de batir con seguridad.':''}</div>
+   <p class="small">Si amortizas, elige normalmente reducir plazo (ahorras más intereses) salvo que necesites bajar la cuota. Mira si tu banco cobra comisión por amortizar y, si compraste la vivienda antes de 2013, si aún aplicas la deducción por vivienda habitual. Nunca amortices con el dinero del colchón de emergencia.</p>`;
+}
+['hX','hT','hA','hR'].forEach(i=>document.getElementById(i).addEventListener('input',runHip));runHip();
+
+const GAS=[['Luz',60,50],['Gas',30,25],['Móvil e internet',55,35],['Seguro de coche',40,32],['Seguro de hogar',20,15],['Seguro de vida',15,10],['Suscripciones (TV, música…)',35,20],['Gimnasio',40,30],['Comisiones bancarias',0,0]];
+let gasSaved=null;try{gasSaved=JSON.parse(localStorage.getItem('gastos')||'null')}catch(_){}
+document.getElementById('tGas').innerHTML='<tr><th>Gasto</th><th class="n">Pagas al mes (€)</th><th class="n">Podrías pagar (€)</th></tr>'+GAS.map((g,i)=>`<tr><td>${g[0]}</td><td class="n"><input type="number" data-g="${i}a" value="${gasSaved?.[i+'a']??g[1]}" style="width:100px"></td><td class="n"><input type="number" data-g="${i}b" value="${gasSaved?.[i+'b']??g[2]}" style="width:100px"></td></tr>`).join('');
+function runGas(){const v={};document.querySelectorAll('[data-g]').forEach(i=>v[i.dataset.g]=+i.value||0);try{localStorage.setItem('gastos',JSON.stringify(v))}catch(_){}
+  let mes=0;GAS.forEach((_,i)=>mes+=Math.max(0,v[i+'a']-v[i+'b']));
+  const fv=y=>{const m=Math.pow(1.06,1/12)-1;let x=0;for(let k=0;k<y*12;k++)x=x*(1+m)+mes;return x;};
+  document.getElementById('gasRes').innerHTML=`<div class="grid"><div class="kpi"><div class="l">Ahorro al mes</div><div class="v">${eur(mes)}</div></div><div class="kpi"><div class="l">Al año</div><div class="v">${eur(mes*12)}</div></div>
+   <div class="kpi"><div class="l">Invertido 10 años (≈6%)</div><div class="v">${eur(fv(10))}</div></div><div class="kpi"><div class="l">Invertido 20 años (≈6%)</div><div class="v">${eur(fv(20))}</div></div></div>`;}
+document.querySelectorAll('[data-g]').forEach(i=>i.addEventListener('input',runGas));runGas();
+
+// ---------- MI SEGUIMIENTO ----------
+const PR=D.precios.lista;
+document.getElementById('sIbexList').innerHTML=Object.keys(PR).map(k=>`<option value="${k}">`).join('');
+const TIPOS=['Acción','ETF','Fondo','Depósito','Letras/Bonos','Cuenta','Cripto','Otro'];
+let S=[];try{S=JSON.parse(localStorage.getItem('seguimiento')||'[]')}catch(_){}
+if(!S.length)S=[{n:'',t:'ETF',u:0,pc:0,pa:0,v:'',o:0}];
+function saveS(){try{localStorage.setItem('seguimiento',JSON.stringify(S))}catch(_){}}
+function drawS(){
+  document.getElementById('sTab').innerHTML='<tr><th>Nombre</th><th>Tipo</th><th class="n">Unidades / importe</th><th class="n">Precio de compra</th><th class="n">Precio actual</th><th>Vence</th><th class="n">% objetivo</th><th></th></tr>'+
+   S.map((r,i)=>{const auto=PR[r.n];return `<tr>
+    <td><input list="sIbexList" data-s="${i}" data-f="n" value="${r.n}" placeholder="p. ej. SXR8, Inditex, Depósito X" style="min-width:150px;font:inherit;padding:6px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)"></td>
+    <td><select data-s="${i}" data-f="t">${TIPOS.map(t=>`<option ${t===r.t?'selected':''}>${t}</option>`).join('')}</select></td>
+    <td class="n"><input type="number" data-s="${i}" data-f="u" value="${r.u}" style="width:95px"></td>
+    <td class="n"><input type="number" data-s="${i}" data-f="pc" value="${r.pc}" step="0.01" style="width:95px"></td>
+    <td class="n">${auto?`<b>${fmt(auto)}</b><br><span class="small">auto ${D.precios.fecha}</span>`:`<input type="number" data-s="${i}" data-f="pa" value="${r.pa}" step="0.01" style="width:95px">`}</td>
+    <td><input type="date" data-s="${i}" data-f="v" value="${r.v}" style="font:inherit;padding:5px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)"></td>
+    <td class="n"><input type="number" data-s="${i}" data-f="o" value="${r.o}" style="width:70px"></td>
+    <td><button data-del="${i}" style="border:0;background:none;cursor:pointer;color:var(--bad);font-size:18px" title="Quitar">×</button></td></tr>`}).join('');
+  document.querySelectorAll('[data-s]').forEach(el=>el.addEventListener(el.tagName==='SELECT'||el.type==='date'?'change':'change',()=>{const r=S[+el.dataset.s],f=el.dataset.f;r[f]=['u','pc','pa','o'].includes(f)?(+el.value||0):el.value;if(f==='n'&&PR[r.n])r.t='Acción';saveS();drawS();}));
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{S.splice(+b.dataset.del,1);if(!S.length)S.push({n:'',t:'ETF',u:0,pc:0,pa:0,v:'',o:0});saveS();drawS();});
+  runS();
+}
+document.getElementById('sAdd').onclick=()=>{S.push({n:'',t:'ETF',u:0,pc:0,pa:0,v:'',o:0});saveS();drawS();};
+function runS(){
+  const rows=S.filter(r=>r.n&&r.u>0).map(r=>{const unit=['Depósito','Cuenta','Letras/Bonos'].includes(r.t)&&!r.pc;const pa=PR[r.n]??r.pa;
+    const coste=unit?r.u:r.u*r.pc, valor=unit?r.u:(pa?r.u*pa:r.u*r.pc);return {...r,coste,valor,pa};});
+  const out=document.getElementById('sOut');
+  if(!rows.length){out.innerHTML='<p class="small">Añade tus inversiones arriba. Para depósitos y cuentas basta con poner el importe en «Unidades / importe» y dejar el precio a 0.</p>';return;}
+  const T=rows.reduce((s,r)=>s+r.valor,0),C=rows.reduce((s,r)=>s+r.coste,0),hoy=new Date();
+  const al=[];
+  rows.forEach(r=>{if(r.v){const d=(new Date(r.v)-hoy)/864e5;if(d<0)al.push(`<b>${r.n}</b> venció el ${new Date(r.v).toLocaleDateString('es-ES')}: decide dónde va ese dinero (mira Bancos).`);else if(d<=30)al.push(`<b>${r.n}</b> vence en ${Math.ceil(d)} días (${new Date(r.v).toLocaleDateString('es-ES')}).`);}
+   const peso=r.valor/T*100;if(r.o>0&&Math.abs(peso-r.o)>5)al.push(`<b>${r.n}</b> pesa un ${fmt(peso,0)}% y tu objetivo es ${fmt(r.o,0)}%: toca rebalancear (${peso>r.o?'vender':'comprar'} unos ${eur(Math.abs(peso-r.o)/100*T)}).`);
+   if(r.pc&&r.pa&&r.pa<r.pc&&['Acción','ETF','Fondo'].includes(r.t)&&hoy.getMonth()>=9)al.push(`<b>${r.n}</b> está en pérdidas (${eur(r.valor-r.coste)}). Si este año tienes ganancias, mira «Ganar más → Fin de año».`);});
+  out.innerHTML=`<div class="grid">
+    <div class="kpi"><div class="l">Valor actual</div><div class="v">${eur(T)}</div></div>
+    <div class="kpi"><div class="l">Lo invertido</div><div class="v">${eur(C)}</div></div>
+    <div class="kpi"><div class="l">Ganancia / pérdida</div><div class="v" style="color:${T>=C?'var(--acc)':'var(--bad)'}">${T>=C?'+':''}${eur(T-C)}</div><div class="s">${C?(T>=C?'+':'')+fmt((T/C-1)*100,1)+'%':''}</div></div></div>
+   <div class="tw" style="margin-top:10px"><table><tr><th>Inversión</th><th class="n">Valor</th><th class="n">Peso</th><th class="n">Resultado</th></tr>${rows.sort((a,b)=>b.valor-a.valor).map(r=>`<tr><td>${r.n} <span class="small">${r.t}</span></td><td class="n">${eur(r.valor)}</td><td class="n">${fmt(r.valor/T*100,0)}%${r.o?` <span class="small">(obj. ${r.o}%)</span>`:''}</td><td class="n" style="color:${r.valor>=r.coste?'var(--acc)':'var(--bad)'}">${r.valor>=r.coste?'+':''}${eur(r.valor-r.coste)}</td></tr>`).join('')}</table></div>
+   ${al.length?'<h3 style="margin-top:12px">Avisos</h3>'+al.map(a=>`<div class="note" style="margin-top:6px">${a}</div>`).join(''):'<div class="good" style="margin-top:10px">Sin avisos: nada vence pronto y tu reparto está dentro de objetivo.</div>'}
+   <p class="small" style="margin-top:8px">Para analizar si está bien diversificado, usa también «Revisa tu cartera».</p>`;
+}
+drawS();
+
+
+
+</script>
+</body>
+</html>
