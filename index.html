@@ -81,6 +81,7 @@ canvas{max-height:360px}
 
 .rcard{border:2px solid var(--line);border-radius:14px;padding:14px}
 .rcard.best{border-color:var(--acc)}
+.rcard{cursor:pointer;transition:box-shadow .15s}.rcard.sel{box-shadow:0 0 0 3px var(--acc) inset}tr[data-sel]{cursor:pointer}tr[data-sel].sel td{background:var(--acc2)}.chk{display:inline-block;width:18px;height:18px;border:2px solid var(--line);border-radius:5px;text-align:center;line-height:14px;font-size:13px;font-weight:700;color:#fff;vertical-align:middle}tr.sel .chk,.rcard.sel .chk{background:var(--acc);border-color:var(--acc)}
 .badge{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;background:var(--acc);color:#fff;margin-bottom:6px}
 @media (prefers-color-scheme:dark){.badge{color:#111}}
 </style>
@@ -341,6 +342,10 @@ canvas{max-height:360px}
   </div>
   <div id="rCol0"></div>
   <div class="grid" id="rTop"></div>
+  <div class="card"><h3>Cómo crecería tu dinero</h3>
+    <div class="good" style="margin-bottom:8px">👆 <b>Toca las tarjetas de arriba o las filas de la tabla de abajo</b> para añadir o quitar opciones del gráfico.</div>
+    <div style="position:relative;height:340px"><canvas id="rChart"></canvas></div>
+    <p class="small" id="rChNota"></p></div>
   <div class="card"><h3>Reparto recomendado para tu caso</h3><div id="rRep"></div></div>
   <div class="card"><h3>Todas las opciones adecuadas para ti, de más segura a más arriesgada</h3><div class="tw"><table id="rTab"></table></div>
     <p class="small">Ganancias estimadas para el plazo elegido, después de impuestos (19–21%) y antes de inflación. En las opciones con riesgo se muestra el resultado típico y el de un escenario malo (1 de cada 10 casos), basados en datos históricos: no están garantizados. Los productos son ejemplos representativos, no una recomendación personalizada; confirma condiciones antes de contratar.</p></div>
@@ -1397,10 +1402,10 @@ function runRec(){
   const depBest=deps[0], depEs=deps.find(d=>d.fgd==='España');
   const l12=D.tesoro.find(t=>t.producto==='Letras 12 meses'), b5=D.tesoro.find(t=>t.producto==='Bono 5 años'), o10=D.tesoro.find(t=>t.producto==='Obligación 10 años');
   const cuentaEst=Math.min(bestSin.tae,3.0); // tras promociones, tipo sostenible aprox
-  const segura=(nombre,detalle,tae,tipo,gar)=>({nombre,detalle,tae,tipo,gar,riesgo:0,ganT:net(A*(Math.pow(1+tae/100,n)-1)),malo:null});
+  const segura=(nombre,detalle,tae,tipo,gar)=>({nombre,detalle,tae,tipo,gar,riesgo:0,ganT:net(A*(Math.pow(1+tae/100,n)-1)),malo:null,f:t=>A*Math.pow(1+tae/100,t),fb:null});
   const conRiesgo=(nombre,detalle,w,riesgo,gar)=>{const s=stats(w);const mu=Math.log(1+s.r/100),sg=s.v/100;
     const med=A*Math.exp((mu-sg*sg/2)*n),bad=A*Math.exp((mu-sg*sg/2)*n-1.2816*sg*Math.sqrt(n));
-    return {nombre,detalle,tae:s.r,tipo:'esperable',gar,riesgo,ganT:net(med-A),malo:net(bad-A),caida:Math.min(s.v*3.5,70)};};
+    return {nombre,detalle,tae:s.r,tipo:'esperable',gar,riesgo,ganT:net(med-A),malo:net(bad-A),f:t=>A*Math.exp((mu-sg*sg/2)*t),fb:t=>A*Math.exp((mu-sg*sg/2)*t-1.2816*sg*Math.sqrt(t)),caida:Math.min(s.v*3.5,70)};};
   const ops=[];
   ops.push(segura('Cuenta remunerada',`${bestSin.entidad} ${fmt(bestSin.tae)}% TAE (promoción); después suele bajar. Calculado con ≈${fmt(cuentaEst)}%`,cuentaEst,'capital garantizado; el tipo puede bajar','FGD 100.000 €'));
   if(depBest)ops.push(segura('Depósito a plazo',`${depBest.entidad}, ${depBest.plazo} meses al ${fmt(depBest.tae)}% TAE (FGD ${depBest.fgd})${depEs&&depEs!==depBest?` · Con banco español: ${depEs.entidad} ${fmt(depEs.tae)}%`:''}`,depBest.tae,'garantizada','FGD 100.000 €'));
@@ -1426,17 +1431,43 @@ function runRec(){
   // top cards
   const seguras=ops.filter(o=>o.riesgo===0).sort((a,b)=>b.ganT-a.ganT);
   const masRent=[...ops].filter(o=>o.riesgo<= [0.5,2,3][ri]).sort((a,b)=>b.ganT-a.ganT)[0];
-  const card=(b,t,o,extra)=>`<div class="card rcard ${b==='Recomendado'?'best':''}"><span class="badge">${b}</span><h3>${t}</h3><p style="margin:0 0 8px">${o}</p>${extra||''}</div>`;
+  const card=(b,t,o,extra,key)=>`<div class="card rcard ${b==='Recomendado'?'best':''}" data-card="${key}"><span class="badge">${b}</span> <span class="chk">✓</span><h3>${t}</h3><p style="margin:0 0 8px">${o}</p>${extra||''}</div>`;
   document.getElementById('rTop').innerHTML=
-   card('Lo más seguro',seguras[0].nombre,seguras[0].detalle,`<div class="kpi"><div class="l">Ganarías en ${n} ${n===1?'año':'años'}</div><div class="v">${eur(seguras[0].ganT)}</div><div class="s">garantizado · ${seguras[0].gar}</div></div>`)+
-   (masRent&&masRent!==seguras[0]?card('Lo más rentable para tu riesgo',masRent.nombre,masRent.detalle,`<div class="kpi"><div class="l">Ganancia típica en ${n} ${n===1?'año':'años'}</div><div class="v">${eur(masRent.ganT)}</div><div class="s">${masRent.malo!=null?`en un mal escenario: ${masRent.malo>=0?'+':''}${eur(masRent.malo)}`:'garantizado'}</div></div>`):'')+
-   card('Recomendado','Reparto equilibrado',`Combina seguridad y rentabilidad según tu plazo y tu riesgo (${rv}% en bolsa).`,`<div class="kpi"><div class="l">Ganancia típica en ${n} ${n===1?'año':'años'}</div><div class="v">${eur(net(med-A))}</div><div class="s">${rv>0?`en un mal escenario: ${bad-A>=0?'+':''}${eur(net(bad-A))}`:'prácticamente garantizado'}</div></div>`);
+   card('Lo más seguro',seguras[0].nombre,seguras[0].detalle,`<div class="kpi"><div class="l">Ganarías en ${n} ${n===1?'año':'años'}</div><div class="v">${eur(seguras[0].ganT)}</div><div class="s">garantizado · ${seguras[0].gar}</div></div>`,seguras[0].nombre)+
+   (masRent&&masRent!==seguras[0]?card('Lo más rentable para tu riesgo',masRent.nombre,masRent.detalle,`<div class="kpi"><div class="l">Ganancia típica en ${n} ${n===1?'año':'años'}</div><div class="v">${eur(masRent.ganT)}</div><div class="s">${masRent.malo!=null?`en un mal escenario: ${masRent.malo>=0?'+':''}${eur(masRent.malo)}`:'garantizado'}</div></div>`,masRent.nombre):'')+
+   card('Recomendado','Reparto equilibrado',`Combina seguridad y rentabilidad según tu plazo y tu riesgo (${rv}% en bolsa).`,`<div class="kpi"><div class="l">Ganancia típica en ${n} ${n===1?'año':'años'}</div><div class="v">${eur(net(med-A))}</div><div class="s">${rv>0?`en un mal escenario: ${bad-A>=0?'+':''}${eur(net(bad-A))}`:'prácticamente garantizado'}</div></div>`,'__rep');
   document.getElementById('rRep').innerHTML=`<div class="bar">${Object.entries(rep).map(([k,x])=>`<div style="width:${x}%;background:${CC[k]||'#999'}"></div>`).join('')}</div>
    <table><tr><th>Dónde</th><th class="n">%</th><th class="n">Importe</th></tr>${Object.entries(rep).map(([k,x])=>`<tr><td><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${CC[k]||'#999'};margin-right:6px"></i>${NOM[k]}</td><td class="n">${x}%</td><td class="n"><b>${eur(A*x/100)}</b></td></tr>`).join('')}</table>
    <p class="small">${n<=2?'Con un plazo tan corto, casi todo debe estar en productos garantizados.':''} ${ri===0&&n>=7?'Aunque prefieres no arriesgar, con tantos años una parte en bolsa ha protegido históricamente frente a la inflación; puedes bajarla si te quita el sueño.':''} ${A>100000?'Recuerda: más de 100.000 € en depósitos, repártelos entre bancos para que todo esté cubierto por el FGD.':''} Revisa el reparto una vez al año.</p>`;
-  document.getElementById('rTab').innerHTML='<tr><th>Opción</th><th>Detalle de hoy</th><th class="n">Rentabilidad anual</th><th class="n">Ganancia en el plazo</th><th class="n">Mal escenario</th><th>Garantía</th></tr>'+
-   ops.sort((a,b)=>a.riesgo-b.riesgo||b.ganT-a.ganT).map(o=>`<tr><td><b>${o.nombre}</b></td><td class="small">${o.detalle}</td><td class="n">${fmt(o.tae,2)}%<br><span class="small">${o.tipo}</span></td><td class="n"><b>${eur(o.ganT)}</b></td><td class="n" style="color:${o.malo!=null&&o.malo<0?'var(--bad)':'inherit'}">${o.malo==null?'—':(o.malo>=0?'+':'')+eur(o.malo)}</td><td class="small">${o.gar}</td></tr>`).join('');
+  document.getElementById('rTab').innerHTML='<tr><th></th><th>Opción</th><th>Detalle de hoy</th><th class="n">Rentabilidad anual</th><th class="n">Ganancia en el plazo</th><th class="n">Mal escenario</th><th>Garantía</th></tr>'+
+   ops.sort((a,b)=>a.riesgo-b.riesgo||b.ganT-a.ganT).map(o=>`<tr data-sel="${o.nombre}"><td><span class="chk">✓</span></td><td><b>${o.nombre}</b></td><td class="small">${o.detalle}</td><td class="n">${fmt(o.tae,2)}%<br><span class="small">${o.tipo}</span></td><td class="n"><b>${eur(o.ganT)}</b></td><td class="n" style="color:${o.malo!=null&&o.malo<0?'var(--bad)':'inherit'}">${o.malo==null?'—':(o.malo>=0?'+':'')+eur(o.malo)}</td><td class="small">${o.gar}</td></tr>`).join('');
+  // ---- selección y gráfico ----
+  const series={...Object.fromEntries(ops.map(o=>[o.nombre,o])),'__rep':{nombre:'Reparto equilibrado',f:t=>A*Math.exp((mu-sg*sg/2)*t),fb:rv>0?t=>A*Math.exp((mu-sg*sg/2)*t-1.2816*sg*Math.sqrt(t)):null}};
+  const valid=[...rSel].filter(k=>series[k]);
+  if(!valid.length||rKey!==n+'|'+ri){rSel=new Set([seguras[0].nombre,'__rep']);if(masRent)rSel.add(masRent.nombre);}
+  rKey=n+'|'+ri;
+  const paint=()=>{document.querySelectorAll('#rTab tr[data-sel]').forEach(tr=>tr.classList.toggle('sel',rSel.has(tr.dataset.sel)));
+    document.querySelectorAll('#rTop [data-card]').forEach(c=>c.classList.toggle('sel',rSel.has(c.dataset.card)));};
+  const toggle=k=>{rSel.has(k)?rSel.delete(k):rSel.add(k);paint();drawRec();};
+  document.querySelectorAll('#rTab tr[data-sel]').forEach(tr=>tr.onclick=()=>toggle(tr.dataset.sel));
+  document.querySelectorAll('#rTop [data-card]').forEach(c=>c.onclick=()=>toggle(c.dataset.card));
+  paint();
+  function drawRec(){
+    const step=n<=2?0.25:1,T=[];for(let t=0;t<=n+1e-9;t+=step)T.push(+t.toFixed(2));
+    const lab=T.map(t=>t===0?'Hoy':step<1?(t*12)+' meses':'Año '+t);
+    const PAL=['#1f5f4a','#d07a2c','#5c7fa3','#8a3b7a','#b39b2d','#b8452e','#2a9d8f','#777'];
+    const ds=[];[...rSel].filter(k=>series[k]).forEach((k,i)=>{const s=series[k],c=PAL[i%PAL.length];
+      ds.push({label:s.nombre,data:T.map(t=>Math.round(s.f(t))),borderColor:c,backgroundColor:c,borderWidth:k==='__rep'?3.5:2.5,pointRadius:0,tension:.2});
+      if(s.fb)ds.push({label:s.nombre+' (mal escenario)',data:T.map(t=>Math.round(s.fb(t))),borderColor:c,borderDash:[5,5],borderWidth:1.5,pointRadius:0,tension:.2});});
+    ds.push({label:'Lo que pones',data:T.map(()=>A),borderColor:getComputedStyle(document.documentElement).getPropertyValue('--mut'),borderDash:[2,4],borderWidth:1.5,pointRadius:0});
+    document.getElementById('rChNota').textContent=rSel.size?'Línea continua: resultado típico. Discontinua: mal escenario (1 de cada 10 casos). Valores antes de impuestos; las opciones garantizadas no tienen mal escenario.':'No hay ninguna opción seleccionada: toca una tarjeta o una fila.';
+    if(typeof Chart==='undefined')return;
+    const cfg={type:'line',data:{labels:lab,datasets:ds},options:{maintainAspectRatio:false,animation:false,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{filter:it=>!it.text.includes('mal escenario')}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+eur(c.raw)}}},scales:{y:{ticks:{callback:v=>eur(v)}}}}};
+    if(rch){rch.data=cfg.data;rch.options=cfg.options;rch.update();}else rch=new Chart(document.getElementById('rChart'),cfg);
+  }
+  drawRec();
 }
+let rSel=new Set(),rKey='',rch=null;
 ['rImp','rAn','rRi','rCol'].forEach(i=>document.getElementById(i).addEventListener('input',runRec));runRec();
 
 // ---------- AMPLIAR GRÁFICOS Y TABLAS ----------
@@ -1456,7 +1487,7 @@ function runRec(){
   Z.classList.add('on');document.body.style.overflow='hidden';
  }
  const addBar=(target,el)=>{const bar=document.createElement('div');bar.className='zbar';bar.innerHTML='<span>Pulsa para verlo en grande</span><button class="zbtn">⤢ Ampliar</button>';
-   bar.querySelector('button').onclick=()=>open(el);target.parentNode.insertBefore(bar,target);el.classList.add('zoomable');el.addEventListener('click',e=>{if(el.tagName!=='CANVAS'&&e.target.closest('a,button'))return;if(el.tagName==='CANVAS'&&window.innerWidth>700)return;open(el);});};
+   bar.querySelector('button').onclick=()=>open(el);target.parentNode.insertBefore(bar,target);el.classList.add('zoomable');el.addEventListener('click',e=>{if(el.tagName!=='CANVAS'&&e.target.closest('a,button,[data-sel]'))return;if(el.tagName==='CANVAS'&&window.innerWidth>700)return;open(el);});};
  document.querySelectorAll('canvas').forEach(c=>addBar(c,c));
  document.querySelectorAll('.tw').forEach(t=>{if(t.closest('#zoom'))return;if(t.querySelector('input,select'))return;
    const tb=t.querySelector('table');if(!tb)return;addBar(t,t);});
