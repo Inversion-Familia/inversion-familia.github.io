@@ -107,12 +107,16 @@ canvas{max-height:360px}
   "naranjaNomina": 1.00, "naranjaSin": 0.30,
   "dep12": [[0,50000,2.00],[50001,100000,2.15],[100001,1000000,2.30]],
   "dep24max": 2.60,
-  "bienvenida": "Depósito Bienvenida 3% TAE a 3 meses (hasta 50.000 €), solo para nuevos clientes",
+  "bienvenida": "Depósito Bienvenida 3% TAE a 3 meses (hasta 50.000 €), solo para nuevos clientes, hasta el 31/12/2026",
+  "promosClientes": [
+   {"txt":"Depósito a 4 meses al 3% TAE (2,971% TIN)","tae":3.00,"plazo":"4 meses","hasta":"30/11/2026","detalle":"Para dinero nuevo que traigas a ING desde otro banco (el que ya tienes en ING no cuenta). Sin mínimo y hasta 250.000 € por cliente. Solo si te aparece habilitado en tu área personal. Intereses al vencimiento; cancelar antes tiene penalización."},
+   {"txt":"Depósito a 3 meses al 3% TAE en la app","tae":3.00,"plazo":"3 meses","hasta":"","detalle":"ING lo ha ofrecido a algunos clientes para dinero que ya está en el banco, contratándolo desde la app. Mira si te aparece."}
+  ],
   "fondosTer": 1.10, "carterasTer": 0.99,
   "brokerCom": "3 € + 0,10% por operación (menos de 15 operaciones/trimestre); 1,5 € + 0,05% con 15 o más",
   "etfGratisMin": "iShares 2.500 € · Amundi 2.000 € · Xtrackers 1.500 € · WisdomTree 1.000 € por compra",
   "fgd": "Países Bajos (100.000 €)",
-  "fuentes": [["Finect – Cuenta Naranja y promoción nómina","https://www.finect.com/usuario/davidcarmona/articulos/ing-amplia-su-oferta-de-400-euros-por-domiciliar-la-nomina-hasta-el-15-de-noviembre"],["Finect – Depósitos ING","https://www.finect.com/usuario/davidcarmona/articulos/ing-sube-hasta-el-260-tae-en-sus-depositos-a-24-meses-y-estrena-dos-nuevos-productos-a-6-meses"],["Rankia – Fondos y Carteras Naranja","https://www.rankia.com/blog/fondos-inversion/5259067-ing-mejores-fondos-cartera-naranja"],["Rankia – Bróker Naranja","https://www.rankia.com/blog/mejores-brokers/5659985-broker-naranja-ing-opiniones"],["Rankia – ETFs sin comisión en ING","https://www.rankia.com/blog/mejores-brokers/3093464-que-bancos-ofrecen-mejores-comisiones-para-operar-bolsa"]]
+  "fuentes": [["ADSLZone – Depósito ING 3% a 4 meses hasta 30/11","https://www.adslzone.net/noticias/fintech/ing-deposito-3-tae-cuatro-meses/"],["TuCapital – ING 3% para dinero que ya está en el banco","https://www.tucapital.es/depositos/ing-ofrece-un-3-tae-a-clientes-con-dinero-que-ya-esta-en-el-banco/"],["Bankkers – Cuenta Naranja (noviembre 2026)","https://bankkers.com/cuenta-remunerada-ing/"],["Finect – Cuenta Naranja y promoción nómina","https://www.finect.com/usuario/davidcarmona/articulos/ing-amplia-su-oferta-de-400-euros-por-domiciliar-la-nomina-hasta-el-15-de-noviembre"],["Finect – Depósitos ING","https://www.finect.com/usuario/davidcarmona/articulos/ing-sube-hasta-el-260-tae-en-sus-depositos-a-24-meses-y-estrena-dos-nuevos-productos-a-6-meses"],["Rankia – Fondos y Carteras Naranja","https://www.rankia.com/blog/fondos-inversion/5259067-ing-mejores-fondos-cartera-naranja"],["Rankia – Bróker Naranja","https://www.rankia.com/blog/mejores-brokers/5659985-broker-naranja-ing-opiniones"],["Rankia – ETFs sin comisión en ING","https://www.rankia.com/blog/mejores-brokers/3093464-que-bancos-ofrecen-mejores-comisiones-para-operar-bolsa"]]
  },
  "ibex": {
   "nivel": 19936.4, "fecha": "10/11/2026", "ytd": 15.19,
@@ -198,6 +202,7 @@ canvas{max-height:360px}
   {"entidad":"Self Bank","plazo":3,"tae":3.05,"min":"6.000 €","fgd":"España"},
   {"entidad":"HoistSpar","plazo":3,"tae":3.02,"min":"1 €","fgd":"Suecia"},
   {"entidad":"WiZink","plazo":18,"tae":2.85,"min":"5.000 €","fgd":"España"},
+  {"entidad":"ING (solo dinero nuevo, si te aparece en tu área)","plazo":4,"tae":3.00,"min":"Sin mínimo · hasta 250.000 € · contratar hasta 30/11/2026","fgd":"Países Bajos"},
   {"entidad":"ING","plazo":12,"tae":2.30,"min":"2,00% hasta 50.000 €; 2,30% desde 100.001 €","fgd":"Países Bajos"}
  ],
  "fondos": {
@@ -405,6 +410,7 @@ canvas{max-height:360px}
     <h2>Qué puedes hacer con tu dinero en ING</h2>
     <p class="small">Todo lo que ofrece ING España para ahorrar e invertir, ordenado de menos a más riesgo, y cómo sacarle más rentabilidad sin cambiar de banco.</p>
     <div class="grid" id="ingKpi"></div>
+    <div id="ingPromo"></div>
   </div>
   <div class="card">
     <h3>1 · Ahorro sin riesgo</h3>
@@ -443,6 +449,7 @@ canvas{max-height:360px}
     <h3>Lo más rentable que puedes hacer siendo cliente de ING</h3>
     <ol>
       <li><b>Colchón (3–6 meses de gastos):</b> en la Cuenta Naranja tienes liquidez inmediata pero solo un <span id="ingN1"></span>. Si quieres más, una cuenta de otro banco al 3–3,5% (pestaña <b>Bancos</b>) puede convivir con tu nómina en ING. Muchos clientes de ING lo hacen así.</li>
+      <li><b>Dinero a pocos meses:</b> si tienes dinero en otro banco y te aparece en ING el depósito a 4 meses al 3%, rinde como las mejores Letras a corto y sin salir de ING (contrátalo antes de que caduque la oferta).</li>
       <li><b>Dinero a 1–2 años:</b> las <b>Letras del Tesoro</b> (≈3,07% a 12 meses) pagan más que el Depósito Naranja. Se compran sin comisión en tesoro.es o en el Banco de España, aunque tu banco sea ING.</li>
       <li><b>Largo plazo (10+ años), si quieres hacerlo todo en ING:</b> Bróker Naranja con un ETF de bolsa mundial o del S&amp;P 500 de la lista sin comisiones, comprando cada vez por encima del mínimo de la gestora (por ejemplo, una compra trimestral). Comprueba en el selector de ETFs de la app que el ETF que elijas está en la lista sin comisión.</li>
       <li><b>Si prefieres aportar poco cada mes sin pensar:</b> el Fondo Naranja S&amp;P 500 o una Cartera Naranja funcionan, pero el coste del 1% se nota mucho a largo plazo (mira la calculadora). Fuera de ING, un indexado al 0,05–0,20% hace lo mismo.</li>
@@ -1240,7 +1247,7 @@ document.querySelectorAll('#cartera input').forEach(i=>i.addEventListener('input
 (()=>{const I=D.ing;
  document.getElementById('ingKpi').innerHTML=[
   ['Cuenta Naranja (con nómina)',fmt(I.naranjaNomina)+'% TAE',`sin nómina: ${fmt(I.naranjaSin)}%`],
-  ['Mejor depósito ING','hasta '+fmt(I.dep24max)+'% TAE','a 24 meses'],
+  (()=>{const pr=(I.promosClientes||[]).filter(x=>x.tae>=I.dep24max);return pr.length?['Mejor depósito ING ahora',fmt(pr[0].tae)+'% TAE',pr[0].plazo+(pr[0].hasta?' · hasta '+pr[0].hasta:'')+' · ver condiciones']:['Mejor depósito ING','hasta '+fmt(I.dep24max)+'% TAE','a 24 meses'];})(),
   ['Inflación actual',fmt(inf,1)+'%','lo que pierde el dinero parado'],
   ['Fondos Naranja',fmt(I.fondosTer)+'% al año','frente a 0,05–0,20% de un indexado barato']
  ].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('');
@@ -1249,12 +1256,14 @@ document.querySelectorAll('#cartera input').forEach(i=>i.addEventListener('input
   ['Cuenta Naranja sin nómina',I.naranjaSin,'Inmediata','Sin límite'],
   ...I.dep12.map(t=>['Depósito Naranja 12 meses ('+(t[1]>=1000000?'más de '+eur(t[0]-1):eur(t[0])+'–'+eur(t[1]))+')',t[2],'12 meses','']),
   ['Depósito Naranja 24 meses (tramo alto)',I.dep24max,'24 meses',''],
+  ...(I.promosClientes||[]).map(x=>['<b>'+x.txt+'</b> · promoción',x.tae,x.plazo,(x.hasta?'Hasta '+x.hasta+'. ':'')+x.detalle]),
   ['<i>Comparación: Letras del Tesoro 12 meses</i>',l12.tipo,'12 meses','Sin comisión en tesoro.es'],
   ['<i>Comparación: mejor cuenta sin condiciones del mercado</i>',bestSin.tae,'Inmediata',bestSin.entidad]
  ];
  document.getElementById('ingAhorro').innerHTML='<tr><th>Producto</th><th class="n">TAE</th><th class="n">Real (tras inflación)</th><th>Disponibilidad</th><th>Notas</th></tr>'+
   rows.map(r=>`<tr><td>${r[0]}</td><td class="n"><b>${fmt(r[1])}%</b></td><td class="n" style="color:${r[1]-inf<0?'var(--bad)':'var(--acc)'}">${fmt(r[1]-inf)}%</td><td>${r[2]}</td><td class="small">${r[3]}</td></tr>`).join('');
  document.getElementById('ingAhorroNota').innerHTML=`<div class="note">Con 20.000 € en la Cuenta Naranja ganas unos <b>${eur(20000*I.naranjaNomina/100)}</b> al año. En la mejor cuenta del mercado, unos <b>${eur(20000*bestSin.tae/100)}</b>. ${I.bienvenida}.</div>`;
+ document.getElementById('ingPromo').innerHTML=(I.promosClientes||[]).length?'<div class="good" style="margin-top:10px"><b>Promociones de ING para clientes ahora mismo:</b><ul style="margin:6px 0 0;padding-left:20px">'+I.promosClientes.map(x=>`<li><b>${x.txt}</b>${x.hasta?` (hasta el ${x.hasta})`:''}: ${x.detalle}</li>`).join('')+'</ul></div>':'';
  document.getElementById('ingFT').textContent='≈'+fmt(I.fondosTer)+'%';document.getElementById('ingCT').textContent='≈'+fmt(I.carterasTer)+'%';
  document.getElementById('ingBC').innerHTML='<span class="small">'+I.brokerCom+'. Custodia 0 € si haces 1 operación al trimestre. ETFs sin comisión con mínimos: '+I.etfGratisMin+'</span>';
  document.getElementById('ingN1').textContent=fmt(I.naranjaNomina)+'% TAE (con nómina)';document.getElementById('ingFGD').textContent=I.fgd;
