@@ -92,124 +92,854 @@ canvas{max-height:360px}
 <script id="datos" type="application/json">
 {
  "actualizado": "2026-11-11",
- "inflacion": {"valor": 4.9, "subyacente": 3.1, "mes": "octubre 2026 (dato adelantado INE)", "fuente": "https://www.ine.es/dyngs/Prensa/adIPC1026.htm"},
+ "inflacion": {
+  "valor": 4.9,
+  "subyacente": 3.1,
+  "mes": "octubre 2026 (dato adelantado INE)",
+  "fuente": "https://www.ine.es/dyngs/Prensa/adIPC1026.htm"
+ },
  "bce_deposito": 2.5,
  "tesoro": [
-  {"producto":"Letras 3 meses","tipo":2.665,"fecha":"10/11/2026"},
-  {"producto":"Letras 6 meses","tipo":2.845,"fecha":"3/11/2026"},
-  {"producto":"Letras 9 meses","tipo":2.946,"fecha":"10/11/2026"},
-  {"producto":"Letras 12 meses","tipo":3.068,"fecha":"3/11/2026"},
-  {"producto":"Bono 5 años","tipo":3.34,"fecha":"5/11/2026"},
-  {"producto":"Obligación 10 años","tipo":3.80,"fecha":"5/11/2026"},
-  {"producto":"Obligación 15 años","tipo":4.09,"fecha":"5/11/2026"}
+  {
+   "producto": "Letras 3 meses",
+   "tipo": 2.665,
+   "fecha": "10/11/2026"
+  },
+  {
+   "producto": "Letras 6 meses",
+   "tipo": 2.845,
+   "fecha": "3/11/2026"
+  },
+  {
+   "producto": "Letras 9 meses",
+   "tipo": 2.946,
+   "fecha": "10/11/2026"
+  },
+  {
+   "producto": "Letras 12 meses",
+   "tipo": 3.068,
+   "fecha": "3/11/2026"
+  },
+  {
+   "producto": "Bono 5 años",
+   "tipo": 3.34,
+   "fecha": "5/11/2026"
+  },
+  {
+   "producto": "Obligación 10 años",
+   "tipo": 3.8,
+   "fecha": "5/11/2026"
+  },
+  {
+   "producto": "Obligación 15 años",
+   "tipo": 4.09,
+   "fecha": "5/11/2026"
+  }
  ],
  "ing": {
-  "naranjaNomina": 1.00, "naranjaSin": 0.30,
-  "dep12": [[0,50000,2.00],[50001,100000,2.15],[100001,1000000,2.30]],
-  "dep24max": 2.60,
+  "naranjaNomina": 1.0,
+  "naranjaSin": 0.3,
+  "dep12": [
+   [
+    0,
+    50000,
+    2.0
+   ],
+   [
+    50001,
+    100000,
+    2.15
+   ],
+   [
+    100001,
+    1000000,
+    2.3
+   ]
+  ],
+  "dep24max": 2.6,
   "bienvenida": "Depósito Bienvenida 3% TAE a 3 meses (hasta 50.000 €), solo para nuevos clientes, hasta el 31/12/2026",
   "promosClientes": [
-   {"txt":"Depósito a 4 meses al 3% TAE (2,971% TIN)","tae":3.00,"plazo":"4 meses","hasta":"30/11/2026","detalle":"Para dinero nuevo que traigas a ING desde otro banco (el que ya tienes en ING no cuenta). Sin mínimo y hasta 250.000 € por cliente. Solo si te aparece habilitado en tu área personal. Intereses al vencimiento; cancelar antes tiene penalización."},
-   {"txt":"Depósito a 3 meses al 3% TAE en la app","tae":3.00,"plazo":"3 meses","hasta":"","detalle":"ING lo ha ofrecido a algunos clientes para dinero que ya está en el banco, contratándolo desde la app. Mira si te aparece."}
+   {
+    "txt": "Depósito a 4 meses al 3% TAE (2,971% TIN)",
+    "tae": 3.0,
+    "plazo": "4 meses",
+    "hasta": "30/11/2026",
+    "detalle": "Para dinero nuevo que traigas a ING desde otro banco (el que ya tienes en ING no cuenta). Sin mínimo y hasta 250.000 € por cliente. Solo si te aparece habilitado en tu área personal. Intereses al vencimiento; cancelar antes tiene penalización."
+   },
+   {
+    "txt": "Depósito a 3 meses al 3% TAE en la app",
+    "tae": 3.0,
+    "plazo": "3 meses",
+    "hasta": "",
+    "detalle": "ING lo ha ofrecido a algunos clientes para dinero que ya está en el banco, contratándolo desde la app. Mira si te aparece."
+   }
   ],
-  "fondosTer": 1.10, "carterasTer": 0.99,
+  "fondosTer": 1.1,
+  "carterasTer": 0.99,
   "brokerCom": "3 € + 0,10% por operación (menos de 15 operaciones/trimestre); 1,5 € + 0,05% con 15 o más",
   "etfGratisMin": "iShares 2.500 € · Amundi 2.000 € · Xtrackers 1.500 € · WisdomTree 1.000 € por compra",
   "fgd": "Países Bajos (100.000 €)",
-  "fuentes": [["ADSLZone – Depósito ING 3% a 4 meses hasta 30/11","https://www.adslzone.net/noticias/fintech/ing-deposito-3-tae-cuatro-meses/"],["TuCapital – ING 3% para dinero que ya está en el banco","https://www.tucapital.es/depositos/ing-ofrece-un-3-tae-a-clientes-con-dinero-que-ya-esta-en-el-banco/"],["Bankkers – Cuenta Naranja (noviembre 2026)","https://bankkers.com/cuenta-remunerada-ing/"],["Finect – Cuenta Naranja y promoción nómina","https://www.finect.com/usuario/davidcarmona/articulos/ing-amplia-su-oferta-de-400-euros-por-domiciliar-la-nomina-hasta-el-15-de-noviembre"],["Finect – Depósitos ING","https://www.finect.com/usuario/davidcarmona/articulos/ing-sube-hasta-el-260-tae-en-sus-depositos-a-24-meses-y-estrena-dos-nuevos-productos-a-6-meses"],["Rankia – Fondos y Carteras Naranja","https://www.rankia.com/blog/fondos-inversion/5259067-ing-mejores-fondos-cartera-naranja"],["Rankia – Bróker Naranja","https://www.rankia.com/blog/mejores-brokers/5659985-broker-naranja-ing-opiniones"],["Rankia – ETFs sin comisión en ING","https://www.rankia.com/blog/mejores-brokers/3093464-que-bancos-ofrecen-mejores-comisiones-para-operar-bolsa"]]
+  "fuentes": [
+   [
+    "ADSLZone – Depósito ING 3% a 4 meses hasta 30/11",
+    "https://www.adslzone.net/noticias/fintech/ing-deposito-3-tae-cuatro-meses/"
+   ],
+   [
+    "TuCapital – ING 3% para dinero que ya está en el banco",
+    "https://www.tucapital.es/depositos/ing-ofrece-un-3-tae-a-clientes-con-dinero-que-ya-esta-en-el-banco/"
+   ],
+   [
+    "Bankkers – Cuenta Naranja (noviembre 2026)",
+    "https://bankkers.com/cuenta-remunerada-ing/"
+   ],
+   [
+    "Finect – Cuenta Naranja y promoción nómina",
+    "https://www.finect.com/usuario/davidcarmona/articulos/ing-amplia-su-oferta-de-400-euros-por-domiciliar-la-nomina-hasta-el-15-de-noviembre"
+   ],
+   [
+    "Finect – Depósitos ING",
+    "https://www.finect.com/usuario/davidcarmona/articulos/ing-sube-hasta-el-260-tae-en-sus-depositos-a-24-meses-y-estrena-dos-nuevos-productos-a-6-meses"
+   ],
+   [
+    "Rankia – Fondos y Carteras Naranja",
+    "https://www.rankia.com/blog/fondos-inversion/5259067-ing-mejores-fondos-cartera-naranja"
+   ],
+   [
+    "Rankia – Bróker Naranja",
+    "https://www.rankia.com/blog/mejores-brokers/5659985-broker-naranja-ing-opiniones"
+   ],
+   [
+    "Rankia – ETFs sin comisión en ING",
+    "https://www.rankia.com/blog/mejores-brokers/3093464-que-bancos-ofrecen-mejores-comisiones-para-operar-bolsa"
+   ]
+  ]
  },
  "ibex": {
-  "nivel": 19936.4, "fecha": "10/11/2026", "ytd": 15.19,
+  "nivel": 19936.4,
+  "fecha": "10/11/2026",
+  "ytd": 15.19,
   "fechaConsenso": "2–4 de noviembre de 2026 (consenso Reuters)",
   "valores": [
-   {"v":"Solaria","pot":66.8,"ytd":-18,"po":24.78,"nota":"Renovables. El que más recorrido ve el consenso"},
-   {"v":"Merlin Properties","pot":47.0,"ytd":-0.9,"po":16.87,"nota":"Inmobiliaria (SOCIMI)"},
-   {"v":"ACS","pot":41.3,"ytd":9.3,"po":128.72,"nota":"Construcción; ha corregido ~35% desde máximos de mayo"},
-   {"v":"Grifols","pot":38.7,"ytd":-10.1,"po":15.60,"nota":"Farmacéutica; Barclays, más prudente, la ve en 13 €"},
-   {"v":"Fluidra","pot":37.8,"ytd":null,"po":null,"nota":"Piscinas"},
-   {"v":"Cellnex","pot":33.9,"ytd":null,"po":null,"nota":"Torres de telecomunicaciones"},
-   {"v":"Banco Santander","pot":32.5,"ytd":null,"po":13.70,"nota":"Banca"},
-   {"v":"Sacyr","pot":31.5,"ytd":null,"po":null,"nota":"Construcción y concesiones"},
-   {"v":"CaixaBank","pot":19.4,"ytd":null,"po":13.58,"nota":"Banca. 10 analistas compran, 5 venden"},
-   {"v":"Acerinox","pot":16.8,"ytd":31.6,"po":19.45,"nota":"Acero inoxidable"},
-   {"v":"BBVA","pot":16.5,"ytd":6.9,"po":24.95,"nota":"Banca"},
-   {"v":"Telefónica","pot":15.9,"ytd":-3.7,"po":3.90,"nota":"Telecomunicaciones"},
-   {"v":"Acciona Energía","pot":11.3,"ytd":-5.6,"po":23.53,"nota":"Renovables"},
-   {"v":"Inditex","pot":8.8,"ytd":0.0,"po":61.28,"nota":"Textil (Zara)"},
-   {"v":"Acciona","pot":5.3,"ytd":9.8,"po":214.97,"nota":"Infraestructuras y energía"},
-   {"v":"Repsol","pot":3.3,"ytd":85,"po":null,"nota":"Petróleo; +85% en el año por la subida de la energía"},
-   {"v":"Aena","pot":1.9,"ytd":14.3,"po":27.74,"nota":"Aeropuertos"},
-   {"v":"Iberdrola","pot":-2.2,"ytd":23.5,"po":21.62,"nota":"Eléctrica; ya superó el precio objetivo"},
-   {"v":"Logista","pot":-8.5,"ytd":20.7,"po":null,"nota":"Distribución"},
-   {"v":"Endesa","pot":-16.0,"ytd":42.8,"po":36.77,"nota":"Eléctrica; ha subido por encima de lo que esperaban los analistas"}
+   {
+    "v": "Solaria",
+    "pot": 66.8,
+    "ytd": -18,
+    "po": 24.78,
+    "nota": "Renovables. El que más recorrido ve el consenso"
+   },
+   {
+    "v": "Merlin Properties",
+    "pot": 47.0,
+    "ytd": -0.9,
+    "po": 16.87,
+    "nota": "Inmobiliaria (SOCIMI)"
+   },
+   {
+    "v": "ACS",
+    "pot": 41.3,
+    "ytd": 9.3,
+    "po": 128.72,
+    "nota": "Construcción; ha corregido ~35% desde máximos de mayo"
+   },
+   {
+    "v": "Grifols",
+    "pot": 38.7,
+    "ytd": -10.1,
+    "po": 15.6,
+    "nota": "Farmacéutica; Barclays, más prudente, la ve en 13 €"
+   },
+   {
+    "v": "Fluidra",
+    "pot": 37.8,
+    "ytd": null,
+    "po": null,
+    "nota": "Piscinas"
+   },
+   {
+    "v": "Cellnex",
+    "pot": 33.9,
+    "ytd": null,
+    "po": null,
+    "nota": "Torres de telecomunicaciones"
+   },
+   {
+    "v": "Banco Santander",
+    "pot": 32.5,
+    "ytd": null,
+    "po": 13.7,
+    "nota": "Banca"
+   },
+   {
+    "v": "Sacyr",
+    "pot": 31.5,
+    "ytd": null,
+    "po": null,
+    "nota": "Construcción y concesiones"
+   },
+   {
+    "v": "CaixaBank",
+    "pot": 19.4,
+    "ytd": null,
+    "po": 13.58,
+    "nota": "Banca. 10 analistas compran, 5 venden"
+   },
+   {
+    "v": "Acerinox",
+    "pot": 16.8,
+    "ytd": 31.6,
+    "po": 19.45,
+    "nota": "Acero inoxidable"
+   },
+   {
+    "v": "BBVA",
+    "pot": 16.5,
+    "ytd": 6.9,
+    "po": 24.95,
+    "nota": "Banca"
+   },
+   {
+    "v": "Telefónica",
+    "pot": 15.9,
+    "ytd": -3.7,
+    "po": 3.9,
+    "nota": "Telecomunicaciones"
+   },
+   {
+    "v": "Acciona Energía",
+    "pot": 11.3,
+    "ytd": -5.6,
+    "po": 23.53,
+    "nota": "Renovables"
+   },
+   {
+    "v": "Inditex",
+    "pot": 8.8,
+    "ytd": 0.0,
+    "po": 61.28,
+    "nota": "Textil (Zara)"
+   },
+   {
+    "v": "Acciona",
+    "pot": 5.3,
+    "ytd": 9.8,
+    "po": 214.97,
+    "nota": "Infraestructuras y energía"
+   },
+   {
+    "v": "Repsol",
+    "pot": 3.3,
+    "ytd": 85,
+    "po": null,
+    "nota": "Petróleo; +85% en el año por la subida de la energía"
+   },
+   {
+    "v": "Aena",
+    "pot": 1.9,
+    "ytd": 14.3,
+    "po": 27.74,
+    "nota": "Aeropuertos"
+   },
+   {
+    "v": "Iberdrola",
+    "pot": -2.2,
+    "ytd": 23.5,
+    "po": 21.62,
+    "nota": "Eléctrica; ya superó el precio objetivo"
+   },
+   {
+    "v": "Logista",
+    "pot": -8.5,
+    "ytd": 20.7,
+    "po": null,
+    "nota": "Distribución"
+   },
+   {
+    "v": "Endesa",
+    "pot": -16.0,
+    "ytd": 42.8,
+    "po": 36.77,
+    "nota": "Eléctrica; ha subido por encima de lo que esperaban los analistas"
+   }
   ],
   "sinDato": "Amadeus, Bankinter, Colonial, Ferrovial, IAG, Indra, Mapfre, Puig, Redeia, Rovi, Sabadell, Unicaja, Naturgy, ArcelorMittal y Enagás",
-  "fuentes": [["Estrategias de Inversión – Potencial de los valores del Ibex 35 (Reuters)","https://www.estrategiasdeinversion.com/actualidad/noticias/bolsa-espana/tres-acciones-del-ibex-35-con-potencial-de-mas-n-965387"],["Yahoo Finanzas – Tres acciones con potencial de más del 40%","https://es.finance.yahoo.com/noticias/acciones-ibex-35-potencial-40-051000410.html"],["Yahoo Finanzas – Grifols (4/11/2026)","https://es.finance.yahoo.com/noticias/acci%C3%B3n-ibex-35-pleno-rebote-092000066.html"],["Estrategias de Inversión – CaixaBank (3/11/2026)","https://www.estrategiasdeinversion.com/analisis/los-brokers-recomiendan/recomendaciones-espana/un-valor-y-banco-del-ibex-35-que-se-puede-disparar-n-965831"],["El Periódico de Ceuta – Cierre Ibex 10/11/2026","https://www.elperiodicodeceuta.es/cierre-ibex-35-10-de-noviembre-de-2026/"]]
+  "fuentes": [
+   [
+    "Estrategias de Inversión – Potencial de los valores del Ibex 35 (Reuters)",
+    "https://www.estrategiasdeinversion.com/actualidad/noticias/bolsa-espana/tres-acciones-del-ibex-35-con-potencial-de-mas-n-965387"
+   ],
+   [
+    "Yahoo Finanzas – Tres acciones con potencial de más del 40%",
+    "https://es.finance.yahoo.com/noticias/acciones-ibex-35-potencial-40-051000410.html"
+   ],
+   [
+    "Yahoo Finanzas – Grifols (4/11/2026)",
+    "https://es.finance.yahoo.com/noticias/acci%C3%B3n-ibex-35-pleno-rebote-092000066.html"
+   ],
+   [
+    "Estrategias de Inversión – CaixaBank (3/11/2026)",
+    "https://www.estrategiasdeinversion.com/analisis/los-brokers-recomiendan/recomendaciones-espana/un-valor-y-banco-del-ibex-35-que-se-puede-disparar-n-965831"
+   ],
+   [
+    "El Periódico de Ceuta – Cierre Ibex 10/11/2026",
+    "https://www.elperiodicodeceuta.es/cierre-ibex-35-10-de-noviembre-de-2026/"
+   ]
+  ]
  },
  "bonos": [
-  {"banco":"Unicaja (Requetecuenta Digital)","importe":900,"txt":"Hasta 900 €","req":"450 € por domiciliar nómina, hasta 250 € vía remuneración de la cuenta (1,25% TAE hasta 20.000 €) y hasta 200 € por recibos (1% devuelto)","perm":"24 meses (parte de nómina)","plazo":""},
-  {"banco":"Santander","importe":840,"txt":"Hasta 840 € en 2 años","req":"35 €/mes con nómina desde 1.500 € (30 €/mes con 800–1.499 €), Bizum y 2 recibos","perm":"Sin permanencia: cobras los meses que cumples","plazo":""},
-  {"banco":"Cajamar","importe":750,"txt":"300 / 500 / 750 €","req":"Según nómina: 1.200–1.999 € / 2.000–3.999 € / desde 4.000 €. Cuenta al 2,02% TAE hasta 20.000 €","perm":"36 meses","plazo":"31/03/2027"},
-  {"banco":"Kutxabank","importe":600,"txt":"300 € o 600 €","req":"300 € con nómina desde 800 €; 600 € desde 2.500 €. Además cuenta al 3,10% TAE el 1er año","perm":"Hasta 36 meses","plazo":"31/12/2026"},
-  {"banco":"Bankinter","importe":600,"txt":"600 € brutos","req":"Nómina desde 850 €, mantenerla 12 meses. Cuenta Digital al 3% TAE","perm":"12 meses","plazo":"11/11/2026"},
-  {"banco":"ABANCA","importe":500,"txt":"500 € brutos (405 € netos)","req":"Nómina desde 1.200 € (185 € brutos con 800–1.200 €)","perm":"24 meses","plazo":"31/01/2027"},
-  {"banco":"Deutsche Bank","importe":500,"txt":"500 € brutos (405 € netos) en 12 meses","req":"Nómina o pensión desde 2.000 € en un único ingreso y saldo medio de 3.000 €","perm":"12 meses de abono","plazo":"10/01/2027"},
-  {"banco":"Sabadell","importe":400,"txt":"400 €","req":"Nómina desde 1.000 € y activar Bizum (33,34 €/mes durante 12 meses). Cuenta Online al 2,75% TAE hasta 100.000 €","perm":"Según condiciones","plazo":"12/11/2026"},
-  {"banco":"imagin","importe":250,"txt":"250 € netos","req":"Nómina desde 900 €, sin recibos, seguros ni compras mínimas","perm":"Según condiciones","plazo":""},
-  {"banco":"CaixaBank","importe":250,"txt":"Hasta 250 € o regalo (móvil, TV)","req":"Nómina, 3 recibos y 3 compras con tarjeta al trimestre","perm":"Según condiciones","plazo":""}
+  {
+   "banco": "Unicaja (Requetecuenta Digital)",
+   "importe": 900,
+   "txt": "Hasta 900 €",
+   "req": "450 € por domiciliar nómina, hasta 250 € vía remuneración de la cuenta (1,25% TAE hasta 20.000 €) y hasta 200 € por recibos (1% devuelto)",
+   "perm": "24 meses (parte de nómina)",
+   "plazo": ""
+  },
+  {
+   "banco": "Santander",
+   "importe": 840,
+   "txt": "Hasta 840 € en 2 años",
+   "req": "35 €/mes con nómina desde 1.500 € (30 €/mes con 800–1.499 €), Bizum y 2 recibos",
+   "perm": "Sin permanencia: cobras los meses que cumples",
+   "plazo": ""
+  },
+  {
+   "banco": "Cajamar",
+   "importe": 750,
+   "txt": "300 / 500 / 750 €",
+   "req": "Según nómina: 1.200–1.999 € / 2.000–3.999 € / desde 4.000 €. Cuenta al 2,02% TAE hasta 20.000 €",
+   "perm": "36 meses",
+   "plazo": "31/03/2027"
+  },
+  {
+   "banco": "Kutxabank",
+   "importe": 600,
+   "txt": "300 € o 600 €",
+   "req": "300 € con nómina desde 800 €; 600 € desde 2.500 €. Además cuenta al 3,10% TAE el 1er año",
+   "perm": "Hasta 36 meses",
+   "plazo": "31/12/2026"
+  },
+  {
+   "banco": "Bankinter",
+   "importe": 600,
+   "txt": "600 € brutos",
+   "req": "Nómina desde 850 €, mantenerla 12 meses. Cuenta Digital al 3% TAE",
+   "perm": "12 meses",
+   "plazo": "11/11/2026"
+  },
+  {
+   "banco": "ABANCA",
+   "importe": 500,
+   "txt": "500 € brutos (405 € netos)",
+   "req": "Nómina desde 1.200 € (185 € brutos con 800–1.200 €)",
+   "perm": "24 meses",
+   "plazo": "31/01/2027"
+  },
+  {
+   "banco": "Deutsche Bank",
+   "importe": 500,
+   "txt": "500 € brutos (405 € netos) en 12 meses",
+   "req": "Nómina o pensión desde 2.000 € en un único ingreso y saldo medio de 3.000 €",
+   "perm": "12 meses de abono",
+   "plazo": "10/01/2027"
+  },
+  {
+   "banco": "Sabadell",
+   "importe": 400,
+   "txt": "400 €",
+   "req": "Nómina desde 1.000 € y activar Bizum (33,34 €/mes durante 12 meses). Cuenta Online al 2,75% TAE hasta 100.000 €",
+   "perm": "Según condiciones",
+   "plazo": "12/11/2026"
+  },
+  {
+   "banco": "imagin",
+   "importe": 250,
+   "txt": "250 € netos",
+   "req": "Nómina desde 900 €, sin recibos, seguros ni compras mínimas",
+   "perm": "Según condiciones",
+   "plazo": ""
+  },
+  {
+   "banco": "CaixaBank",
+   "importe": 250,
+   "txt": "Hasta 250 € o regalo (móvil, TV)",
+   "req": "Nómina, 3 recibos y 3 compras con tarjeta al trimestre",
+   "perm": "Según condiciones",
+   "plazo": ""
+  }
  ],
- "bonosFuentes": [["Finect – Promociones por domiciliar la nómina (3/11/2026)","https://www.finect.com/usuario/mariarefojos/articulos/hasta-400-euros-o-un-iphone-los-regalos-que-te-hacen-los-bancos-por-abrirte-una-cuenta"],["Merca2 – Primas por nómina que caducan esta semana","https://www.merca2.es/2026/11/04/primas-domiciliar-nomina-600-euros-2495052/"],["Rankia – Bancos que regalan dinero","https://www.rankia.com/blog/cuentas-corrientes/5463401-bancos-que-regalan-dinero-abrir-cuenta-mejores-ofertas"],["Kelisto – Regalos por domiciliar la nómina","https://www.kelisto.es/cuentas-bancarias/consejos-y-analisis/los-mejores-regalos-de-los-bancos-3189"],["Rastreator – Cuentas nómina","https://www.rastreator.com/cuentas-bancarias/guias/mejores-cuentas-nomina"],["Roams – Regalos por abrir cuenta","https://roams.es/finanzas/cuentas/cuenta-regalo/"],["Rankia – Mejores promociones de bancos (noviembre 2026)","https://www.rankia.com/blog/cuentas-corrientes/2102559-mejores-promociones-bancos"],["Roams – BBVA alarga hasta el 10 de noviembre la oferta de 1.060 €","https://roams.es/actualidad/finanzas/bbva-alarga-10-noviembre-oferta-1060-cinco-bloques-forman/"]],
- "precios": {"fecha":"6/11/2026","lista":{
-  "Solaria":16.15,"Acciona Energía":22.14,"Merlin Properties":11.60,"ACS":87.00,"Ferrovial":52.78,"Acciona":218.00,"Amadeus":60.52,"IAG":5.192,"Colonial":5.27,"Logista":36.60,"Sacyr":4.046,"Acerinox":14.94,"Fluidra":19.32,"Mapfre":4.13,"Telefónica":3.385,"Inditex":59.04,"Cellnex":26.68,"Endesa":44.20,"Indra":56.76,"Puig":19.84,"BBVA":22.73,"Repsol":29.90}},
+ "bonosFuentes": [
+  [
+   "Finect – Promociones por domiciliar la nómina (3/11/2026)",
+   "https://www.finect.com/usuario/mariarefojos/articulos/hasta-400-euros-o-un-iphone-los-regalos-que-te-hacen-los-bancos-por-abrirte-una-cuenta"
+  ],
+  [
+   "Merca2 – Primas por nómina que caducan esta semana",
+   "https://www.merca2.es/2026/11/04/primas-domiciliar-nomina-600-euros-2495052/"
+  ],
+  [
+   "Rankia – Bancos que regalan dinero",
+   "https://www.rankia.com/blog/cuentas-corrientes/5463401-bancos-que-regalan-dinero-abrir-cuenta-mejores-ofertas"
+  ],
+  [
+   "Kelisto – Regalos por domiciliar la nómina",
+   "https://www.kelisto.es/cuentas-bancarias/consejos-y-analisis/los-mejores-regalos-de-los-bancos-3189"
+  ],
+  [
+   "Rastreator – Cuentas nómina",
+   "https://www.rastreator.com/cuentas-bancarias/guias/mejores-cuentas-nomina"
+  ],
+  [
+   "Roams – Regalos por abrir cuenta",
+   "https://roams.es/finanzas/cuentas/cuenta-regalo/"
+  ],
+  [
+   "Rankia – Mejores promociones de bancos (noviembre 2026)",
+   "https://www.rankia.com/blog/cuentas-corrientes/2102559-mejores-promociones-bancos"
+  ],
+  [
+   "Roams – BBVA alarga hasta el 10 de noviembre la oferta de 1.060 €",
+   "https://roams.es/actualidad/finanzas/bbva-alarga-10-noviembre-oferta-1060-cinco-bloques-forman/"
+  ]
+ ],
+ "precios": {
+  "fecha": "6/11/2026",
+  "lista": {
+   "Solaria": 16.15,
+   "Acciona Energía": 22.14,
+   "Merlin Properties": 11.6,
+   "ACS": 87.0,
+   "Ferrovial": 52.78,
+   "Acciona": 218.0,
+   "Amadeus": 60.52,
+   "IAG": 5.192,
+   "Colonial": 5.27,
+   "Logista": 36.6,
+   "Sacyr": 4.046,
+   "Acerinox": 14.94,
+   "Fluidra": 19.32,
+   "Mapfre": 4.13,
+   "Telefónica": 3.385,
+   "Inditex": 59.04,
+   "Cellnex": 26.68,
+   "Endesa": 44.2,
+   "Indra": 56.76,
+   "Puig": 19.84,
+   "BBVA": 22.73,
+   "Repsol": 29.9
+  }
+ },
  "tesoro_proximas": "19/11/2026 (Bonos y Obligaciones) · 1/12/2026 (Letras 6 y 12 meses) · 9/12/2026 (Letras 3 y 9 meses)",
  "cuentas": [
-  {"entidad":"Monzo","producto":"Hucha remunerada potenciada","tae":4.00,"cond":"Nuevo en España. 3,93% TIN 12 meses; después 2,50% TAE. Basta con abrir la cuenta y la hucha","max":"5.000 €","fgd":"Irlanda","sinCond":true,"plazoOferta":"Abrir hucha hasta 31/12/2026"},
-  {"entidad":"Bankinter","producto":"Cuenta Nómina","tae":5.00,"cond":"Nómina ≥850 €, 3 recibos y 3 pagos con tarjeta al trimestre. 5% solo el 1er año (2% el 2º)","max":"10.000 €","fgd":"España","sinCond":false,"plazoOferta":""},
-  {"entidad":"Revolut","producto":"Cuenta Remunerada","tae":3.51,"cond":"Nuevos clientes, tipo promocional limitado en el tiempo (hasta 4 meses)","max":"25.000 €","fgd":"Lituania","sinCond":false,"plazoOferta":""},
-  {"entidad":"Ferratum","producto":"Cuenta de ahorro","tae":3.40,"cond":"Nuevos clientes: 3,35% TIN 3 meses, luego 3,00% TIN","max":"100.000 €","fgd":"Malta","sinCond":true,"plazoOferta":""},
-  {"entidad":"Raisin","producto":"Cuenta Bienvenida","tae":3.30,"cond":"Nuevos clientes, 3 meses. Dinero disponible siempre","max":"60.000 €","fgd":"Alemania","sinCond":true,"plazoOferta":""},
-  {"entidad":"Openbank","producto":"Cuenta Remunerada","tae":3.25,"cond":"Nuevos clientes, 12 meses, activar Bizum","max":"Sin límite","fgd":"España","sinCond":true,"plazoOferta":"Alta hasta 16/11/2026"},
-  {"entidad":"B100 (Abanca)","producto":"Cuenta Health","tae":3.15,"cond":"Ligada a retos/hábitos de la app","max":"50.000 €","fgd":"España","sinCond":false,"plazoOferta":""},
-  {"entidad":"bunq","producto":"Cuenta de ahorro","tae":3.16,"cond":"Tipo variable según saldo (el máximo se aplica hasta fijar tu umbral; después, sobre lo que supere tu saldo más alto del semestre anterior). Intereses semanales","max":"100.000 €","fgd":"Países Bajos","sinCond":true,"plazoOferta":""},
-  {"entidad":"Kutxabank","producto":"Cuenta Remunerada","tae":3.10,"cond":"1er año; el 2º año baja a 0,75%","max":"100.000 €","fgd":"España","sinCond":true,"plazoOferta":"Activación hasta 22/11/2026"},
-  {"entidad":"Trade Republic","producto":"Cuenta","tae":3.04,"cond":"Sin condiciones. Revisa el saldo máximo remunerado (fuentes difieren)","max":"Consultar","fgd":"Alemania","sinCond":true,"plazoOferta":""},
-  {"entidad":"Bankinter","producto":"Cuenta Digital","tae":3.00,"cond":"Sin nómina. 2,96% TIN garantizado hasta 11/05/2027","max":"100.000 €","fgd":"España","sinCond":true,"plazoOferta":"Altas hasta 11/11/2026"},
-  {"entidad":"Sabadell","producto":"Cuenta Online","tae":2.75,"cond":"Nuevos clientes","max":"100.000 €","fgd":"España","sinCond":true,"plazoOferta":""},
-  {"entidad":"B100 (Abanca)","producto":"Cuenta Save","tae":2.75,"cond":"Sin condiciones","max":"100.000 €","fgd":"España","sinCond":true,"plazoOferta":""},
-  {"entidad":"Renault Bank","producto":"Cuenta Contigo","tae":2.61,"cond":"Nuevos clientes","max":"Sin máximo","fgd":"Francia","sinCond":true,"plazoOferta":""},
-  {"entidad":"Unicaja","producto":"Cuenta Online","tae":2.55,"cond":"Sin comisiones; bonificación extra si domicilias nómina","max":"—","fgd":"España","sinCond":true,"plazoOferta":"Apertura hasta 31/01/2027"},
-  {"entidad":"MyInvestor","producto":"Cuenta Remunerada","tae":2.50,"cond":"Nuevos clientes, 6 meses","max":"70.000 €","fgd":"España","sinCond":true,"plazoOferta":""},
-  {"entidad":"ABANCA","producto":"Cuenta Remunerada","tae":2.00,"cond":"Sin límite de saldo","max":"Sin límite","fgd":"España","sinCond":true,"plazoOferta":""}
+  {
+   "entidad": "Bankinter",
+   "producto": "Cuenta Nómina",
+   "tae": 5.0,
+   "cond": "Nómina ≥850 €, 3 recibos y 3 pagos con tarjeta al trimestre. 5% solo el 1er año (2% el 2º)",
+   "max": "10.000 €",
+   "fgd": "España",
+   "sinCond": false,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Monzo",
+   "producto": "Hucha remunerada potenciada",
+   "tae": 4.0,
+   "cond": "Nuevo en España. 3,93% TIN 12 meses; después 2,50% TAE. Basta con abrir la cuenta y la hucha",
+   "max": "5.000 €",
+   "fgd": "Irlanda",
+   "sinCond": true,
+   "plazoOferta": "Abrir hucha hasta 31/12/2026"
+  },
+  {
+   "entidad": "Revolut",
+   "producto": "Cuenta Remunerada",
+   "tae": 3.51,
+   "cond": "Nuevos clientes: 3,51% TAE durante 120 días como máximo; después, según plan (1,15% TAE en el plan gratuito)",
+   "max": "25.000 €",
+   "fgd": "Lituania",
+   "sinCond": false,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Ferratum",
+   "producto": "Cuenta de ahorro",
+   "tae": 3.4,
+   "cond": "Nuevos clientes: 3,35% TIN 3 meses, luego 3,00% TIN",
+   "max": "100.000 €",
+   "fgd": "Malta",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Raisin",
+   "producto": "Cuenta Bienvenida",
+   "tae": 3.3,
+   "cond": "Nuevos clientes, 3 meses. Dinero disponible siempre",
+   "max": "60.000 €",
+   "fgd": "Alemania",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Openbank",
+   "producto": "Cuenta Remunerada",
+   "tae": 3.25,
+   "cond": "Nuevos clientes: 3,25% TAE (3,20% TIN) 12 meses sin límite de saldo activando Bizum, más hasta 200 € por recibos",
+   "max": "Sin límite",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": "Alta hasta 16/11/2026"
+  },
+  {
+   "entidad": "bunq",
+   "producto": "Cuenta de ahorro",
+   "tae": 3.16,
+   "cond": "Tipo variable según saldo (el máximo se aplica hasta fijar tu umbral; después, sobre lo que supere tu saldo más alto del semestre anterior). Intereses semanales",
+   "max": "100.000 €",
+   "fgd": "Países Bajos",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "B100 (Abanca)",
+   "producto": "Cuenta Health",
+   "tae": 3.15,
+   "cond": "Ligada a retos/hábitos de la app",
+   "max": "50.000 €",
+   "fgd": "España",
+   "sinCond": false,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Kutxabank",
+   "producto": "Cuenta Remunerada",
+   "tae": 3.1,
+   "cond": "1er año; el 2º año baja a 0,75%",
+   "max": "100.000 €",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": "Activación hasta 22/11/2026"
+  },
+  {
+   "entidad": "Trade Republic",
+   "producto": "Cuenta",
+   "tae": 3.04,
+   "cond": "Sin condiciones ni nómina. Nuevos clientes; tipo variable que sigue al BCE. IBAN español, Bizum",
+   "max": "50.000 €",
+   "fgd": "Alemania",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Bank Norwegian",
+   "producto": "Cuenta Ahorro",
+   "tae": 3.01,
+   "cond": "Sin condiciones. Tipo variable (subido el 10/11/2026). La versión Plus paga igual pero limita las retiradas",
+   "max": "Consultar",
+   "fgd": "Noruega",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Bankinter",
+   "producto": "Cuenta Digital",
+   "tae": 3.0,
+   "cond": "Sin nómina. 2,96% TIN garantizado hasta 11/05/2027",
+   "max": "100.000 €",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": "Altas solo hasta HOY 11/11/2026"
+  },
+  {
+   "entidad": "Sabadell",
+   "producto": "Cuenta Online",
+   "tae": 2.75,
+   "cond": "Nuevos clientes",
+   "max": "100.000 €",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "B100 (Abanca)",
+   "producto": "Cuenta Save",
+   "tae": 2.75,
+   "cond": "Sin condiciones",
+   "max": "100.000 €",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Renault Bank",
+   "producto": "Cuenta Contigo",
+   "tae": 2.61,
+   "cond": "Nuevos clientes",
+   "max": "Sin máximo",
+   "fgd": "Francia",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Unicaja",
+   "producto": "Cuenta Online",
+   "tae": 2.55,
+   "cond": "Sin comisiones; bonificación extra si domicilias nómina",
+   "max": "—",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": "Apertura hasta 31/01/2027"
+  },
+  {
+   "entidad": "MyInvestor",
+   "producto": "Cuenta Remunerada",
+   "tae": 2.5,
+   "cond": "Nuevos clientes, 6 meses",
+   "max": "70.000 €",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "Pibank",
+   "producto": "Cuenta Remunerada",
+   "tae": 2.02,
+   "cond": "Sin condiciones, sin límite de saldo y no es promoción. Intereses mensuales",
+   "max": "Sin límite",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": ""
+  },
+  {
+   "entidad": "ABANCA",
+   "producto": "Cuenta Remunerada",
+   "tae": 2.0,
+   "cond": "Sin límite de saldo",
+   "max": "Sin límite",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": ""
+  }
  ],
  "depositos": [
-  {"entidad":"Bank B (vía Raisin)","plazo":84,"tae":3.75,"min":"5.000 €","fgd":"Bélgica"},
-  {"entidad":"Renault Bank","plazo":36,"tae":3.55,"min":"—","fgd":"Francia"},
-  {"entidad":"HoistSpar","plazo":12,"tae":3.51,"min":"1 €","fgd":"Suecia"},
-  {"entidad":"Banco BIG (Gran Depósito)","plazo":6,"tae":3.50,"min":"10.000 € (nuevos clientes)","fgd":"Portugal"},
-  {"entidad":"Volkswagen Bank","plazo":24,"tae":3.50,"min":"—","fgd":"Alemania"},
-  {"entidad":"Mano Bank (vía Raisin)","plazo":12,"tae":3.46,"min":"—","fgd":"Lituania"},
-  {"entidad":"BluOr Bank (vía Raisin)","plazo":12,"tae":3.45,"min":"—","fgd":"Letonia"},
-  {"entidad":"SME Bank (vía Raisin)","plazo":24,"tae":3.44,"min":"20.000 €","fgd":"Lituania"},
-  {"entidad":"Ferratum","plazo":36,"tae":3.40,"min":"50 €","fgd":"Malta"},
-  {"entidad":"Bank DiMare","plazo":24,"tae":3.40,"min":"10.000 €","fgd":"Extranjero"},
-  {"entidad":"MiraltaBank (vía Raisin)","plazo":36,"tae":3.38,"min":"15.000 €","fgd":"España"},
-  {"entidad":"SME Bank (vía Raisin)","plazo":12,"tae":3.35,"min":"20.000 €","fgd":"Lituania"},
-  {"entidad":"Cetelem","plazo":24,"tae":3.25,"min":"1 €","fgd":"Consultar"},
-  {"entidad":"Banco Finantia (Jump)","plazo":6,"tae":3.25,"min":"—","fgd":"Portugal"},
-  {"entidad":"Ferratum","plazo":12,"tae":3.20,"min":"50 €","fgd":"Malta"},
-  {"entidad":"Ferratum","plazo":6,"tae":3.10,"min":"50 €","fgd":"Malta"},
-  {"entidad":"MiraltaBank (vía Raisin)","plazo":12,"tae":3.10,"min":"—","fgd":"España"},
-  {"entidad":"Self Bank","plazo":3,"tae":3.05,"min":"6.000 €","fgd":"España"},
-  {"entidad":"HoistSpar","plazo":3,"tae":3.02,"min":"1 €","fgd":"Suecia"},
-  {"entidad":"WiZink","plazo":18,"tae":2.85,"min":"5.000 €","fgd":"España"},
-  {"entidad":"ING (solo dinero nuevo, si te aparece en tu área)","plazo":4,"tae":3.00,"min":"Sin mínimo · hasta 250.000 € · contratar hasta 30/11/2026","fgd":"Países Bajos"},
-  {"entidad":"ING","plazo":12,"tae":2.30,"min":"2,00% hasta 50.000 €; 2,30% desde 100.001 €","fgd":"Países Bajos"}
+  {
+   "entidad": "Banco BIG (dinero nuevo)",
+   "plazo": 3,
+   "tae": 4.0,
+   "min": "10.000–75.000 € · si cancelas pierdes los intereses",
+   "fgd": "Portugal"
+  },
+  {
+   "entidad": "Bank B (vía Raisin)",
+   "plazo": 84,
+   "tae": 3.75,
+   "min": "5.000 €",
+   "fgd": "Bélgica"
+  },
+  {
+   "entidad": "Renault Bank",
+   "plazo": 36,
+   "tae": 3.55,
+   "min": "—",
+   "fgd": "Francia"
+  },
+  {
+   "entidad": "HoistSpar",
+   "plazo": 12,
+   "tae": 3.5,
+   "min": "1 €",
+   "fgd": "Suecia"
+  },
+  {
+   "entidad": "Banco BIG (Gran Depósito)",
+   "plazo": 6,
+   "tae": 3.5,
+   "min": "10.000 € (nuevos clientes)",
+   "fgd": "Portugal"
+  },
+  {
+   "entidad": "Volkswagen Bank",
+   "plazo": 24,
+   "tae": 3.5,
+   "min": "—",
+   "fgd": "Alemania"
+  },
+  {
+   "entidad": "HoistSpar",
+   "plazo": 6,
+   "tae": 3.5,
+   "min": "1 €",
+   "fgd": "Suecia"
+  },
+  {
+   "entidad": "HoistSpar",
+   "plazo": 24,
+   "tae": 3.5,
+   "min": "1 €",
+   "fgd": "Suecia"
+  },
+  {
+   "entidad": "Mano Bank (vía Raisin)",
+   "plazo": 12,
+   "tae": 3.46,
+   "min": "—",
+   "fgd": "Lituania"
+  },
+  {
+   "entidad": "BluOr Bank (vía Raisin)",
+   "plazo": 12,
+   "tae": 3.45,
+   "min": "—",
+   "fgd": "Letonia"
+  },
+  {
+   "entidad": "SME Bank (vía Raisin)",
+   "plazo": 24,
+   "tae": 3.44,
+   "min": "20.000 €",
+   "fgd": "Lituania"
+  },
+  {
+   "entidad": "Ferratum",
+   "plazo": 36,
+   "tae": 3.4,
+   "min": "50 €",
+   "fgd": "Malta"
+  },
+  {
+   "entidad": "Bank DiMare",
+   "plazo": 24,
+   "tae": 3.4,
+   "min": "10.000 €",
+   "fgd": "Extranjero"
+  },
+  {
+   "entidad": "MiraltaBank (vía Raisin)",
+   "plazo": 36,
+   "tae": 3.38,
+   "min": "15.000 €",
+   "fgd": "España"
+  },
+  {
+   "entidad": "SME Bank (vía Raisin)",
+   "plazo": 12,
+   "tae": 3.35,
+   "min": "20.000 €",
+   "fgd": "Lituania"
+  },
+  {
+   "entidad": "Cetelem",
+   "plazo": 24,
+   "tae": 3.25,
+   "min": "1 €",
+   "fgd": "Consultar"
+  },
+  {
+   "entidad": "Banco Finantia (Jump)",
+   "plazo": 6,
+   "tae": 3.25,
+   "min": "—",
+   "fgd": "Portugal"
+  },
+  {
+   "entidad": "Openbank (Depósito Open, con nómina)",
+   "plazo": 6,
+   "tae": 3.25,
+   "min": "Nómina ≥900 € y dinero nuevo; sin nómina 2,75%. Hasta 31/12/2026",
+   "fgd": "España"
+  },
+  {
+   "entidad": "Ferratum",
+   "plazo": 12,
+   "tae": 3.2,
+   "min": "50 €",
+   "fgd": "Malta"
+  },
+  {
+   "entidad": "Ferratum",
+   "plazo": 6,
+   "tae": 3.1,
+   "min": "50 €",
+   "fgd": "Malta"
+  },
+  {
+   "entidad": "MiraltaBank (vía Raisin)",
+   "plazo": 12,
+   "tae": 3.1,
+   "min": "—",
+   "fgd": "España"
+  },
+  {
+   "entidad": "Self Bank",
+   "plazo": 3,
+   "tae": 3.05,
+   "min": "6.000 €",
+   "fgd": "España"
+  },
+  {
+   "entidad": "Pibank",
+   "plazo": 12,
+   "tae": 3.03,
+   "min": "Sin requisitos · contratar hasta 30/11/2026",
+   "fgd": "España"
+  },
+  {
+   "entidad": "HoistSpar",
+   "plazo": 3,
+   "tae": 3.02,
+   "min": "1 €",
+   "fgd": "Suecia"
+  },
+  {
+   "entidad": "ING (solo dinero nuevo, si te aparece en tu área)",
+   "plazo": 4,
+   "tae": 3.0,
+   "min": "Sin mínimo · hasta 250.000 € · contratar hasta 30/11/2026",
+   "fgd": "Países Bajos"
+  },
+  {
+   "entidad": "MyInvestor",
+   "plazo": 12,
+   "tae": 3.0,
+   "min": "Sin condiciones · hasta 30/11/2026",
+   "fgd": "España"
+  },
+  {
+   "entidad": "WiZink",
+   "plazo": 18,
+   "tae": 2.85,
+   "min": "5.000 €",
+   "fgd": "España"
+  },
+  {
+   "entidad": "MyInvestor",
+   "plazo": 6,
+   "tae": 2.75,
+   "min": "Sin condiciones · hasta 30/11/2026",
+   "fgd": "España"
+  },
+  {
+   "entidad": "ING",
+   "plazo": 12,
+   "tae": 2.3,
+   "min": "2,00% hasta 50.000 €; 2,30% desde 100.001 €",
+   "fgd": "Países Bajos"
+  }
  ],
  "fondos": {
-  "patrimonio": 479234, "mes": "octubre 2026",
+  "patrimonio": 479234,
+  "mes": "octubre 2026",
   "categorias": [
-   {"cat":"Renta fija","patrimonio":185831,"nota":"La mayor categoría con diferencia"},
-   {"cat":"Renta variable internacional","patrimonio":81432,"nota":"Dato a septiembre 2026"}
+   {
+    "cat": "Renta fija",
+    "patrimonio": 185831,
+    "nota": "La mayor categoría con diferencia"
+   },
+   {
+    "cat": "Renta variable internacional",
+    "patrimonio": 81432,
+    "nota": "Dato a septiembre 2026"
+   }
   ],
   "flujos": [
    "Suscripciones netas en 2026: unos 11.500 M€ hasta octubre (10.658 M€ a septiembre + 864 M€ en octubre).",
@@ -221,24 +951,110 @@ canvas{max-height:360px}
   "hogares": "Los depósitos bancarios siguen siendo el producto donde más ahorran los hogares españoles; los fondos de inversión son el segundo (215.400 M€ captados en 10 años según Inverco)."
  },
  "fuentes": [
-  ["INE – IPC adelantado octubre 2026","https://www.ine.es/dyngs/Prensa/adIPC1026.htm"],
-  ["Finect – Monzo 4% TAE en España","https://www.finect.com/usuario/davidcarmona/articulos/monzo-lanza-un-4-tae-para-potenciar-el-ahorro-tras-su-llegada-oficial-a-espana"],
-  ["Finantres – Monzo: letra pequeña (FGD Irlanda)","https://finantresnoticias.com/cuentas-remuneradas/monzo-abre-por-fin-cuentas-en-espana-hucha-4-por-ciento-tae-tiene-letra-pequena/"],
-  ["Artículo 14 – Cuentas remuneradas noviembre","https://www.articulo14.es/economia/la-guerra-por-el-ahorro-se-acelera-en-noviembre-las-cuentas-remuneradas-vuelven-a-pagar-mas-del-35-20261105.html"],
-  ["Rankia – Cuentas remuneradas noviembre 2026","https://www.rankia.com/blog/cuentas-corrientes/7544345-mejores-cuentas-remuneradas-noviembre-2026"],
-  ["elEconomista – Cuentas remuneradas","https://www.eleconomista.es/finanzas-personales/cuentas-sin-comisiones/cuentas-remuneradas/"],
-  ["Bankkers – Cuentas remuneradas","https://bankkers.com/cuentas/mejores-cuentas-remuneradas/"],
-  ["Kelisto – Cuentas remuneradas","https://www.kelisto.es/cuentas-bancarias/mejor-compra/las-mejores-cuentas-ahorro-2851"],
-  ["Raisin – Depósitos noviembre","https://www.raisin.com/es-es/noticias/mejores-depositos-a-plazo-fijo-noviembre-2026/"],
-  ["elEconomista – Depósitos","https://www.eleconomista.es/finanzas-personales/depositos-a-plazo-fijo/"],
-  ["Rankia – Depósitos","https://www.rankia.com/blog/mejores-depositos/4127358-mejores-depositos"],
-  ["Finect – Depósitos","https://www.finect.com/usuario/eduardogarcia/articulos/los-mejores-depositos-bancarios-a-plazo-fijo"],
-  ["Finect – Subasta Letras 3 y 9 meses (10/11/2026)","https://www.finect.com/usuario/eduardogarcia/articulos/la-rentabilidad-de-las-letras-del-tesoro-a-3-meses-sube-al-2665-su-nivel-mas-alto-desde-noviembre-de-2024"],
-  ["R4 – Letras del Tesoro","https://www.r4.com/articulos-y-analisis/ideas/actualidad-letras-del-tesoro-12-meses"],
-  ["OCU – Subasta bonos 5 nov 2026","https://www.ocu.org/inversiones/invertir/obligaciones/articulos/2026/11/subasta-tesoro-noviembre-2026"],
-  ["Finect – Patrimonio fondos octubre 2026 (Inverco)","https://www.finect.com/usuario/eduardogarcia/articulos/el-patrimonio-de-los-fondos-en-espana-se-situa-en-479234-millones-en-octubre-y-recupera-el-crecimiento"],
-  ["Finect – Patrimonio fondos septiembre 2026","https://www.finect.com/usuario/eduardogarcia/articulos/el-patrimonio-de-los-fondos-en-espana-se-situa-en-478086-millones-en-septiembre-por-debajo-de-lo-previsto"],
-  ["Bankkers – Rentabilidad histórica MSCI World","https://bankkers.com/?p=1259"]
+  [
+   "INE – IPC adelantado octubre 2026",
+   "https://www.ine.es/dyngs/Prensa/adIPC1026.htm"
+  ],
+  [
+   "Finect – Monzo 4% TAE en España",
+   "https://www.finect.com/usuario/davidcarmona/articulos/monzo-lanza-un-4-tae-para-potenciar-el-ahorro-tras-su-llegada-oficial-a-espana"
+  ],
+  [
+   "Finantres – Monzo: letra pequeña (FGD Irlanda)",
+   "https://finantresnoticias.com/cuentas-remuneradas/monzo-abre-por-fin-cuentas-en-espana-hucha-4-por-ciento-tae-tiene-letra-pequena/"
+  ],
+  [
+   "Artículo 14 – Cuentas remuneradas noviembre",
+   "https://www.articulo14.es/economia/la-guerra-por-el-ahorro-se-acelera-en-noviembre-las-cuentas-remuneradas-vuelven-a-pagar-mas-del-35-20261105.html"
+  ],
+  [
+   "Rankia – Cuentas remuneradas noviembre 2026",
+   "https://www.rankia.com/blog/cuentas-corrientes/7544345-mejores-cuentas-remuneradas-noviembre-2026"
+  ],
+  [
+   "elEconomista – Cuentas remuneradas",
+   "https://www.eleconomista.es/finanzas-personales/cuentas-sin-comisiones/cuentas-remuneradas/"
+  ],
+  [
+   "Bankkers – Cuentas remuneradas",
+   "https://bankkers.com/cuentas/mejores-cuentas-remuneradas/"
+  ],
+  [
+   "Kelisto – Cuentas remuneradas",
+   "https://www.kelisto.es/cuentas-bancarias/mejor-compra/las-mejores-cuentas-ahorro-2851"
+  ],
+  [
+   "Raisin – Depósitos noviembre",
+   "https://www.raisin.com/es-es/noticias/mejores-depositos-a-plazo-fijo-noviembre-2026/"
+  ],
+  [
+   "elEconomista – Depósitos",
+   "https://www.eleconomista.es/finanzas-personales/depositos-a-plazo-fijo/"
+  ],
+  [
+   "Rankia – Depósitos",
+   "https://www.rankia.com/blog/mejores-depositos/4127358-mejores-depositos"
+  ],
+  [
+   "Finect – Depósitos",
+   "https://www.finect.com/usuario/eduardogarcia/articulos/los-mejores-depositos-bancarios-a-plazo-fijo"
+  ],
+  [
+   "Finect – Subasta Letras 3 y 9 meses (10/11/2026)",
+   "https://www.finect.com/usuario/eduardogarcia/articulos/la-rentabilidad-de-las-letras-del-tesoro-a-3-meses-sube-al-2665-su-nivel-mas-alto-desde-noviembre-de-2024"
+  ],
+  [
+   "R4 – Letras del Tesoro",
+   "https://www.r4.com/articulos-y-analisis/ideas/actualidad-letras-del-tesoro-12-meses"
+  ],
+  [
+   "OCU – Subasta bonos 5 nov 2026",
+   "https://www.ocu.org/inversiones/invertir/obligaciones/articulos/2026/11/subasta-tesoro-noviembre-2026"
+  ],
+  [
+   "Finect – Patrimonio fondos octubre 2026 (Inverco)",
+   "https://www.finect.com/usuario/eduardogarcia/articulos/el-patrimonio-de-los-fondos-en-espana-se-situa-en-479234-millones-en-octubre-y-recupera-el-crecimiento"
+  ],
+  [
+   "Finect – Patrimonio fondos septiembre 2026",
+   "https://www.finect.com/usuario/eduardogarcia/articulos/el-patrimonio-de-los-fondos-en-espana-se-situa-en-478086-millones-en-septiembre-por-debajo-de-lo-previsto"
+  ],
+  [
+   "Bankkers – Rentabilidad histórica MSCI World",
+   "https://bankkers.com/?p=1259"
+  ],
+  [
+   "TuCapital – HoistSpar 3,5% desde 6 meses (11/11/2026)",
+   "https://www.tucapital.es/depositos/hoistspar-ofrece-ahora-al-35-tae-desde-los-6-meses-de-plazo/"
+  ],
+  [
+   "TuCapital – Banco BIG depósitos (10/11/2026)",
+   "https://www.tucapital.es/depositos/banco-big-sube-la-rentabilidad-de-sus-depositos-top-hasta-el-31-tae/"
+  ],
+  [
+   "TuCapital – Norwegian 3,01% (10/11/2026)",
+   "https://www.tucapital.es/cuentas/norwegian-bank-ofrece-ahora-al-301-tae-en-sus-2-cuentas/"
+  ],
+  [
+   "TuCapital – Pibank depósito 12 meses",
+   "https://www.tucapital.es/depositos/pibank-amplia-el-plazo-por-1-mes-mas-sin-cambios-en-su-deposito-a-12-meses/"
+  ],
+  [
+   "TuCapital – MyInvestor depósitos noviembre",
+   "https://www.tucapital.es/depositos/myinvestor-sube-su-deposito-a-6-meses-al-275-tae-resto-igual/"
+  ],
+  [
+   "Kelisto – Mejores depósitos noviembre 2026",
+   "https://www.kelisto.es/depositos/mejor-compra/los-mejores-depositos-2854"
+  ],
+  [
+   "Finect – Mejores cuentas remuneradas noviembre 2026",
+   "https://www.finect.com/usuario/AsunInfante/articulos/mejores-cuentas-remuneradas"
+  ],
+  [
+   "ComparadorBancario – Cuentas remuneradas",
+   "https://comparadorbancario.com/cuentas-remuneradas/"
+  ]
  ]
 }
 </script>
@@ -249,7 +1065,7 @@ canvas{max-height:360px}
  {"id":"cuenta","nombre":"Cuenta remunerada","grupo":"Liquidez","riesgo":1,"rent":3.0,"vol":0.3,"rentTxt":"2,5–3,5% hoy (promos)","peor":"0% (garantizada hasta 100.000 €)","liquidez":"Inmediata","garantia":"FGD 100.000 €/titular/banco","fiscal":"Intereses: base del ahorro, con retención 19%","para":"Colchón de emergencia y dinero que puedes necesitar ya","ojo":"Las mejores ofertas son promociones temporales; luego el tipo baja"},
  {"id":"deposito","nombre":"Depósito a plazo fijo","grupo":"Liquidez","riesgo":1,"rent":3.2,"vol":0.3,"rentTxt":"3–3,75% hoy","peor":"0% (garantizado)","liquidez":"Al vencimiento (cancelar antes penaliza)","garantia":"FGD 100.000 €","fiscal":"Base del ahorro, retención 19%","para":"Dinero que no tocarás en un plazo concreto","ojo":"Si el banco es extranjero, lo cubre el FGD de su país"},
  {"id":"letras","nombre":"Letras del Tesoro","grupo":"Liquidez","riesgo":1,"rent":3.0,"vol":0.5,"rentTxt":"2,8–3,1% hoy","peor":"≈0% si mantienes hasta vencimiento","liquidez":"3–12 meses (o vender antes en mercado)","garantia":"Estado español","fiscal":"Base del ahorro, sin retención","para":"Alternativa segura a depósitos, sin límite de 100.000 €","ojo":"Comprar en el Tesoro tiene trámites; el Banco de España cobra si no reinviertes"},
- {"id":"monetario","nombre":"Fondo monetario","grupo":"Liquidez","riesgo":1,"rent":2.3,"vol":0.5,"rentTxt":"≈2–2,5% anual actual","peor":"≈ -0,5% (2022)","liquidez":"2–3 días","garantia":"Sin FGD (riesgo muy bajo)","fiscal":"Solo tributa al vender; traspasos entre fondos sin impuestos","para":"Aparcar dinero a medio plazo y mover luego a otros fondos sin pagar impuestos","ojo":"Su rentabilidad baja cuando bajan los tipos del BCE"},
+ {"id":"monetario","nombre":"Fondo monetario","grupo":"Liquidez","riesgo":1,"rent":2.1,"vol":0.5,"rentTxt":"≈1,9–2,2% último año (los mejores, comisión ≤0,10%)","peor":"≈ -0,5% (2022)","liquidez":"2–3 días","garantia":"Sin FGD (riesgo muy bajo)","fiscal":"Solo tributa al vender; traspasos entre fondos sin impuestos","para":"Aparcar dinero a medio plazo y mover luego a otros fondos sin pagar impuestos","ojo":"Su rentabilidad baja cuando bajan los tipos del BCE"},
  {"id":"bonos","nombre":"Bonos del Estado (5–15 años)","grupo":"Renta fija","riesgo":2,"rent":3.6,"vol":6,"rentTxt":"3,3–4,1% hoy","peor":"≈ -20% (2022, si vendes antes)","liquidez":"Vender en mercado al precio del día","garantia":"Estado español","fiscal":"Cupones en base del ahorro","para":"Asegurar un tipo durante años","ojo":"Si suben los tipos y necesitas vender, pierdes"},
  {"id":"rfglobal","nombre":"Fondo/ETF renta fija global","grupo":"Renta fija","riesgo":2,"rent":3.0,"vol":5,"rentTxt":"≈2,5–4% largo plazo","peor":"≈ -17% (2022)","liquidez":"2–3 días","garantia":"No","fiscal":"Fondos: traspasos sin impuestos","para":"Amortiguar la cartera y diversificar","ojo":"No es «sin riesgo»: 2022 fue el peor año en décadas"},
  {"id":"mixto","nombre":"Fondo mixto 60/40","grupo":"Mixto","riesgo":3,"rent":6.0,"vol":10,"rentTxt":"≈5–7% largo plazo","peor":"≈ -25% (2008)","liquidez":"2–3 días","garantia":"No","fiscal":"Traspasos sin impuestos","para":"Quien quiere una sola cosa que lo haga todo","ojo":"Vigila comisiones: en banco suelen ser 1,5–2% al año"},
