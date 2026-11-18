@@ -91,7 +91,7 @@ canvas{max-height:360px}
 <!-- ===================== DATOS (se actualizan a diario) ===================== -->
 <script id="datos" type="application/json">
 {
- "actualizado": "2026-11-17",
+ "actualizado": "2026-11-18",
  "inflacion": {
   "valor": 4.9,
   "subyacente": 3.1,
@@ -160,6 +160,13 @@ canvas{max-height:360px}
   "bienvenida": "Depósito Bienvenida 3% TAE a 3 meses (hasta 50.000 €), solo para nuevos clientes, hasta el 31/12/2026",
   "promosClientes": [
    {
+    "txt": "Depósito a 6 meses al 3,25% TAE (3,225% TIN)",
+    "tae": 3.25,
+    "plazo": "6 meses",
+    "hasta": "30/11/2026",
+    "detalle": "Para dinero nuevo que traigas a ING (el que ya tienes en ING no cuenta). Sin mínimo y hasta 250.000 €; uno por persona. Solo si te aparece habilitado en tu área personal y hasta agotar 10.000 contrataciones. Puedes cancelarlo antes sin coste, pero lo cancelado solo cobra el 0,87% de la Cuenta Naranja por los días que estuvo."
+   },
+   {
     "txt": "Depósito a 4 meses al 3% TAE (2,971% TIN)",
     "tae": 3.0,
     "plazo": "4 meses",
@@ -180,6 +187,14 @@ canvas{max-height:360px}
   "etfGratisMin": "iShares 2.500 € · Amundi 2.000 € · Xtrackers 1.500 € · WisdomTree 1.000 € por compra",
   "fgd": "Países Bajos (100.000 €)",
   "fuentes": [
+   [
+    "Finect – ING lanza depósito al 3,25% TAE a 6 meses para clientes (17/11/2026)",
+    "https://www.finect.com/usuario/davidcarmona/articulos/ing-lanza-un-nuevo-deposito-al-325-tae-a-6-meses-para-clientes-y-potencia-el-ahorro-a-corto-plazo"
+   ],
+   [
+    "Finantres – ING: depósito 3,25% a seis meses, pero no es para todos",
+    "https://finantresnoticias.com/depositos/ing-ofrece-nuevo-deposito-3-25-por-ciento-tae-seis-meses-pero-no-es-todos/"
+   ],
    [
     "ADSLZone – Depósito ING 3% a 4 meses hasta 30/11",
     "https://www.adslzone.net/noticias/fintech/ing-deposito-3-tae-cuatro-meses/"
@@ -215,9 +230,9 @@ canvas{max-height:360px}
   ]
  },
  "ibex": {
-  "nivel": 19946.6,
-  "fecha": "16/11/2026",
-  "ytd": 15.24,
+  "nivel": 19625.3,
+  "fecha": "17/11/2026",
+  "ytd": 13.39,
   "fechaConsenso": "2–11 de noviembre de 2026 (consenso Reuters; bancos actualizados el 11/11 tras resultados)",
   "valores": [
    {
@@ -385,6 +400,14 @@ canvas{max-height:360px}
   "sinDato": "Amadeus, Colonial, Ferrovial, IAG, Indra, Mapfre, Puig, Redeia, Rovi, Naturgy, ArcelorMittal y Enagás",
   "fuentes": [
    [
+    "Bolsamanía – El Ibex 35 cierra en 19.625,30 puntos (17/11/2026)",
+    "https://www.bolsamania.com/noticias/mercados-ultima-hora/el-ibex-35-cierra-con-caidas-del-161-hasta-1962530-puntos--24206838.html"
+   ],
+   [
+    "Infobae (EFE) – El Ibex pierde un 1,61% y los 19.700 puntos (17/11/2026)",
+    "https://www.infobae.com/espana/agencias/2026/11/17/el-ibex-35-pierde-un-161-y-los-19700-puntos-lastrado-por-wall-street-y-la-tecnologia/"
+   ],
+   [
     "Estrategias de Inversión – Potencial de los valores del Ibex 35 (Reuters)",
     "https://www.estrategiasdeinversion.com/actualidad/noticias/bolsa-espana/tres-acciones-del-ibex-35-con-potencial-de-mas-n-965387"
    ],
@@ -407,14 +430,6 @@ canvas{max-height:360px}
    [
     "Estrategias de Inversión – CaixaBank, Sabadell y Bankinter a examen (12/11/2026)",
     "https://www.estrategiasdeinversion.com/actualidad/noticias/bolsa-espana/tres-bancos-a-examen-por-los-analistas-cual-de-n-969181"
-   ],
-   [
-    "Bolsamanía – El Ibex 35 cierra en 19.946,60 puntos (16/11/2026)",
-    "https://www.bolsamania.com/noticias/mercados-ultima-hora/el-ibex-35-cierra-con-caidas-del-037-hasta-1994660-puntos--24191530.html"
-   ],
-   [
-    "Infobae (EFE) – El Ibex cae un 0,37% y pierde los 20.000 puntos (16/11/2026)",
-    "https://infobae.com/espana/agencias/2026/11/16/el-ibex-cae-un-037-y-pierde-los-20000-puntos-en-una-sesion-de-tramite"
    ]
   ]
  },
@@ -616,6 +631,16 @@ canvas{max-height:360px}
    "plazoOferta": "Abrir hucha hasta 31/12/2026"
   },
   {
+   "entidad": "Openbank",
+   "producto": "Cuenta Remunerada",
+   "tae": 3.25,
+   "cond": "Nuevos clientes. 3,20% TIN durante 12 meses, sin límite de saldo; después pasa a Cuenta de Ahorro con tipo sin fijar. Pide activar Bizum; alguna FAQ de su web menciona ingresos de 900 €, confírmalo al contratar. Extra opcional de hasta 200 € netos por 2 recibos al mes",
+   "max": "Sin límite",
+   "fgd": "España",
+   "sinCond": true,
+   "plazoOferta": "Contratar hasta 30/11/2026"
+  },
+  {
    "entidad": "Revolut",
    "producto": "Cuenta Remunerada",
    "tae": 3.51,
@@ -730,7 +755,7 @@ canvas{max-height:360px}
    "producto": "Cuenta Online",
    "tae": 2.55,
    "cond": "Sin comisiones; bonificación extra si domicilias nómina",
-   "max": "—",
+   "max": "50.000 €",
    "fgd": "España",
    "sinCond": true,
    "plazoOferta": "Apertura hasta 31/01/2027"
@@ -782,11 +807,25 @@ canvas{max-height:360px}
    "fgd": "Bélgica"
   },
   {
+   "entidad": "Bank B (vía Raisin)",
+   "plazo": 60,
+   "tae": 3.6,
+   "min": "—",
+   "fgd": "Bélgica"
+  },
+  {
    "entidad": "Renault Bank",
    "plazo": 36,
    "tae": 3.55,
-   "min": "500 € · nuevos clientes, sin cancelación anticipada · contratar solo hasta el 18/11/2026",
+   "min": "500 € · nuevos clientes, sin cancelación anticipada · hoy, 18/11/2026, es el último día para contratar",
    "fgd": "Francia"
+  },
+  {
+   "entidad": "Bank B (vía Raisin)",
+   "plazo": 48,
+   "tae": 3.55,
+   "min": "—",
+   "fgd": "Bélgica"
   },
   {
    "entidad": "HoistSpar",
@@ -822,6 +861,13 @@ canvas{max-height:360px}
    "tae": 3.5,
    "min": "1 €",
    "fgd": "Suecia"
+  },
+  {
+   "entidad": "SME Bank (vía Raisin)",
+   "plazo": 12,
+   "tae": 3.5,
+   "min": "20.000 €",
+   "fgd": "Lituania"
   },
   {
    "entidad": "Mano Bank (vía Raisin)",
@@ -866,13 +912,6 @@ canvas{max-height:360px}
    "fgd": "España"
   },
   {
-   "entidad": "SME Bank (vía Raisin)",
-   "plazo": 12,
-   "tae": 3.35,
-   "min": "20.000 €",
-   "fgd": "Lituania"
-  },
-  {
    "entidad": "Cetelem",
    "plazo": 24,
    "tae": 3.25,
@@ -883,7 +922,7 @@ canvas{max-height:360px}
    "entidad": "Banco Finantia (Jump)",
    "plazo": 6,
    "tae": 3.25,
-   "min": "—",
+   "min": "50.000 € (Depósitos Destacados, dinero nuevo) · sin cancelación anticipada · hasta 22/11/2026",
    "fgd": "Portugal"
   },
   {
@@ -894,11 +933,32 @@ canvas{max-height:360px}
    "fgd": "España"
   },
   {
+   "entidad": "ING (solo dinero nuevo, si te aparece en tu área)",
+   "plazo": 6,
+   "tae": 3.25,
+   "min": "Sin mínimo · hasta 250.000 € · uno por persona · contratar hasta 30/11/2026 o 10.000 contrataciones",
+   "fgd": "Países Bajos"
+  },
+  {
+   "entidad": "Renault Bank",
+   "plazo": 24,
+   "tae": 3.24,
+   "min": "500 €",
+   "fgd": "Francia"
+  },
+  {
    "entidad": "Ferratum",
    "plazo": 12,
    "tae": 3.2,
    "min": "50 €",
    "fgd": "Malta"
+  },
+  {
+   "entidad": "CA Auto Bank (vía Raisin)",
+   "plazo": 12,
+   "tae": 3.2,
+   "min": "—",
+   "fgd": "Italia"
   },
   {
    "entidad": "Ferratum",
@@ -912,6 +972,20 @@ canvas{max-height:360px}
    "plazo": 12,
    "tae": 3.1,
    "min": "—",
+   "fgd": "España"
+  },
+  {
+   "entidad": "Cetelem",
+   "plazo": 12,
+   "tae": 3.1,
+   "min": "1 € (hasta 250.000 €)",
+   "fgd": "Consultar"
+  },
+  {
+   "entidad": "EBN Banco (Nuevo Ahorro)",
+   "plazo": 12,
+   "tae": 3.1,
+   "min": "5.000 € · nuevos clientes o dinero nuevo",
    "fgd": "España"
   },
   {
@@ -947,6 +1021,13 @@ canvas{max-height:360px}
    "plazo": 12,
    "tae": 3.0,
    "min": "Sin condiciones · hasta 30/11/2026",
+   "fgd": "España"
+  },
+  {
+   "entidad": "WiZink",
+   "plazo": 12,
+   "tae": 3.0,
+   "min": "5.000 € · solo dinero de otro banco",
    "fgd": "España"
   },
   {
@@ -1121,10 +1202,6 @@ canvas{max-height:360px}
    "https://www.tucapital.es/"
   ],
   [
-   "HelpMyCash – Cuentas remuneradas (Openbank 3,25% hasta 16/11)",
-   "https://www.helpmycash.com/cuentas/cuentas-remuneradas/"
-  ],
-  [
    "Bankkers – Cuenta Digital Bankinter 3% hasta 16/12/2026",
    "https://bankkers.com/abrir-cuenta-bankinter/"
   ],
@@ -1147,6 +1224,26 @@ canvas{max-height:360px}
   [
    "Rankia – Mejores depósitos noviembre 2026 (16/11/2026)",
    "https://www.rankia.com/blog/mejores-depositos/7544410-mejores-depositos-noviembre-2026"
+  ],
+  [
+   "Raisin – Cuatro bancos suben sus depósitos hasta el 3,60% (17/11/2026)",
+   "https://www.raisin.com/es-es/noticias/subida-tipos-depositos-a-plazo-fijo-noviembre-2026/"
+  ],
+  [
+   "Finect – Depósitos de noviembre: Banco BIG, Cetelem, WiZink, EBN, Renault (9/11/2026)",
+   "https://www.finect.com/usuario/davidcarmona/articulos/4-tae-y-banco-big-a-la-cabeza-con-openbank-y-cetelem-detras-los-depositos-vuelven-a-la-carga-en-noviembre"
+  ],
+  [
+   "Finantres – Banco Finantia sube depósitos hasta el 22/11",
+   "https://finantresnoticias.com/depositos/banco-finantia-sube-depositos-amplia-contratacion-hasta-22-noviembre/"
+  ],
+  [
+   "Finantres – Openbank prorroga el 3,25% TAE hasta el 30/11 (17/11/2026)",
+   "https://finantresnoticias.com/cuentas-remuneradas/openbank-prorroga-3-25-por-ciento-tae-ofrece-hasta-200-euros-netos-por-recibos/"
+  ],
+  [
+   "HelpMyCash – Cuentas remuneradas (12/11/2026: Openbank hasta 30/11, Unicaja hasta 50.000 €)",
+   "https://www.helpmycash.com/cuentas/cuentas-remuneradas/"
   ]
  ]
 }
